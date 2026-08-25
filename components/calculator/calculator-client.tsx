@@ -594,13 +594,13 @@ export function CalculatorClient({
               <p className="font-bold text-navy">{d.calc.specTitle}</p>
               <div className="mt-2 grid gap-2 sm:grid-cols-3">
                 <p className="rounded-xl bg-secondary/60 px-3 py-2 font-medium text-navy">
-                  {fmt(d.calc.specBattery, { n: systemSpec.batteryAh })}
+                  {fmt(d.calc.specBattery, { n: n(systemSpec.batteryAh) })}
                 </p>
                 <p className="rounded-xl bg-secondary/60 px-3 py-2 font-medium text-navy">
-                  {fmt(d.calc.specPanel, { n: systemSpec.panelWatt })}
+                  {fmt(d.calc.specPanel, { n: n(systemSpec.panelWatt) })}
                 </p>
                 <p className="rounded-xl bg-secondary/60 px-3 py-2 font-medium text-navy">
-                  {fmt(d.calc.specController, { n: systemSpec.controllerWatt })}
+                  {fmt(d.calc.specController, { n: n(systemSpec.controllerWatt) })}
                 </p>
               </div>
               <p className="mt-2 text-xs text-muted-foreground">{d.calc.specNote}</p>
@@ -716,13 +716,13 @@ export function CalculatorClient({
               {systemSpec ? (
                 <div className="mx-auto mt-4 grid max-w-xl gap-2 sm:grid-cols-3">
                   <p className="rounded-xl bg-white/70 px-3 py-3 text-sm font-bold text-navy">
-                    {fmt(d.calc.specBattery, { n: systemSpec.batteryAh })}
+                    {fmt(d.calc.specBattery, { n: n(systemSpec.batteryAh) })}
                   </p>
                   <p className="rounded-xl bg-white/70 px-3 py-3 text-sm font-bold text-navy">
-                    {fmt(d.calc.specPanel, { n: systemSpec.panelWatt })}
+                    {fmt(d.calc.specPanel, { n: n(systemSpec.panelWatt) })}
                   </p>
                   <p className="rounded-xl bg-white/70 px-3 py-3 text-sm font-bold text-navy">
-                    {fmt(d.calc.specController, { n: systemSpec.controllerWatt })}
+                    {fmt(d.calc.specController, { n: n(systemSpec.controllerWatt) })}
                   </p>
                 </div>
               ) : null}
