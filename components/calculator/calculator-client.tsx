@@ -109,9 +109,13 @@ export function CalculatorClient({
       const draft = JSON.parse(raw) as {
         quantities?: Record<string, number>;
         backupHours?: number | null;
+        mode?: "dc" | "ac" | null;
       };
       if (draft.quantities) setQuantities(draft.quantities);
       if (typeof draft.backupHours === "number") setBackupHours(draft.backupHours);
+      // Landing from the homepage mini-calculator: skip the AC/DC chooser
+      // and continue directly in the same system type.
+      if (draft.mode === "dc" || draft.mode === "ac") setMode(draft.mode);
     } catch {
       // ignore malformed drafts
     }

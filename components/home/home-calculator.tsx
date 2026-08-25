@@ -67,9 +67,11 @@ export function HomeCalculator({
         const draft = JSON.parse(raw) as {
           quantities?: Record<string, number>;
           backupHours?: number | null;
+          mode?: Mode | null;
         };
         if (draft.quantities) setQuantities(draft.quantities);
         if (typeof draft.backupHours === "number") setBackupHours(draft.backupHours);
+        if (draft.mode === "dc" || draft.mode === "ac") setMode(draft.mode);
       }
     } catch {
       // ignore malformed drafts
@@ -78,11 +80,11 @@ export function HomeCalculator({
 
   useEffect(() => {
     try {
-      localStorage.setItem("sunvolt:home-calc", JSON.stringify({ quantities, backupHours }));
+      localStorage.setItem("sunvolt:home-calc", JSON.stringify({ quantities, backupHours, mode }));
     } catch {
       // storage unavailable — session-only state
     }
-  }, [quantities, backupHours]);
+  }, [quantities, backupHours, mode]);
 
   // Appliances for the chosen system type — AC mode shows the "ac"
   // category, DC mode everything else.
@@ -341,9 +343,9 @@ export function HomeCalculator({
                 </div>
               </div>
             ) : recommendation?.status === "none" ? (
-              <div className="mt-4 rounded-2xl bg-solar-light/70 p-4 text-center ring-1 ring-solar/40">
-                <p className="text-sm font-bold text-navy">{d.mini.noneMsg}</p>
-                <Button asChild size="sm" className="mt-3 font-bold">
+              <div className="mt-4 rounded-2xl bg-solar-light/70 p-5 text-center ring-2 ring-solar/50">
+                <p className="text-base font-bold text-navy sm:text-lg">{d.mini.noneMsg}</p>
+                <Button asChild size="lg" className="mt-4 h-14 w-full text-base font-bold">
                   <Link href="/calculator">{d.mini.noneBtn}</Link>
                 </Button>
               </div>
