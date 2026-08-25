@@ -285,7 +285,6 @@ export function HomeCalculator({
                     ⚡ {n(spec.controllerWatt)}W {d.mini.controller}
                   </span>
                 </div>
-                <p className="mt-1 text-center text-[11px] text-muted-foreground">{d.mini.specNote}</p>
               </div>
             ) : null}
 
