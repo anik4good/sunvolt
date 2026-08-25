@@ -1,11 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Hind_Siliguri } from "next/font/google";
+import { Manrope, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
+import { getLang } from "@/lib/i18n";
 
-const hindSiliguri = Hind_Siliguri({
-  variable: "--font-sans",
-  subsets: ["bengali", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
+// Same pairing as SurjoOne: Manrope for Latin, Noto Sans Bengali for Bengali.
+// Latin-first stack keeps digits clean; Bengali falls through to Noto.
+const manrope = Manrope({
+  variable: "--font-latin",
+  subsets: ["latin"],
+});
+
+const notoSansBengali = Noto_Sans_Bengali({
+  variable: "--font-bengali",
+  subsets: ["bengali"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -37,11 +44,15 @@ export const viewport: Viewport = {
 // admin dashboard at any time (plan §33), so pages always render fresh.
 export const dynamic = "force-dynamic";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: LayoutProps<"/">) {
+  const lang = await getLang();
   return (
-    <html lang="bn" className={`${hindSiliguri.variable} h-full antialiased`}>
+    <html
+      lang={lang}
+      className={`${manrope.variable} ${notoSansBengali.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col bg-background font-sans">
         {children}
       </body>

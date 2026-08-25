@@ -11,8 +11,10 @@ async function seedAppliances() {
     return;
   }
   await db.insert(appliances).values([
-    { name: "DC Fan", category: "cooling", defaultWatt: 17, icon: "🌀" },
-    { name: "DC Bulb", category: "lighting", defaultWatt: 3, icon: "💡" },
+    { name: "DC Fan", category: "cooling", defaultWatt: 17, icon: "fan" },
+    { name: "DC Bulb", category: "lighting", defaultWatt: 3, icon: "bulb" },
+    { name: "AC Fan", category: "ac", defaultWatt: 70, icon: "fan" },
+    { name: "AC Light", category: "ac", defaultWatt: 20, icon: "bulb" },
     { name: "DC Light", category: "lighting", defaultWatt: 5, icon: "💡", active: false },
     { name: "TV", category: "entertainment", defaultWatt: 60, icon: "📺", active: false },
     { name: "WiFi Router", category: "network", defaultWatt: 10, icon: "📡", active: false },
@@ -30,41 +32,51 @@ async function seedProducts() {
     {
       // Draft: price and panel/controller specs to be set by admin
       // before activating.
-      name: "SunVolt 3 Hour",
+      name: "SunVolt 3 Hour DC",
       slug: "sunvolt-3-hour",
+      exampleFanCount: 1,
+      exampleLightCount: 2,
       description:
         "৩ ঘণ্টার সোলার ব্যাকআপ প্যাকেজ — লোডশেডিং চলাকালীন ফ্যান ও লাইট চালানোর জন্য।",
-      batteryVoltage: 12,
+      batteryVoltage: "12.6",
       batteryCapacityAh: 15,
       backupHours: 3,
       recommendedLoadWatt: 39,
-      price: "0",
+      price: "13500",
+      solarPanelWatt: 200,
+      controllerWatt: 150,
       warrantyMonths: 6,
-      active: false,
+      active: true,
       featured: false,
     },
     {
       // Draft: price and panel/controller specs to be set by admin
       // before activating.
-      name: "SunVolt 6 Hour",
+      name: "SunVolt 6 Hour DC",
       slug: "sunvolt-6-hour",
+      exampleFanCount: 2,
+      exampleLightCount: 3,
       description:
         "৬ ঘণ্টার সোলার ব্যাকআপ প্যাকেজ — লোডশেডিং চলাকালীন ফ্যান ও লাইট চালানোর জন্য।",
-      batteryVoltage: 12,
+      batteryVoltage: "12.6",
       batteryCapacityAh: 30,
       backupHours: 6,
       recommendedLoadWatt: 39,
-      price: "0",
+      price: "16300",
+      solarPanelWatt: 200,
+      controllerWatt: 150,
       warrantyMonths: 6,
-      active: false,
+      active: true,
       featured: false,
     },
     {
-      name: "SunVolt 12 Hour Solar Backup",
+      name: "SunVolt 12 Hour DC",
       slug: "sunvolt-12-hour",
+      exampleFanCount: 2,
+      exampleLightCount: 5,
       description:
-        "১২ ঘণ্টার সোলার ব্যাকআপ প্যাকেজ — লোডশেডিং চলাকালীন ফ্যান, লাইট, টিভি ও রাউটার চালাতে পারবেন।",
-      batteryVoltage: 12,
+        "১২ ঘণ্টার সোলার ব্যাকআপ প্যাকেজ — লোডশেডিং চলাকালীন ফ্যান ও লাইট চালাতে পারবেন।",
+      batteryVoltage: "12.6",
       batteryCapacityAh: 45,
       batteryType: "LiFePO4",
       solarPanelWatt: 200,

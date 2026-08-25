@@ -24,7 +24,27 @@ const settingsSchema = z.object({
   batteryEfficiency: z.coerce.number().min(0.1).max(1),
   systemEfficiency: z.coerce.number().min(0.1).max(1),
   recommendedReserve: z.coerce.number().min(0).max(1),
+  systemVoltage: z.coerce.number().min(1).max(1000),
+  panelOutputFactor: z.coerce.number().min(0.1).max(1),
+  peakSunHours: z.coerce.number().min(1).max(12),
+  batterySizes: z
+    .string()
+    .trim()
+    .regex(/^\d+(\s*,\s*\d+)*$/, "Battery sizes must be numbers separated by commas"),
+  controllerSizes: z
+    .string()
+    .trim()
+    .regex(/^\d+(\s*,\s*\d+)*$/, "Controller ratings must be numbers separated by commas"),
 });
+
+function normalizeSizes(csv: string): string {
+  return csv
+    .split(",")
+    .map((v) => Number(v.trim()))
+    .filter((n) => Number.isFinite(n) && n > 0)
+    .sort((a, b) => a - b)
+    .join(",");
+}
 
 export async function updateSettings(
   _prev: AdminFormState | undefined,
@@ -41,6 +61,11 @@ export async function updateSettings(
     batteryEfficiency: formData.get("batteryEfficiency"),
     systemEfficiency: formData.get("systemEfficiency"),
     recommendedReserve: formData.get("recommendedReserve"),
+    systemVoltage: formData.get("systemVoltage"),
+    panelOutputFactor: formData.get("panelOutputFactor"),
+    peakSunHours: formData.get("peakSunHours"),
+    batterySizes: formData.get("batterySizes"),
+    controllerSizes: formData.get("controllerSizes"),
   });
   if (!parsed.success) {
     return { message: parsed.error.issues[0]?.message ?? "Check the form." };
@@ -58,6 +83,11 @@ export async function updateSettings(
       batteryEfficiency: data.batteryEfficiency.toFixed(3),
       systemEfficiency: data.systemEfficiency.toFixed(3),
       recommendedReserve: data.recommendedReserve.toFixed(3),
+      systemVoltage: data.systemVoltage.toFixed(1),
+      panelOutputFactor: data.panelOutputFactor.toFixed(3),
+      peakSunHours: data.peakSunHours.toFixed(2),
+      batterySizes: normalizeSizes(data.batterySizes),
+      controllerSizes: normalizeSizes(data.controllerSizes),
     })
     .where(eq(settings.id, 1));
 

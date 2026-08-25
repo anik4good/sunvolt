@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { ProductImagesEditor } from "@/components/admin/product-images-editor";
 import {
   saveProduct,
   type ProductFormState,
@@ -64,7 +65,7 @@ export function ProductForm({ product }: { product?: Product }) {
         </Field>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Category *">
           <Select name="category" value={category} onValueChange={setCategory}>
             <SelectTrigger>
@@ -87,9 +88,23 @@ export function ProductForm({ product }: { product?: Product }) {
         <Field label="Slug" hint="Leave blank to generate from the name">
           <Input name="slug" defaultValue={product?.slug} placeholder="sunvolt-12-hour" />
         </Field>
-        <Field label="Image URL">
-          <Input name="imageUrl" defaultValue={product?.imageUrl ?? ""} placeholder="/products/… or https://…" />
-        </Field>
+      </div>
+
+      <div>
+        <Label className="text-xs text-muted-foreground">
+          Images — first one is the cover shown on cards
+        </Label>
+        <div className="mt-2">
+          <ProductImagesEditor
+            initial={
+              product
+                ? [product.imageUrl, ...(product.images ?? [])].filter(
+                    (v): v is string => Boolean(v),
+                  )
+                : []
+            }
+          />
+        </div>
       </div>
 
       <Field label="Description (Bengali, shown to customers)">
@@ -100,7 +115,7 @@ export function ProductForm({ product }: { product?: Product }) {
         <>
           <div className="grid gap-4 sm:grid-cols-3">
             <Field label="Battery voltage (V) *">
-              <Input name="batteryVoltage" type="number" min={1} defaultValue={product?.batteryVoltage ?? 12} />
+              <Input name="batteryVoltage" type="number" min={1} step="0.1" defaultValue={product?.batteryVoltage ?? 12.6} />
             </Field>
             <Field label="Battery capacity (Ah) *">
               <Input name="batteryCapacityAh" type="number" min={1} defaultValue={product?.batteryCapacityAh ?? ""} />
@@ -128,6 +143,16 @@ export function ProductForm({ product }: { product?: Product }) {
             </Field>
             <Field label="Installation price (৳)" hint="Leave blank for “separate charge”">
               <Input name="installationPrice" type="number" min={0} step="0.01" defaultValue={product?.installationPrice ? Number(product.installationPrice) : ""} />
+            </Field>
+            <div className="hidden sm:block" />
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Field label="Example: fan count" hint="Shown as “চালাতে পারবেন” on the card">
+              <Input name="exampleFanCount" type="number" min={0} max={20} defaultValue={product?.exampleFanCount ?? ""} />
+            </Field>
+            <Field label="Example: light count">
+              <Input name="exampleLightCount" type="number" min={0} max={30} defaultValue={product?.exampleLightCount ?? ""} />
             </Field>
             <div className="hidden sm:block" />
           </div>

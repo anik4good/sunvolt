@@ -3,6 +3,8 @@ import { asc, desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import {
   appliances,
+  invoiceItems,
+  invoices,
   orderAppliances,
   orderItems,
   orders,
@@ -33,6 +35,11 @@ export const getCalculationSettings = cache(
       batteryEfficiency: Number(s.batteryEfficiency),
       systemEfficiency: Number(s.systemEfficiency),
       recommendedReserve: Number(s.recommendedReserve),
+      systemVoltage: Number(s.systemVoltage),
+      panelOutputFactor: Number(s.panelOutputFactor),
+      peakSunHours: Number(s.peakSunHours),
+      batterySizes: s.batterySizes,
+      controllerSizes: s.controllerSizes,
     };
   },
 );
@@ -132,6 +139,33 @@ export async function getRelatedProducts(slug: string, category: string, limit =
     .limit(limit);
 }
 
+/**
+ * Curated products for the homepage showcase: admin-featured products
+ * first, then newest — always `limit` items.
+ */
+export async function getHomeProducts(limit = 6) {
+  const [featured, newest] = await Promise.all([
+    db
+      .select()
+      .from(products)
+      .where(
+        sql`${products.category} <> 'package' and ${products.active} = true and ${products.featured} = true`,
+      )
+      .orderBy(desc(products.createdAt))
+      .limit(limit),
+    db
+      .select()
+      .from(products)
+      .where(sql`${products.category} <> 'package' and ${products.active} = true`)
+      .orderBy(desc(products.createdAt))
+      .limit(limit * 2),
+  ]);
+
+  const seen = new Set(featured.map((p) => p.id));
+  const fill = newest.filter((p) => !seen.has(p.id));
+  return [...featured, ...fill].slice(0, limit);
+}
+
 export async function getProductBySlug(slug: string) {
   const rows = await db
     .select()
@@ -154,4 +188,36 @@ export async function getOrderWithDetails(id: string) {
     db.select().from(orderAppliances).where(eq(orderAppliances.orderId, id)),
   ]);
   return { ...rows[0], items, appliances: applianceRows };
+}
+
+export async function getInvoiceWithItems(id: string) {
+  const rows = await db
+    .select()
+    .from(invoices)
+    .where(eq(invoices.id, id))
+    .limit(1);
+  if (rows.length === 0) return null;
+  const items = await db
+    .select()
+    .from(invoiceItems)
+    .where(eq(invoiceItems.invoiceId, id))
+    .orderBy(asc(invoiceItems.position));
+  return { invoice: rows[0], items };
+}
+
+/**
+ * Next sequential custom-invoice number (INV-0001, INV-0002, …).
+ * Custom invoices all live in one table, so max-suffix + 1 keeps the
+ * sequence gapless; single-admin use makes races a non-issue.
+ */
+export async function nextInvoiceNo(): Promise<string> {
+  const rows = await db
+    .select({ invoiceNo: invoices.invoiceNo })
+    .from(invoices)
+    .where(sql`${invoices.invoiceNo} ~ '^INV-[0-9]+$'`);
+  const next = rows.reduce(
+    (max, r) => Math.max(max, Number(r.invoiceNo.slice(4))),
+    0,
+  ) + 1;
+  return `INV-${String(next).padStart(4, "0")}`;
 }

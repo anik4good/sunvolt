@@ -11,9 +11,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { createOrder } from "@/app/actions/orders";
 import { useCart } from "@/components/cart/cart-provider";
 import { formatPrice } from "@/lib/format";
+import { fmt, num, type Dictionary, type Lang } from "@/lib/dictionaries";
 
 interface CheckoutFormProps {
   currency: string;
+  lang: Lang;
+  d: Dictionary;
 }
 
 interface StoredCalculation {
@@ -29,7 +32,8 @@ interface StoredCalculation {
   recommendedSlug?: string;
 }
 
-export function CheckoutForm({ currency }: CheckoutFormProps) {
+export function CheckoutForm({ currency, lang, d }: CheckoutFormProps) {
+  const n = (v: number | string) => num(v, lang);
   const { items, hydrated, subtotal, totalItems } = useCart();
   const [state, formAction, pending] = useActionState(createOrder, undefined);
   const [calc, setCalc] = useState<StoredCalculation | null>(null);
@@ -47,12 +51,12 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
     return (
       <div className="mt-10 rounded-2xl border border-dashed p-10 text-center">
         <ShoppingCart className="mx-auto size-10 text-muted-foreground" aria-hidden />
-        <p className="mt-4 text-lg font-semibold text-navy">কার্ট খালি</p>
+        <p className="mt-4 text-lg font-semibold text-navy">{d.checkout.emptyTitle}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          চেকআউট করতে অন্তত একটি প্যাকেজ কার্টে রাখুন।
+          {d.checkout.emptySub}
         </p>
         <Button asChild className="mt-6 font-bold">
-          <Link href="/packages">প্যাকেজ দেখুন</Link>
+          <Link href="/packages">{d.checkout.viewPackages}</Link>
         </Button>
       </div>
     );
@@ -69,20 +73,20 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
 
       <div className="space-y-5">
         <div>
-          <Label htmlFor="customerName">আপনার নাম *</Label>
+          <Label htmlFor="customerName">{d.checkout.name}</Label>
           <Input
             id="customerName"
             name="customerName"
             required
             minLength={2}
             maxLength={80}
-            placeholder="সম্পূর্ণ নাম"
+            placeholder={d.checkout.namePh}
             autoComplete="name"
           />
         </div>
 
         <div>
-          <Label htmlFor="phone">মোবাইল নম্বর *</Label>
+          <Label htmlFor="phone">{d.checkout.phone}</Label>
           <Input
             id="phone"
             name="phone"
@@ -94,19 +98,19 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
         </div>
 
         <div>
-          <Label htmlFor="district">জেলা *</Label>
-          <Input id="district" name="district" required placeholder="যেমন: ঢাকা" />
+          <Label htmlFor="district">{d.checkout.district}</Label>
+          <Input id="district" name="district" required placeholder={d.checkout.districtPh} />
         </div>
 
         <div>
-          <Label htmlFor="address">সম্পূর্ণ ঠিকানা *</Label>
+          <Label htmlFor="address">{d.checkout.address}</Label>
           <Textarea
             id="address"
             name="address"
             required
             minLength={5}
             maxLength={250}
-            placeholder="বাসা/হোল্ডিং, রোড, এলাকা"
+            placeholder={d.checkout.addressPh}
             autoComplete="street-address"
           />
         </div>
@@ -114,16 +118,16 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
         <div className="flex items-start gap-3 rounded-xl border p-4">
           <Checkbox id="installationRequired" name="installationRequired" className="mt-0.5 size-5" />
           <Label htmlFor="installationRequired" className="cursor-pointer font-normal">
-            <span className="font-semibold text-navy">ইনস্টলেশন প্রয়োজন</span>
+            <span className="font-semibold text-navy">{d.checkout.installation}</span>
             <span className="mt-0.5 block text-sm text-muted-foreground">
-              ইনস্টলেশন চার্জ আলাদা — কল করে চূড়ান্ত চার্জ নিশ্চিত হোন
+              {d.checkout.installationSub}
             </span>
           </Label>
         </div>
 
         <div>
-          <Label htmlFor="notes">নোট (ঐচ্ছিক)</Label>
-          <Textarea id="notes" name="notes" maxLength={500} placeholder="বিশেষ কিছু জানাতে চাইলে লিখুন" />
+          <Label htmlFor="notes">{d.checkout.notes}</Label>
+          <Textarea id="notes" name="notes" maxLength={500} placeholder={d.checkout.notesPh} />
         </div>
 
         {state?.message ? (
@@ -136,9 +140,9 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
 
       {/* Order summary */}
       <aside className="h-fit rounded-2xl border bg-card p-5 lg:sticky lg:top-24">
-        <h2 className="font-bold text-navy">অর্ডার সামারি</h2>
+        <h2 className="font-bold text-navy">{d.checkout.summary}</h2>
         {!hydrated ? (
-          <p className="mt-3 text-sm text-muted-foreground">লোড হচ্ছে…</p>
+          <p className="mt-3 text-sm text-muted-foreground">{d.cart.loading}</p>
         ) : (
           <>
             <ul className="mt-3 space-y-3 text-sm">
@@ -154,14 +158,14 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
               ))}
             </ul>
             <div className="mt-4 flex items-center justify-between border-t pt-4">
-              <span className="font-bold text-navy">সাবটোটাল ({totalItems}টি)</span>
+              <span className="font-bold text-navy">{fmt(d.checkout.subtotalN, { n: n(totalItems) })}</span>
               <span className="text-xl font-extrabold text-navy">
                 {formatPrice(subtotal, currency)}
                 <span className="text-xs font-normal text-muted-foreground">/-</span>
               </span>
             </div>
             <p className="mt-2 text-xs text-muted-foreground">
-              ইনস্টলেশন চার্জ আলাদা · ডেলিভারির আগে প্রতিনিধি কল করে অর্ডার নিশ্চিত করবেন
+              {d.checkout.note}
             </p>
             <Button
               type="submit"
@@ -172,10 +176,10 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
               {pending ? (
                 <>
                   <Loader2 className="animate-spin" aria-hidden />
-                  অপেক্ষা করুন…
+                  {d.checkout.waiting}
                 </>
               ) : (
-                "অর্ডার নিশ্চিত করুন"
+                "{d.checkout.submit}"
               )}
             </Button>
           </>
@@ -183,10 +187,9 @@ export function CheckoutForm({ currency }: CheckoutFormProps) {
 
         {calc && calc.selections.length > 0 ? (
           <div className="mt-5 rounded-xl bg-solar-light/60 p-3 text-xs ring-1 ring-solar/40">
-            <p className="font-bold text-navy">আপনার হিসাব (কার্টে যুক্ত)</p>
+            <p className="font-bold text-navy">{d.checkout.calcAttached}</p>
             <p className="mt-1 text-muted-foreground">
-              মোট লোড: {calc.totalLoadWatt}W · ব্যাকআপ: {calc.backupHours ?? "—"} ঘণ্টা ·
-              শক্তি: {calc.requiredEnergy}Wh
+              {fmt(d.checkout.calcLine, { w: calc.totalLoadWatt, h: calc.backupHours ?? "—", e: calc.requiredEnergy })}
             </p>
           </div>
         ) : null}

@@ -4,6 +4,8 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
+import { promises as fs } from "fs";
+import path from "path";
 import { db } from "@/db";
 import { orderItems, products } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth";
@@ -44,12 +46,18 @@ const productSchema = z
     controllerWatt: z.coerce.number().int().min(0).max(100000).optional(),
     backupHours: z.coerce.number().int().min(0).max(200).optional(),
     recommendedLoadWatt: z.coerce.number().int().min(0).max(100000).optional(),
+    exampleFanCount: z.coerce.number().int().min(0).max(20).optional(),
+    exampleLightCount: z.coerce.number().int().min(0).max(30).optional(),
     price: z.coerce.number().min(0).max(10_000_000),
     discountPct: z.coerce.number().int().min(0).max(90).default(0),
     installationPrice: z.coerce.number().min(0).max(10_000_000).optional(),
     warrantyMonths: z.coerce.number().int().min(0).max(120),
     stock: z.coerce.number().int().min(0).max(100000),
-    imageUrl: z.string().trim().max(500).optional(),
+    // Ordered image list; first entry is the cover image
+    images: z
+      .array(z.string().trim().min(1).max(500))
+      .max(10)
+      .default([]),
     active: z.coerce.boolean(),
     featured: z.coerce.boolean(),
   })
@@ -102,6 +110,17 @@ function slugify(name: string): string {
   );
 }
 
+/** Parse the ordered image list submitted as JSON by the images editor. */
+function parseImages(formData: FormData): unknown {
+  const raw = formData.get("imagesJson");
+  if (typeof raw !== "string" || raw.length === 0) return [];
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
 function parseForm(formData: FormData) {
   return productSchema.safeParse({
     name: formData.get("name"),
@@ -120,12 +139,14 @@ function parseForm(formData: FormData) {
     controllerWatt: formData.get("controllerWatt") || 0,
     backupHours: formData.get("backupHours") || undefined,
     recommendedLoadWatt: formData.get("recommendedLoadWatt") || undefined,
+    exampleFanCount: formData.get("exampleFanCount") || undefined,
+    exampleLightCount: formData.get("exampleLightCount") || undefined,
     price: formData.get("price"),
     discountPct: formData.get("discountPct") || 0,
     installationPrice: formData.get("installationPrice") || undefined,
     warrantyMonths: formData.get("warrantyMonths"),
     stock: formData.get("stock"),
-    imageUrl: formData.get("imageUrl") || undefined,
+    images: parseImages(formData),
     active: formData.get("active") === "on",
     featured: formData.get("featured") === "on",
   });
@@ -159,7 +180,10 @@ export async function saveProduct(
     model: data.model || null,
     specs: parseSpecs(data.specsText),
     features: parseFeatures(data.featuresText),
-    batteryVoltage: data.category === "package" ? (data.batteryVoltage ?? null) : null,
+    batteryVoltage:
+      data.category === "package" && data.batteryVoltage != null
+        ? String(data.batteryVoltage)
+        : null,
     batteryCapacityAh: data.category === "package" ? (data.batteryCapacityAh ?? null) : null,
     batteryType: data.category === "package" ? (data.batteryType || "LiFePO4") : null,
     solarPanelWatt: data.solarPanelWatt || null,
@@ -167,12 +191,17 @@ export async function saveProduct(
     backupHours: data.category === "package" ? (data.backupHours ?? null) : null,
     recommendedLoadWatt:
       data.category === "package" ? (data.recommendedLoadWatt ?? null) : null,
+    exampleFanCount:
+      data.category === "package" ? (data.exampleFanCount ?? null) : null,
+    exampleLightCount:
+      data.category === "package" ? (data.exampleLightCount ?? null) : null,
     price: data.price.toFixed(2),
     discountPct: data.discountPct,
     installationPrice: data.installationPrice ? data.installationPrice.toFixed(2) : null,
     warrantyMonths: data.warrantyMonths,
     stock: data.stock,
-    imageUrl: data.imageUrl || null,
+    imageUrl: data.images[0] ?? null,
+    images: data.images.slice(1),
     active: data.active,
     featured: data.featured,
   };
@@ -232,4 +261,48 @@ export async function deleteProduct(
   await db.delete(products).where(eq(products.id, id));
   revalidatePath("/", "layout");
   redirect("/admin/products?deleted=1");
+}
+
+export interface UploadResult {
+  path?: string;
+  error?: string;
+}
+
+const UPLOAD_TYPES: Record<string, string> = {
+  "image/png": "png",
+  "image/jpeg": "jpg",
+  "image/webp": "webp",
+  "image/gif": "gif",
+};
+
+/**
+ * Save an uploaded product image into public/products and return its
+ * site path. The stored filename is fully generated, so the original
+ * name can't escape the directory or collide with existing files.
+ */
+export async function uploadProductImage(file: File): Promise<UploadResult> {
+  await requireAdmin();
+
+  const ext = UPLOAD_TYPES[file.type];
+  if (!ext) {
+    return { error: "Only PNG, JPG, WebP or GIF images are allowed." };
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    return { error: "Image must be under 5 MB." };
+  }
+  if (file.size === 0) {
+    return { error: "The selected file is empty." };
+  }
+
+  const name = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const dir = path.join(process.cwd(), "public", "products");
+  try {
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(path.join(dir, name), Buffer.from(await file.arrayBuffer()));
+  } catch {
+    return { error: "Could not save the file on the server." };
+  }
+
+  revalidatePath("/admin/products");
+  return { path: `/products/${name}` };
 }

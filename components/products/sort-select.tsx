@@ -9,13 +9,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const SORTS = [
-  { value: "newest", label: "Newest" },
-  { value: "price-asc", label: "Price: Low to High" },
-  { value: "price-desc", label: "Price: High to Low" },
-];
 
-export function SortSelect({ current }: { current: string }) {
+
+export function SortSelect({ current, d }: { current: string; d: import("@/lib/i18n").Dictionary }) {
+  const SORTS = [
+    { value: "newest", label: d.products.sort.newest },
+    { value: "price-asc", label: d.products.sort.priceAsc },
+    { value: "price-desc", label: d.products.sort.priceDesc },
+  ];
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -28,7 +29,7 @@ export function SortSelect({ current }: { current: string }) {
 
   return (
     <Select value={current} onValueChange={onChange}>
-      <SelectTrigger className="w-48" aria-label="Sort products">
+      <SelectTrigger className="w-48" aria-label={d.products.sortLabel}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

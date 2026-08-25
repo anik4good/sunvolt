@@ -6,15 +6,19 @@ import {
   getCalculationSettings,
   getSettings,
 } from "@/lib/queries";
+import { getDict } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "স্মার্ট ব্যাকআপ হিসাব",
-  description:
-    "আপনার ডিভাইস ও ব্যাকআপ সময় নির্বাচন করুন — SunVolt হিসাব করে বলে দেবে কোন সোলার প্যাকেজ আপনার জন্য উপযুক্ত।",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { d } = await getDict();
+  return {
+    title: d.calc.title,
+    description: d.calc.sub,
+  };
+}
 
 export default async function CalculatorPage() {
-  const [settings, calcSettings, appliances, products] = await Promise.all([
+  const [{ lang, d }, settings, calcSettings, appliances, products] = await Promise.all([
+    getDict(),
     getSettings(),
     getCalculationSettings(),
     getActiveAppliances(),
@@ -29,17 +33,20 @@ export default async function CalculatorPage() {
       calcSettings={calcSettings}
       whatsapp={settings.whatsapp}
       phone={settings.phone}
+      lang={lang}
+      d={d}
       appliances={appliances.map((a) => ({
         id: a.id,
         name: a.name,
         defaultWatt: a.defaultWatt,
         icon: a.icon,
+        category: a.category,
       }))}
       packages={products.map((p) => ({
         id: p.id,
         name: p.name,
         slug: p.slug,
-        batteryVoltage: p.batteryVoltage ?? 0,
+        batteryVoltage: Number(p.batteryVoltage ?? 0),
         batteryCapacityAh: p.batteryCapacityAh ?? 0,
         batteryType: p.batteryType ?? "",
         solarPanelWatt: p.solarPanelWatt,

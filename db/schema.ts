@@ -35,19 +35,26 @@ export const products = pgTable("products", {
   specs: jsonb("specs").$type<Record<string, string>>(),
   features: jsonb("features").$type<string[]>(),
   // Package-specific fields (null for components)
-  batteryVoltage: integer("battery_voltage"),
+  batteryVoltage: numeric("battery_voltage", { precision: 5, scale: 1 }),
   batteryCapacityAh: integer("battery_capacity_ah"),
   batteryType: text("battery_type"),
   solarPanelWatt: integer("solar_panel_watt"),
   controllerWatt: integer("controller_watt"),
   backupHours: integer("backup_hours"),
   recommendedLoadWatt: integer("recommended_load_watt"),
+  // Marketing example load shown on cards ("চালাতে পারবেন")
+  exampleFanCount: integer("example_fan_count"),
+  exampleLightCount: integer("example_light_count"),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),
   discountPct: integer("discount_pct").notNull().default(0),
   installationPrice: numeric("installation_price", { precision: 10, scale: 2 }),
   warrantyMonths: integer("warranty_months").notNull().default(6),
   stock: integer("stock").notNull().default(0),
+  // Cover image (also used by cards, cart and the calculator).
   imageUrl: text("image_url"),
+  // Additional gallery images shown on the product detail page;
+  // the cover is NOT repeated here.
+  images: jsonb("images").$type<string[]>(),
   active: boolean("active").notNull().default(true),
   featured: boolean("featured").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -130,6 +137,40 @@ export const orderAppliances = pgTable("order_appliances", {
   totalWatt: integer("total_watt").notNull(),
 });
 
+// Manually-created invoices for sales taken outside the website
+// (phone / walk-in orders). Website orders generate invoices on the
+// fly from order data and are never stored here, so every row in
+// this table was issued from the admin invoice generator.
+export const invoices = pgTable("invoices", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  // Sequential business number, e.g. INV-0007
+  invoiceNo: text("invoice_no").notNull().unique(),
+  customerName: text("customer_name").notNull(),
+  phone: text("phone"),
+  address: text("address"),
+  district: text("district"),
+  paymentTerms: text("payment_terms"),
+  salesPerson: text("sales_person"),
+  notes: text("notes"),
+  totalAmount: numeric("total_amount", { precision: 12, scale: 2 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const invoiceItems = pgTable("invoice_items", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  invoiceId: uuid("invoice_id")
+    .notNull()
+    .references(() => invoices.id, { onDelete: "cascade" }),
+  description: text("description").notNull(),
+  quantity: integer("quantity").notNull(),
+  unitPrice: numeric("unit_price", { precision: 10, scale: 2 }).notNull(),
+  totalPrice: numeric("total_price", { precision: 12, scale: 2 }).notNull(),
+  // Preserves the admin's line-item order on the printed invoice
+  position: integer("position").notNull().default(0),
+});
+
 // Singleton row (id = 1) holding all business-configurable values.
 export const settings = pgTable("settings", {
   id: integer("id").primaryKey().default(1),
@@ -153,6 +194,22 @@ export const settings = pgTable("settings", {
   })
     .notNull()
     .default("0.100"),
+  // Custom-sizing inputs (calculator "custom system" spec)
+  systemVoltage: numeric("system_voltage", { precision: 5, scale: 1 })
+    .notNull()
+    .default("12.6"),
+  /** Real-world panel output fraction of nameplate (0.700 = 70%). */
+  panelOutputFactor: numeric("panel_output_factor", { precision: 4, scale: 3 })
+    .notNull()
+    .default("0.700"),
+  /** Daily peak sun hours used for recharge sizing (Bangladesh ≈ 4.5). */
+  peakSunHours: numeric("peak_sun_hours", { precision: 4, scale: 2 })
+    .notNull()
+    .default("4.50"),
+  /** Comma-separated standard battery sizes in Ah. */
+  batterySizes: text("battery_sizes").notNull().default("15,30,45,60,80,100,150,200"),
+  /** Comma-separated standard controller ratings in W. */
+  controllerSizes: text("controller_sizes").notNull().default("100,150,300,400,600"),
 });
 
 export type Product = typeof products.$inferSelect;
@@ -163,4 +220,7 @@ export type Order = typeof orders.$inferSelect;
 export type NewOrder = typeof orders.$inferInsert;
 export type OrderItem = typeof orderItems.$inferSelect;
 export type OrderAppliance = typeof orderAppliances.$inferSelect;
+export type Invoice = typeof invoices.$inferSelect;
+export type NewInvoice = typeof invoices.$inferInsert;
+export type InvoiceItem = typeof invoiceItems.$inferSelect;
 export type Settings = typeof settings.$inferSelect;

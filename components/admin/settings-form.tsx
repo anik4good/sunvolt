@@ -95,6 +95,62 @@ export function SettingsForm({ settings }: { settings: Settings }) {
         </div>
       </div>
 
+      <div>
+        <h2 className="text-sm font-bold text-navy">Custom system sizing</h2>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Used when a customer's load exceeds every package — the calculator
+          shows a battery / panel / controller spec built from these values.
+        </p>
+        <div className="mt-3 grid gap-4 sm:grid-cols-3">
+          <div>
+            <Label className="text-xs text-muted-foreground">System voltage (V) *</Label>
+            <Input
+              name="systemVoltage"
+              type="number"
+              step="0.1"
+              min="1"
+              required
+              defaultValue={Number(settings.systemVoltage)}
+            />
+          </div>
+          <div>
+            <Label className="text-xs text-muted-foreground">Panel output factor (0.1–1) *</Label>
+            <Input
+              name="panelOutputFactor"
+              type="number"
+              step="0.001"
+              min="0.1"
+              max="1"
+              required
+              defaultValue={Number(settings.panelOutputFactor)}
+            />
+            <p className="mt-1 text-xs text-muted-foreground">0.7 = panels deliver 70% of nameplate</p>
+          </div>
+          <div>
+            <Label className="text-xs text-muted-foreground">Peak sun hours / day *</Label>
+            <Input
+              name="peakSunHours"
+              type="number"
+              step="0.1"
+              min="1"
+              max="12"
+              required
+              defaultValue={Number(settings.peakSunHours)}
+            />
+          </div>
+        </div>
+        <div className="mt-3 grid gap-4 sm:grid-cols-2">
+          <div>
+            <Label className="text-xs text-muted-foreground">Standard battery sizes (Ah, comma-separated) *</Label>
+            <Input name="batterySizes" required defaultValue={settings.batterySizes} />
+          </div>
+          <div>
+            <Label className="text-xs text-muted-foreground">Standard controller ratings (W, comma-separated) *</Label>
+            <Input name="controllerSizes" required defaultValue={settings.controllerSizes} />
+          </div>
+        </div>
+      </div>
+
       {state?.message ? (
         <p className="rounded-xl bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive" role="alert">
           {state.message}

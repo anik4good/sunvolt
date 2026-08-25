@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -113,6 +113,12 @@ export default async function AdminOrderDetailPage({
               </Button>
             </form>
           </div>
+          <Button asChild variant="outline">
+            <Link href={`/admin/orders/${order.id}/invoice`}>
+              <FileText aria-hidden />
+              Invoice
+            </Link>
+          </Button>
           <Button asChild variant="outline">
             <a
               href={`https://wa.me/880${order.phone.replace(/^0/, "").replace(/\D/g, "")}?text=${encodeURIComponent(

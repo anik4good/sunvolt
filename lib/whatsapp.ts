@@ -1,4 +1,3 @@
-import type { Product } from "@/db/schema";
 import { formatPrice } from "@/lib/format";
 
 /**
@@ -14,10 +13,15 @@ export function whatsappUrl(number: string, text: string): string {
 
 /** Prefilled inquiry for a specific package (plan §29 template). */
 export function packageInquiryMessage(
-  product: Pick<
-    Product,
-    "name" | "batteryVoltage" | "batteryCapacityAh" | "batteryType" | "solarPanelWatt" | "controllerWatt" | "price"
-  >,
+  product: {
+    name: string;
+    batteryVoltage: number;
+    batteryCapacityAh: number;
+    batteryType: string;
+    solarPanelWatt?: number | null;
+    controllerWatt?: number | null;
+    price: string;
+  },
   currency: string,
 ): string {
   const lines = [
@@ -41,17 +45,27 @@ export function customSystemInquiryMessage(
   totalLoadWatt: number,
   backupHours: number,
   requiredWh: number,
+  spec?: { batteryAh?: number; panelWatt?: number; controllerWatt?: number },
 ): string {
-  return [
+  const lines = [
     "Assalamu Alaikum SunVolt,",
     "",
     "আমার প্রয়োজন স্ট্যান্ডার্ড প্যাকেজের চেয়ে বেশি:",
     `মোট লোড: ${totalLoadWatt}W`,
     `ব্যাকআপ: ${backupHours} ঘণ্টা`,
     `প্রয়োজনীয় শক্তি: ${requiredWh}Wh`,
-    "",
-    "আমার জন্য কাস্টম সোলার সিস্টেমের একটি প্রস্তাব জানাবেন।",
-  ].join("\n");
+  ];
+  if (spec?.batteryAh || spec?.panelWatt || spec?.controllerWatt) {
+    lines.push(
+      "",
+      "ক্যালকুলেটরের সাজেস্টেড স্পেক:",
+      `ব্যাটারি: ${spec.batteryAh ?? "—"}Ah`,
+      `প্যানেল: ${spec.panelWatt ?? "—"}W`,
+      `কন্ট্রোলার: ${spec.controllerWatt ?? "—"}W`,
+    );
+  }
+  lines.push("", "আমার জন্য কাস্টম সোলার সিস্টেমের একটি প্রস্তাব জানাবেন।");
+  return lines.join("\n");
 }
 
 /** Prefilled message after placing an order. */

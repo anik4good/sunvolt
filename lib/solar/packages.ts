@@ -13,10 +13,18 @@ import { usableEnergyWh } from "./battery";
  *   2. the customer's total load fits its recommended load, and
  *   3. the required energy fits its usable battery energy.
  *
+ * Backup-hour marketing uses "প্রায়" (approximately), so energy matching
+ * carries a 5% tolerance — e.g. the 12-hour package's rated example
+ * (2 fans + 5 bulbs = 49W × 12h = 588Wh) fits its 567Wh (45Ah × 12.6V)
+ * battery within tolerance.
+ *
  * Among suitable packages the SMALLEST one is recommended (plan §17).
  * If nothing fits we return { status: "none" } — never an undersized
  * package (plan §19, UX Rule 4).
  */
+
+/** Matching tolerance for approximate ("প্রায়") backup-hour claims. */
+const MATCH_TOLERANCE = 1.05;
 
 export function isPackageSuitable(
   pkg: PackageLike,
@@ -27,7 +35,10 @@ export function isPackageSuitable(
   if (!pkg.active) return false;
   if (totalLoadWatt <= 0 || requiredWh <= 0) return false;
   const usableWh = usableEnergyWh(pkg, settings);
-  return totalLoadWatt <= pkg.recommendedLoadWatt && requiredWh <= usableWh;
+  return (
+    totalLoadWatt <= pkg.recommendedLoadWatt &&
+    requiredWh <= usableWh * MATCH_TOLERANCE
+  );
 }
 
 export function checkPackageCompatibility(
@@ -39,7 +50,7 @@ export function checkPackageCompatibility(
   const usableWh = usableEnergyWh(pkg, settings);
   return {
     loadOk: totalLoadWatt <= pkg.recommendedLoadWatt,
-    energyOk: requiredWh <= usableWh,
+    energyOk: requiredWh <= usableWh * MATCH_TOLERANCE,
   };
 }
 

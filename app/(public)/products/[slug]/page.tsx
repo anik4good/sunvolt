@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, Truck, Wallet, ShieldCheck } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { ProductCard } from "@/components/products/product-card";
+import { ProductGallery } from "@/components/products/product-gallery";
 import { categoryLabel } from "@/lib/categories";
 import { getProductBySlug, getRelatedProducts, getSettings } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
 import { whatsappUrl } from "@/lib/whatsapp";
+import { fmt, getDict } from "@/lib/i18n";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -31,7 +31,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const product = await getProductBySlug(slug);
   if (!product || !product.active || product.category === "package") notFound();
 
-  const [settings, related] = await Promise.all([
+  const [{ d }, settings, related] = await Promise.all([
+    getDict(),
     getSettings(),
     getRelatedProducts(slug, product.category),
   ]);
@@ -53,7 +54,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     <div className="mx-auto max-w-6xl px-4 py-8">
       {/* Breadcrumb */}
       <nav className="mb-6 flex min-w-0 items-center gap-1 text-sm text-muted-foreground" aria-label="Breadcrumb">
-        <Link href="/" className="hover:text-navy">Home</Link>
+        <Link href="/" className="hover:text-navy">{d.products.home}</Link>
         <span aria-hidden>/</span>
         <Link href="/products" className="hover:text-navy">Products</Link>
         <span aria-hidden>/</span>
@@ -62,30 +63,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
       {/* Product grid */}
       <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
-        {/* Image */}
-        <div className="relative overflow-hidden rounded-2xl border bg-white">
-          <div className="relative aspect-square">
-            {product.imageUrl ? (
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                fill
-                sizes="(max-width: 1024px) 100vw, 550px"
-                priority
-                className="object-cover"
-              />
-            ) : (
-              <span className="flex h-full items-center justify-center text-6xl" aria-hidden>
-                ⚡
-              </span>
-            )}
-          </div>
-          {product.discountPct > 0 ? (
-            <Badge className="absolute left-3 top-3 bg-destructive text-white">
-              −{product.discountPct}%
-            </Badge>
-          ) : null}
-        </div>
+        {/* Image gallery */}
+        <ProductGallery
+          images={[product.imageUrl, ...(product.images ?? [])].filter(
+            (v): v is string => Boolean(v),
+          )}
+          name={product.name}
+          discountPct={product.discountPct}
+        />
 
         {/* Info */}
         <div>
@@ -109,7 +94,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           </div>
           <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-leaf">
             <span className="size-2 rounded-full bg-leaf" aria-hidden />
-            {product.stock > 0 ? "In stock" : "Out of stock"}
+            {product.stock > 0 ? d.products.inStock : d.products.outOfStock}
             {product.stock > 0 ? (
               <span className="font-normal text-muted-foreground">
                 ({product.stock} available)
@@ -121,22 +106,22 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <AddToCartButton
               size="lg"
-              label="Add to cart"
-              addedLabel="Added ✓"
+              label={d.products.addToCart}
+              addedLabel={d.products.added}
               className="h-12 w-full font-bold sm:w-auto sm:flex-1"
               item={cartItem}
             />
             <AddToCartButton
               size="lg"
-              label="Buy now"
-              addedLabel="Opening cart…"
+              label={d.products.buyNow}
+              addedLabel={d.products.buyNowDone}
               goToCart
               className="h-12 w-full border border-navy bg-white font-bold text-navy hover:bg-secondary sm:w-auto sm:flex-1"
               item={cartItem}
             />
             <WhatsAppButton
               className="h-12 w-full sm:w-auto sm:flex-1"
-              label="Order on WhatsApp"
+              label={d.products.whatsappOrder}
               href={whatsappUrl(
                 settings.whatsapp,
                 `I want to order: ${product.name} (${formatPrice(product.price, settings.currency)})`,
@@ -148,18 +133,18 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
             <li className="flex items-center gap-1.5">
               <Wallet className="size-4 text-leaf" aria-hidden />
-              Cash on Delivery available
+              {d.products.cod}
             </li>
             <li className="flex items-center gap-1.5">
               <Truck className="size-4 text-leaf" aria-hidden />
-              Delivery in 3–5 days
+              {d.products.delivery}
             </li>
             {product.warrantyMonths > 0 ? (
               <li className="flex items-center gap-1.5">
                 <ShieldCheck className="size-4 text-leaf" aria-hidden />
                 {product.warrantyMonths >= 12
-                  ? `${product.warrantyMonths / 12} Year Warranty`
-                  : `${product.warrantyMonths} Month Warranty`}
+                  ? fmt(d.products.warrantyY, { n: product.warrantyMonths / 12 })
+                  : fmt(d.products.warrantyM, { n: product.warrantyMonths })}
               </li>
             ) : null}
           </ul>
@@ -208,11 +193,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
             Complete your system
           </h2>
           <p className="mt-2 text-muted-foreground">
-            More from {categoryLabel(product.category)}.
+            {fmt(d.products.relatedSub, { n: categoryLabel(product.category) })}
           </p>
           <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
             {related.map((item) => (
-              <ProductCard key={item.id} product={item} currency={settings.currency} />
+              <ProductCard key={item.id} product={item} currency={settings.currency} d={d} />
             ))}
           </div>
         </section>

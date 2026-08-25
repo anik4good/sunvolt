@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/products/product-card";
 import { SortSelect } from "@/components/products/sort-select";
 import { PRODUCT_CATEGORIES } from "@/lib/categories";
 import { getCategoryCounts, getProducts, getSettings, type ProductSort } from "@/lib/queries";
+import { fmt, getDict, num } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Solar Products",
@@ -31,6 +32,7 @@ function buildHref(params: { category?: string; q?: string; sort?: string }) {
 }
 
 export default async function ProductsPage({ searchParams }: PageProps) {
+  const { lang, d } = await getDict();
   const { category, q, sort } = await searchParams;
   const validCategory = PRODUCT_CATEGORIES.some((c) => c.slug === category)
     ? category
@@ -38,6 +40,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const validSort: ProductSort =
     sort === "price-asc" || sort === "price-desc" ? sort : "newest";
 
+  void lang;
   const [settings, items, counts] = await Promise.all([
     getSettings(),
     getProducts({ category: validCategory, q, sort: validSort }),
@@ -92,9 +95,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
         <p className="text-xs font-semibold uppercase tracking-widest text-solar-dark">
           Products
         </p>
-        <h1 className="mt-1 text-3xl font-extrabold text-navy">Solar Products</h1>
+        <h1 className="mt-1 text-3xl font-extrabold text-navy">{d.products.title}</h1>
         <p className="mt-2 text-muted-foreground">
-          Browse our full range of certified equipment.
+          {d.products.sub}
         </p>
       </header>
 
@@ -108,13 +111,13 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             <Input
               type="search"
               name="q"
-              placeholder="Search products…"
+              placeholder={d.products.search}
               defaultValue={q ?? ""}
-              aria-label="Search products"
+              aria-label={d.products.searchLabel}
             />
           </form>
           <h2 className="hidden text-sm font-bold uppercase tracking-wide text-muted-foreground lg:block">
-            Categories
+            {d.products.categories}
           </h2>
 
           {/* Desktop category list */}
@@ -130,7 +133,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                   : "bg-background text-navy/70"
               }`}
             >
-              All
+              {d.products.all}
             </Link>
             {PRODUCT_CATEGORIES.map((c) => {
               const count = counts.get(c.slug) ?? 0;
@@ -156,11 +159,11 @@ export default async function ProductsPage({ searchParams }: PageProps) {
         <div className="mt-6 min-w-0 flex-1 lg:mt-0">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm text-muted-foreground">
-              {items.length} item{items.length === 1 ? "" : "s"}
+              {fmt(d.products.items, { n: items.length })}
               {validCategory ? ` · ${currentLabel}` : ""}
               {q ? ` · “${q}”` : ""}
             </p>
-            <SortSelect current={validSort} />
+            <SortSelect current={validSort} d={d} />
           </div>
 
           {items.length > 0 ? (
@@ -170,21 +173,22 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                   key={product.id}
                   product={product}
                   currency={settings.currency}
+                  d={d}
                 />
               ))}
             </div>
           ) : (
             <div className="rounded-2xl border border-dashed p-12 text-center">
               <PackageSearch className="mx-auto size-10 text-muted-foreground" aria-hidden />
-              <p className="mt-3 font-semibold text-navy">No products found</p>
+              <p className="mt-3 font-semibold text-navy">{d.products.noProducts}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Try a different category or search term.
+                {d.products.noProductsSub}
               </p>
               <Link
                 href="/products"
                 className="mt-4 inline-block text-sm font-semibold text-navy hover:underline"
               >
-                Browse all products →
+                {d.products.browseAll}
               </Link>
             </div>
           )}

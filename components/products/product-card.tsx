@@ -6,8 +6,9 @@ import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import type { Product } from "@/db/schema";
 import { categoryLabel } from "@/lib/categories";
 import { formatPrice } from "@/lib/format";
+import { fmt, type Dictionary } from "@/lib/i18n";
 
-export function ProductCard({ product, currency }: { product: Product; currency: string }) {
+export function ProductCard({ product, currency, d }: { product: Product; currency: string; d: Dictionary }) {
   const original =
     product.discountPct > 0
       ? Math.round(Number(product.price) / (1 - product.discountPct / 100))
@@ -22,7 +23,7 @@ export function ProductCard({ product, currency }: { product: Product; currency:
       ) : null}
       {product.stock === 0 ? (
         <Badge className="absolute right-2 top-2 z-10 bg-muted text-muted-foreground">
-          Out of stock
+          {d.products.outOfStock}
         </Badge>
       ) : null}
 
@@ -58,9 +59,9 @@ export function ProductCard({ product, currency }: { product: Product; currency:
         </Link>
         <p className="mt-1 text-xs font-medium">
           {product.stock > 0 ? (
-            <span className="text-leaf">In stock</span>
+            <span className="text-leaf">{d.products.inStock}</span>
           ) : (
-            <span className="text-muted-foreground">Out of stock</span>
+            <span className="text-muted-foreground">{d.products.outOfStock}</span>
           )}
         </p>
         <p className="mt-auto pt-3">
@@ -78,8 +79,8 @@ export function ProductCard({ product, currency }: { product: Product; currency:
       <CardFooter className="px-4 pb-4 pt-0">
         <AddToCartButton
           className="w-full"
-          label="Add to cart"
-          addedLabel="Added ✓"
+          label={d.products.addToCart}
+          addedLabel={d.products.added}
           item={{
             slug: product.slug,
             name: product.name,

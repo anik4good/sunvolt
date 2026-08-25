@@ -3,15 +3,19 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PackageCard } from "@/components/site/package-card";
 import { getBackupPackages, getSettings } from "@/lib/queries";
+import { getDict } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "সোলার ব্যাকআপ প্যাকেজ",
-  description:
-    "SunVolt সোলার ব্যাকআপ প্যাকেজ — লিথিয়াম ব্যাটারি, সোলার প্যানেল ও চার্জ কন্ট্রোলারসহ সম্পূর্ণ কম্বো সমাধান।",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { d } = await getDict();
+  return {
+    title: d.packages.title,
+    description: d.packages.sub,
+  };
+}
 
 export default async function PackagesPage() {
-  const [settings, packages] = await Promise.all([
+  const [{ lang, d }, settings, packages] = await Promise.all([
+    getDict(),
     getSettings(),
     getBackupPackages(),
   ]);
@@ -19,13 +23,10 @@ export default async function PackagesPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="text-center">
-        <h1 className="text-3xl font-extrabold text-navy">সব প্যাকেজ</h1>
-        <p className="mx-auto mt-2 max-w-xl text-muted-foreground">
-          প্রয়োজন অনুযায়ী প্রস্তুত সোলার ব্যাকআপ কম্বো প্যাকেজ। কোনটি আপনার জন্য
-          উপযুক্ত নিশ্চিত নন?
-        </p>
+        <h1 className="text-3xl font-extrabold text-navy">{d.packages.title}</h1>
+        <p className="mx-auto mt-2 max-w-xl text-muted-foreground">{d.packages.sub}</p>
         <Button asChild size="lg" className="mt-5 h-13 text-base font-bold">
-          <Link href="/calculator">🔋 ব্যাকআপ হিসাব করুন</Link>
+          <Link href="/calculator">{d.packages.cta}</Link>
         </Button>
       </header>
 
@@ -37,23 +38,22 @@ export default async function PackagesPage() {
               product={product}
               currency={settings.currency}
               featured={product.featured}
+              lang={lang}
+              d={d}
             />
           ))}
         </div>
       ) : (
         <p className="mt-10 rounded-xl border border-dashed p-10 text-center text-muted-foreground">
-          এই মুহূর্তে কোনো প্যাকেজ উপলব্ধ নেই।
+          {d.packages.empty}
         </p>
       )}
-      <p className="mt-6 text-center text-xs text-muted-foreground">
-        *ব্যাকআপ সময় লোডের ধরন, ব্যবহার পদ্ধতি, ব্যাটারির অবস্থা ও অন্যান্য
-        পরিস্থিতির উপর নির্ভরশীল।
-      </p>
+      <p className="mt-6 text-center text-xs text-muted-foreground">{d.packages.disclaimer}</p>
 
       <p className="mt-10 text-center text-sm text-muted-foreground">
-        আলাদা আলাদা প্রোডাক্ট কিনতে চান?{" "}
+        {d.packages.productsLine}{" "}
         <Link href="/products" className="font-semibold text-navy hover:underline">
-          সব প্রোডাক্ট দেখুন →
+          {d.packages.productsLink}
         </Link>
       </p>
     </div>

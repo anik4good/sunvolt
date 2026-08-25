@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { desc, eq, sql } from "drizzle-orm";
+import { FileText } from "lucide-react";
 import { db } from "@/db";
 import { orders, type Order } from "@/db/schema";
 import { Badge } from "@/components/ui/badge";
@@ -85,7 +86,7 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
       </div>
 
       <div className="overflow-x-auto rounded-xl border bg-card">
-        <table className="w-full min-w-[760px] text-sm">
+        <table className="w-full min-w-[820px] text-sm">
           <thead className="bg-secondary/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>
               <th className="px-4 py-3">Order</th>
@@ -95,12 +96,13 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
               <th className="px-4 py-3">Total</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Placed</th>
+              <th className="px-4 py-3 text-right">Invoice</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-muted-foreground">
+                <td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">
                   No orders{filter !== "all" ? ` with status “${filter}”` : ""}.
                 </td>
               </tr>
@@ -145,6 +147,16 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
                       month: "short",
                       year: "numeric",
                     })}
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <Link
+                      href={`/admin/orders/${order.id}/invoice`}
+                      aria-label={`Invoice for SV-${order.id.slice(0, 8).toUpperCase()}`}
+                      title="Generate invoice"
+                      className="inline-flex size-8 items-center justify-center rounded-lg border bg-background text-navy/70 transition-colors hover:bg-secondary hover:text-navy"
+                    >
+                      <FileText className="size-4" aria-hidden />
+                    </Link>
                   </td>
                 </tr>
               ))

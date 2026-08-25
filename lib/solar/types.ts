@@ -32,6 +32,16 @@ export interface CalculationSettings {
   systemEfficiency: number;
   /** Extra energy margin recommended for custom sizing, e.g. 0.10. */
   recommendedReserve: number;
+  /** Nominal DC bus voltage for custom sizing (12.6V packs). */
+  systemVoltage: number;
+  /** Real-world panel output fraction of nameplate (0.7 = 70%). */
+  panelOutputFactor: number;
+  /** Daily peak sun hours for recharge sizing. */
+  peakSunHours: number;
+  /** Comma-separated standard battery sizes in Ah. */
+  batterySizes: string;
+  /** Comma-separated standard controller ratings in W. */
+  controllerSizes: string;
 }
 
 /** Minimal structural shape needed for calculations; DB Product satisfies this. */
