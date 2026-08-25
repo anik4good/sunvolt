@@ -58,6 +58,18 @@ const MODEL_MAP: Array<{ storeModel: string; alibabaId: number; highlights: stri
     ],
   },
   {
+    storeModel: "PD6501",
+    alibabaId: 1601516601188, // 65W Solar Charger Type C PD Converter
+    highlights: [
+      "65W Maximum Output Power",
+      "USB Type-C Power Delivery Output",
+      "MPPT Solar Charging Technology",
+      "Wide 15-60V PV Input Range",
+      "Fast Charging for Laptops, Tablets & Phones",
+      "CE Certified",
+    ],
+  },
+  {
     storeModel: "EL-MD400SP",
     alibabaId: 1600857365592,
     highlights: [

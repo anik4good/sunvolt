@@ -59,16 +59,29 @@ export default async function ProductDetailPage({ params }: PageProps) {
   // Display type and battery voltage usually live in the product title
   const displayMatch = /((?:O)?LED Display)/i.exec(product.name)?.[1];
   const batteryMatch = /(\d+V\s*\/\s*\d+V)/i.exec(product.name)?.[1];
+  // Meaningless placeholder values that should never become tiles
+  const notReal = (value: string) =>
+    /^(no|none|not included|n\/a|-)$/i.test(value.trim());
+  const pick = (keys: string[]): string | null => {
+    const value = specLookup(keys);
+    return value && !notReal(value) ? value : null;
+  };
   const keySpecs = (
     [
-      { label: "Model", value: product.model ?? specLookup(["Model Number", "Model"]) },
-      { label: "Type", value: specLookup(["Type"]) },
-      { label: "System Voltage", value: specLookup(["Rated Voltage", "System Voltage", "Output Voltage"]) },
-      { label: "Max Current", value: specLookup(["Maximum Current", "Max Current"]) },
-      { label: "Max PV Power", value: specLookup(["Max PV Power", "PV Power"]) },
-      { label: "Max PV Voltage", value: specLookup(["Max PV Voltage", "Max Voltage", "PV Voltage"]) },
-      { label: "Display", value: specLookup(["Display", "Screen"]) ?? displayMatch },
-      { label: "Battery", value: specLookup(["Battery Voltage", "Battery"]) ?? batteryMatch },
+      { label: "Model", value: product.model ?? pick(["Model Number", "Model"]) },
+      { label: "Type", value: pick(["Type", "Controller Type", "Product Type"]) },
+      {
+        label: "System Voltage",
+        value: pick(["Rated Voltage", "System Voltage", "Rated Output Voltage", "Output Voltage"]),
+      },
+      { label: "Max Current", value: pick(["Maximum Current", "Max Current", "Maximum Output Current"]) },
+      { label: "Max PV Power", value: pick(["Max PV Power", "Maximum PV Power", "PV Power"]) },
+      {
+        label: "Max PV Voltage",
+        value: pick(["Max PV Voltage", "Maximum PV Voltage", "Max Voltage", "PV Voltage", "Input (PV) Voltage Range"]),
+      },
+      { label: "Display", value: pick(["Display", "Screen"]) ?? displayMatch },
+      { label: "Battery", value: pick(["Battery Type", "Battery Voltage"]) ?? batteryMatch },
     ] as Array<{ label: string; value: string | null }>
   ).filter((item): item is { label: string; value: string } => Boolean(item.value));
   const cartItem = {
