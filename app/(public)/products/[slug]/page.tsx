@@ -66,7 +66,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       { label: "System Voltage", value: specLookup(["Rated Voltage", "System Voltage", "Output Voltage"]) },
       { label: "Max Current", value: specLookup(["Maximum Current", "Max Current"]) },
       { label: "Max PV Power", value: specLookup(["Max PV Power", "PV Power"]) },
-      { label: "Max Voltage", value: specLookup(["Max PV Voltage", "Max Voltage", "PV Voltage"]) },
+      { label: "Max PV Voltage", value: specLookup(["Max PV Voltage", "Max Voltage", "PV Voltage"]) },
       { label: "Display", value: specLookup(["Display", "Screen"]) ?? displayMatch },
       { label: "Battery", value: specLookup(["Battery Voltage", "Battery"]) ?? batteryMatch },
     ] as Array<{ label: string; value: string | null }>
