@@ -604,7 +604,6 @@ export function CalculatorClient({
                   {fmt(d.calc.specController, { n: n(systemSpec.controllerWatt) })}
                 </p>
               </div>
-              <p className="mt-2 text-xs text-muted-foreground">{d.calc.specNote}</p>
             </div>
           ) : null}
 
