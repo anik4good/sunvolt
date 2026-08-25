@@ -90,9 +90,10 @@ export function HomeCalculator({
   // category, DC mode everything else.
   const modeAppliances = useMemo(
     () =>
-      appliances.filter((a) =>
-        mode === "ac" ? a.category === "ac" : a.category !== "ac",
-      ),
+      appliances
+        .filter((a) => (mode === "ac" ? a.category === "ac" : a.category !== "ac"))
+        // bulbs first, fans second — stable sort keeps the rest in DB order
+        .sort((a, b) => Number(a.icon === "fan") - Number(b.icon === "fan")),
     [appliances, mode],
   );
 
