@@ -98,6 +98,12 @@ async function main() {
     for (const [k, values] of Object.entries(sp.sku_attributes)) {
       if (values.length > 0) attributes[k] = values.join(", ");
     }
+    // Display type lives in the Alibaba title (LCD/LED/OLED), not the
+    // attribute table — extract it so the product page tile can show it.
+    const displayMatch = /(OLED|LCD|LED)\s+DISPLAY/i.exec(sp.title);
+    if (displayMatch) {
+      attributes["Display"] = `${displayMatch[1].toUpperCase()} Display`;
+    }
 
     const ladder = sp.price_ladder_usd
       .filter((l) => l.price_usd != null)

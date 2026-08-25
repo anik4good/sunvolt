@@ -42,7 +42,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
       ? Math.round(Number(product.price) / (1 - product.discountPct / 100))
       : null;
   const specs = Object.entries(product.specs ?? {});
-  const features = product.features ?? [];
   const packagingEntries = Object.entries(product.packaging ?? {});
 
   // Compact spec tiles shown after the price (4 per row). Values come
@@ -57,6 +56,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
     }
     return null;
   };
+  // Display type and battery voltage usually live in the product title
+  const displayMatch = /((?:O)?LED Display)/i.exec(product.name)?.[1];
+  const batteryMatch = /(\d+V\s*\/\s*\d+V)/i.exec(product.name)?.[1];
   const keySpecs = (
     [
       { label: "Model", value: product.model ?? specLookup(["Model Number", "Model"]) },
@@ -65,6 +67,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
       { label: "Max Current", value: specLookup(["Maximum Current", "Max Current"]) },
       { label: "Max PV Power", value: specLookup(["Max PV Power", "PV Power"]) },
       { label: "Max Voltage", value: specLookup(["Max PV Voltage", "Max Voltage", "PV Voltage"]) },
+      { label: "Display", value: specLookup(["Display", "Screen"]) ?? displayMatch },
+      { label: "Battery", value: specLookup(["Battery Voltage", "Battery"]) ?? batteryMatch },
     ] as Array<{ label: string; value: string | null }>
   ).filter((item): item is { label: string; value: string } => Boolean(item.value));
   const cartItem = {
@@ -189,17 +193,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
             ) : null}
           </ul>
 
-          {/* Features */}
-          {features.length > 0 ? (
-            <ul className="mt-6 grid gap-2 sm:grid-cols-2">
-              {features.map((feature) => (
-                <li key={feature} className="flex items-center gap-2 text-sm">
-                  <Check className="size-4 shrink-0 text-leaf" aria-hidden />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          ) : null}
         </div>
       </div>
 
