@@ -177,14 +177,60 @@ export function ProductForm({ product }: { product?: Product }) {
                 placeholder={"Maximum Output Power: 65W\nInput (PV) Voltage Range: 15V – 60V"}
               />
             </Field>
-            <Field label="Features" hint="One per line">
+            <Field label="Features" hint="One per line — fallback when highlights are empty">
               <Textarea
                 name="featuresText"
-                rows={7}
+                rows={5}
                 defaultValue={(product?.features ?? []).join("\n")}
                 placeholder={"65W Maximum Output\nMPPT Solar Charging"}
               />
             </Field>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Highlights" hint="One per line — shown after the price on the product page">
+              <Textarea
+                name="highlightsText"
+                rows={6}
+                defaultValue={(product?.highlights ?? []).join("\n")}
+                placeholder={"600W Maximum PV Power\n12V/24V Adjustable Output\nCE Certified"}
+              />
+            </Field>
+            <Field label="Packaging" hint="One per line — “Label: Value”">
+              <Textarea
+                name="packagingText"
+                rows={6}
+                defaultValue={specsToText(product?.packaging ?? null)}
+                placeholder={"Selling Units: Single item\nSingle package size: 17.2X13.8X4.7 cm\nSingle gross weight: 1.35 kg"}
+              />
+            </Field>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Supplier cost price (JSON)" hint="Alibaba ladder — powers the dashboard margin column">
+              <Textarea
+                name="costPriceText"
+                rows={6}
+                className="font-mono text-xs"
+                defaultValue={product?.costPrice ? JSON.stringify(product.costPrice, null, 2) : ""}
+                placeholder={'{"moq":2,"currency":"USD","ladder":[{"qtyMin":2,"qtyMax":49,"priceUsd":30}]}'}
+              />
+            </Field>
+            <div className="space-y-2">
+              <Field label="Source URL" hint="Supplier listing this data came from">
+                <Input name="sourceUrl" defaultValue={product?.sourceUrl ?? ""} placeholder="https://www.alibaba.com/product-detail/..." />
+              </Field>
+              {product?.sourceUrl ? (
+                <a
+                  href={product.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-xs font-medium text-navy underline"
+                >
+                  Open source listing ↗
+                </a>
+              ) : null}
+            </div>
           </div>
         </>
       )}

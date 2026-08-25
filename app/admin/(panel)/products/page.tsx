@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { categoryLabel } from "@/lib/categories";
 import { formatPrice } from "@/lib/format";
+import { getSettings } from "@/lib/queries";
 import { ProductsFilters } from "@/components/admin/products-filters";
 import {
   deleteProduct,
@@ -58,11 +59,13 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
   }
   const where = conditions.length > 0 ? and(...conditions) : undefined;
 
-  const [rows, countRows] = await Promise.all([
+  const [rows, countRows, settings] = await Promise.all([
     db.select().from(products).where(where).orderBy(desc(products.updatedAt)).limit(200),
     db.select({ value: sql<number>`count(*)::int` }).from(products).where(where),
+    getSettings(),
   ]);
   const total = countRows[0]?.value ?? 0;
+  const usdRate = Number(settings.usdToBdt);
   const filtering = Boolean(q || (category && category !== "all") || (status && status !== "all"));
 
   return (
@@ -100,6 +103,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
               <th className="px-4 py-3">Product</th>
               <th className="px-4 py-3">Category</th>
               <th className="px-4 py-3">Price</th>
+              <th className="px-4 py-3">Cost / Margin</th>
               <th className="px-4 py-3">Stock</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Updated</th>
@@ -109,7 +113,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-muted-foreground">
+                <td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">
                   {filtering ? (
                     <>
                       No products match your filters.{" "}
@@ -186,6 +190,21 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
                         −{product.discountPct}%
                       </span>
                     ) : null}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {product.costPrice?.ladder?.[0] ? (
+                      <span title={`MOQ ${product.costPrice.moq} pcs · ${product.costPrice.ladder.map((l) => `${l.qtyMin}${l.qtyMax ? `-${l.qtyMax}` : "+"}=$${l.priceUsd}`).join(" · ")}`}>
+                        <span className="text-muted-foreground">
+                          ${product.costPrice.ladder[0].priceUsd} (৳
+                          {Math.round(product.costPrice.ladder[0].priceUsd * usdRate).toLocaleString()})
+                        </span>{" "}
+                        <span className="font-semibold text-leaf">
+                          +{formatPrice(Math.round(Number(product.price) - product.costPrice.ladder[0].priceUsd * usdRate))}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground/50">—</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
                     <StockBadge stock={product.stock} />

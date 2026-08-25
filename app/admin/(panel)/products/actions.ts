@@ -37,8 +37,12 @@ const productSchema = z
     description: z.string().trim().max(1000).optional(),
     brand: z.string().trim().max(80).optional(),
     model: z.string().trim().max(80).optional(),
-    specsText: z.string().trim().max(4000).optional(),
+    specsText: z.string().trim().max(6000).optional(),
     featuresText: z.string().trim().max(2000).optional(),
+    highlightsText: z.string().trim().max(2000).optional(),
+    packagingText: z.string().trim().max(2000).optional(),
+    costPriceText: z.string().trim().max(2000).optional(),
+    sourceUrl: z.string().trim().max(500).optional(),
     batteryVoltage: z.coerce.number().int().min(0).max(1000).optional(),
     batteryCapacityAh: z.coerce.number().int().min(0).max(10000).optional(),
     batteryType: z.string().trim().max(60).optional(),
@@ -92,6 +96,25 @@ function parseSpecs(text: string | undefined): Record<string, string> | null {
   return entries.length > 0 ? Object.fromEntries(entries) : null;
 }
 
+function parseCostPrice(text: string | undefined) {
+  if (!text) return null;
+  try {
+    const parsed = JSON.parse(text) as {
+      moq?: number;
+      currency?: string;
+      ladder?: Array<{ qtyMin: number; qtyMax: number | null; priceUsd: number }>;
+    };
+    if (!parsed?.ladder?.length) return null;
+    return {
+      moq: parsed.moq ?? parsed.ladder[0].qtyMin ?? 1,
+      currency: parsed.currency ?? "USD",
+      ladder: parsed.ladder.slice(0, 8),
+    };
+  } catch {
+    return null;
+  }
+}
+
 function parseFeatures(text: string | undefined): string[] | null {
   if (!text) return null;
   const items = text
@@ -132,6 +155,10 @@ function parseForm(formData: FormData) {
     model: formData.get("model") || undefined,
     specsText: formData.get("specsText") || undefined,
     featuresText: formData.get("featuresText") || undefined,
+    highlightsText: formData.get("highlightsText") || undefined,
+    packagingText: formData.get("packagingText") || undefined,
+    costPriceText: formData.get("costPriceText") || undefined,
+    sourceUrl: formData.get("sourceUrl") || undefined,
     batteryVoltage: formData.get("batteryVoltage") || undefined,
     batteryCapacityAh: formData.get("batteryCapacityAh") || undefined,
     batteryType: formData.get("batteryType") || undefined,
@@ -180,6 +207,10 @@ export async function saveProduct(
     model: data.model || null,
     specs: parseSpecs(data.specsText),
     features: parseFeatures(data.featuresText),
+    highlights: parseFeatures(data.highlightsText),
+    packaging: parseSpecs(data.packagingText),
+    costPrice: parseCostPrice(data.costPriceText),
+    sourceUrl: data.sourceUrl || null,
     batteryVoltage:
       data.category === "package" && data.batteryVoltage != null
         ? String(data.batteryVoltage)

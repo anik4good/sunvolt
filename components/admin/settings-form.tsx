@@ -148,6 +148,18 @@ export function SettingsForm({ settings }: { settings: Settings }) {
             <Label className="text-xs text-muted-foreground">Standard controller ratings (W, comma-separated) *</Label>
             <Input name="controllerSizes" required defaultValue={settings.controllerSizes} />
           </div>
+          <div>
+            <Label className="text-xs text-muted-foreground">USD → BDT rate *</Label>
+            <Input
+              name="usdToBdt"
+              type="number"
+              step="0.01"
+              min="1"
+              required
+              defaultValue={Number(settings.usdToBdt)}
+            />
+            <p className="mt-1 text-xs text-muted-foreground">Converts supplier cost for the products margin column</p>
+          </div>
         </div>
       </div>
 

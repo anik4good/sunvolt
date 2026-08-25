@@ -35,6 +35,7 @@ const settingsSchema = z.object({
     .string()
     .trim()
     .regex(/^\d+(\s*,\s*\d+)*$/, "Controller ratings must be numbers separated by commas"),
+  usdToBdt: z.coerce.number().min(1).max(1000),
 });
 
 function normalizeSizes(csv: string): string {
@@ -66,6 +67,7 @@ export async function updateSettings(
     peakSunHours: formData.get("peakSunHours"),
     batterySizes: formData.get("batterySizes"),
     controllerSizes: formData.get("controllerSizes"),
+    usdToBdt: formData.get("usdToBdt"),
   });
   if (!parsed.success) {
     return { message: parsed.error.issues[0]?.message ?? "Check the form." };
@@ -88,6 +90,7 @@ export async function updateSettings(
       peakSunHours: data.peakSunHours.toFixed(2),
       batterySizes: normalizeSizes(data.batterySizes),
       controllerSizes: normalizeSizes(data.controllerSizes),
+      usdToBdt: data.usdToBdt.toFixed(2),
     })
     .where(eq(settings.id, 1));
 

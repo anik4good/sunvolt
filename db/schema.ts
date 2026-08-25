@@ -55,6 +55,18 @@ export const products = pgTable("products", {
   // Additional gallery images shown on the product detail page;
   // the cover is NOT repeated here.
   images: jsonb("images").$type<string[]>(),
+  // Marketing bullets shown right after the price on the product page
+  highlights: jsonb("highlights").$type<string[]>(),
+  // "Packaging and delivery" table (unit size, weight, selling units…)
+  packaging: jsonb("packaging").$type<Record<string, string>>(),
+  // Supplier buying price (Alibaba ladder) for dashboard margin calc
+  costPrice: jsonb("cost_price").$type<{
+    moq: number;
+    currency: string;
+    ladder: Array<{ qtyMin: number; qtyMax: number | null; priceUsd: number }>;
+  }>(),
+  // Source listing URL (e.g. the Alibaba product page)
+  sourceUrl: text("source_url"),
   active: boolean("active").notNull().default(true),
   featured: boolean("featured").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -210,6 +222,10 @@ export const settings = pgTable("settings", {
   batterySizes: text("battery_sizes").notNull().default("15,30,45,60,80,100,150,200"),
   /** Comma-separated standard controller ratings in W. */
   controllerSizes: text("controller_sizes").notNull().default("100,150,300,400,600"),
+  /** USD→BDT rate used to convert supplier cost for margin display. */
+  usdToBdt: numeric("usd_to_bdt", { precision: 8, scale: 2 })
+    .notNull()
+    .default("122.00"),
 });
 
 export type Product = typeof products.$inferSelect;

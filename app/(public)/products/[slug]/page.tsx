@@ -43,6 +43,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
       : null;
   const specs = Object.entries(product.specs ?? {});
   const features = product.features ?? [];
+  const highlights = product.highlights ?? [];
+  const packagingEntries = Object.entries(product.packaging ?? {});
   const cartItem = {
     slug: product.slug,
     name: product.name,
@@ -102,6 +104,18 @@ export default async function ProductDetailPage({ params }: PageProps) {
             ) : null}
           </p>
 
+          {/* Marketing highlights — shown right after the price */}
+          {highlights.length > 0 ? (
+            <ul className="mt-4 space-y-1.5 border-t pt-4">
+              {highlights.map((h) => (
+                <li key={h} className="flex items-center gap-2 text-sm font-medium text-navy">
+                  <Check className="size-4 shrink-0 text-leaf" aria-hidden />
+                  {h}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
           {/* Buttons — stacked on mobile, one row on desktop */}
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <AddToCartButton
@@ -149,8 +163,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
             ) : null}
           </ul>
 
-          {/* Features */}
-          {features.length > 0 ? (
+          {/* Features — fallback when curated highlights are absent */}
+          {highlights.length === 0 && features.length > 0 ? (
             <ul className="mt-6 grid gap-2 sm:grid-cols-2">
               {features.map((feature) => (
                 <li key={feature} className="flex items-center gap-2 text-sm">
@@ -163,16 +177,39 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Specifications / additional details */}
+      {/* Key attributes — full spec table */}
       {specs.length > 0 ? (
         <section className="mt-12">
           <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
-            Specifications
+            Key attributes
           </h2>
           <div className="mt-4 overflow-hidden rounded-2xl border">
             <table className="w-full text-sm">
               <tbody>
                 {specs.map(([key, value], i) => (
+                  <tr key={key} className={i % 2 === 0 ? "bg-secondary/40" : ""}>
+                    <th className="w-1/3 px-4 py-3 text-left font-medium text-muted-foreground sm:w-1/4">
+                      {key}
+                    </th>
+                    <td className="px-4 py-3 font-semibold text-navy">{value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
+
+      {/* Packaging and delivery */}
+      {packagingEntries.length > 0 ? (
+        <section className="mt-12">
+          <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
+            Packaging and delivery
+          </h2>
+          <div className="mt-4 overflow-hidden rounded-2xl border">
+            <table className="w-full text-sm">
+              <tbody>
+                {packagingEntries.map(([key, value], i) => (
                   <tr key={key} className={i % 2 === 0 ? "bg-secondary/40" : ""}>
                     <th className="w-1/3 px-4 py-3 text-left font-medium text-muted-foreground sm:w-1/4">
                       {key}
