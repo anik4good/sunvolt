@@ -196,25 +196,21 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Key attributes — full spec table */}
+      {/* Key attributes — two-column grid; Place of Origin hidden on page */}
       {specs.length > 0 ? (
         <section className="mt-12">
           <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
             Key attributes
           </h2>
-          <div className="mt-4 overflow-hidden rounded-2xl border">
-            <table className="w-full text-sm">
-              <tbody>
-                {specs.map(([key, value], i) => (
-                  <tr key={key} className={i % 2 === 0 ? "bg-secondary/40" : ""}>
-                    <th className="w-1/3 px-4 py-3 text-left font-medium text-muted-foreground sm:w-1/4">
-                      {key}
-                    </th>
-                    <td className="px-4 py-3 font-semibold text-navy">{value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-4 grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2">
+            {specs
+              .filter(([key]) => key.toLowerCase() !== "place of origin")
+              .map(([key, value]) => (
+                <div key={key} className="bg-card px-4 py-3 text-sm">
+                  <p className="text-xs font-medium text-muted-foreground">{key}</p>
+                  <p className="mt-0.5 font-semibold text-navy">{value}</p>
+                </div>
+              ))}
           </div>
         </section>
       ) : null}
