@@ -328,8 +328,8 @@ export function CalculatorClient({
                 className={qty > 0 ? "border-navy/50 ring-1 ring-navy/30" : ""}
               >
                 <CardContent className="flex flex-col items-center p-4 text-center">
-                  <span className="flex size-10 items-center justify-center text-navy">
-                    <ApplianceIcon icon={appliance.icon} className="size-9" />
+                  <span className="flex size-12 items-center justify-center rounded-full bg-solar-light text-solar-dark">
+                    <ApplianceIcon icon={appliance.icon} className="size-7" />
                   </span>
                   <p className="mt-2 text-sm font-semibold text-navy">
                     {appliance.name}

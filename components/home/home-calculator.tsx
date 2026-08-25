@@ -204,8 +204,8 @@ export function HomeCalculator({
                       qty > 0 ? "border-navy/50 bg-secondary/50" : "bg-background"
                     }`}
                   >
-                    <span className="flex size-9 items-center justify-center text-navy">
-                      <ApplianceIcon icon={appliance.icon} className="size-8" />
+                    <span className="flex size-12 items-center justify-center rounded-full bg-solar-light text-solar-dark">
+                      <ApplianceIcon icon={appliance.icon} className="size-7" />
                     </span>
                     <p className="mt-1 text-sm font-semibold text-navy">{appliance.name}</p>
                     <p className="text-xs text-muted-foreground">{n(appliance.defaultWatt)}W</p>
