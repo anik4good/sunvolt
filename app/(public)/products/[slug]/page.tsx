@@ -43,8 +43,30 @@ export default async function ProductDetailPage({ params }: PageProps) {
       : null;
   const specs = Object.entries(product.specs ?? {});
   const features = product.features ?? [];
-  const highlights = product.highlights ?? [];
   const packagingEntries = Object.entries(product.packaging ?? {});
+
+  // Compact spec tiles shown after the price (4 per row). Values come
+  // from the model + attribute table with fuzzy key matching.
+  const specLookup = (keys: string[]): string | null => {
+    const normalized = new Map(
+      Object.entries(product.specs ?? {}).map(([k, v]) => [k.toLowerCase(), v]),
+    );
+    for (const key of keys) {
+      const value = normalized.get(key.toLowerCase());
+      if (value) return value;
+    }
+    return null;
+  };
+  const keySpecs = (
+    [
+      { label: "Model", value: product.model ?? specLookup(["Model Number", "Model"]) },
+      { label: "Type", value: specLookup(["Type"]) },
+      { label: "System Voltage", value: specLookup(["Rated Voltage", "System Voltage", "Output Voltage"]) },
+      { label: "Max Current", value: specLookup(["Maximum Current", "Max Current"]) },
+      { label: "Max PV Power", value: specLookup(["Max PV Power", "PV Power"]) },
+      { label: "Max Voltage", value: specLookup(["Max PV Voltage", "Max Voltage", "PV Voltage"]) },
+    ] as Array<{ label: string; value: string | null }>
+  ).filter((item): item is { label: string; value: string } => Boolean(item.value));
   const cartItem = {
     slug: product.slug,
     name: product.name,
@@ -104,16 +126,20 @@ export default async function ProductDetailPage({ params }: PageProps) {
             ) : null}
           </p>
 
-          {/* Marketing highlights — shown right after the price */}
-          {highlights.length > 0 ? (
-            <ul className="mt-4 space-y-1.5 border-t pt-4">
-              {highlights.map((h) => (
-                <li key={h} className="flex items-center gap-2 text-sm font-medium text-navy">
-                  <Check className="size-4 shrink-0 text-leaf" aria-hidden />
-                  {h}
-                </li>
+          {/* Key spec tiles — 4 per row, right after the price */}
+          {keySpecs.length > 0 ? (
+            <div className="mt-4 grid grid-cols-2 gap-2 border-t pt-4 sm:grid-cols-4">
+              {keySpecs.map((item) => (
+                <div key={item.label} className="rounded-xl bg-secondary/60 px-3 py-2">
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {item.label}
+                  </p>
+                  <p className="mt-0.5 truncate text-sm font-bold text-navy" title={item.value}>
+                    {item.value}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           ) : null}
 
           {/* Buttons — stacked on mobile, one row on desktop */}
@@ -163,8 +189,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
             ) : null}
           </ul>
 
-          {/* Features — fallback when curated highlights are absent */}
-          {highlights.length === 0 && features.length > 0 ? (
+          {/* Features */}
+          {features.length > 0 ? (
             <ul className="mt-6 grid gap-2 sm:grid-cols-2">
               {features.map((feature) => (
                 <li key={feature} className="flex items-center gap-2 text-sm">
