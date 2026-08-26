@@ -12,6 +12,9 @@ type Db = NodePgDatabase<typeof schema>;
  */
 function getDb(): Db {
   const globalForDb = globalThis as unknown as { db?: Db };
+  // Cache on globalThis in EVERY environment. Production bundles can load
+  // this module once per route chunk; without the cache each one opens its
+  // own pool and Postgres eventually rejects with "too many clients" (53300).
   if (globalForDb.db) return globalForDb.db;
 
   const connectionString = process.env.DATABASE_URL;
@@ -19,12 +22,16 @@ function getDb(): Db {
     throw new Error("DATABASE_URL is not set. Set it in the environment or .env.");
   }
 
-  // Reuse the connection across Next.js dev-server hot reloads.
-  const client = postgres(connectionString, { max: 10 });
+  const client = postgres(connectionString, {
+    max: 10,
+    // Release idle connections so pools from multiple module instances
+    // can't pile up against Postgres max_connections.
+    idle_timeout: 20,
+    connect_timeout: 10,
+    max_lifetime: 60 * 30,
+  });
   const instance = drizzle(client, { schema });
-  if (process.env.NODE_ENV !== "production") {
-    globalForDb.db = instance;
-  }
+  globalForDb.db = instance;
   return instance;
 }
 
