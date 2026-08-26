@@ -25,6 +25,18 @@ const nullableTrim = (max: number) =>
 const optionalInt = (min: number, max: number) =>
   z.number().int().min(min).max(max).nullable().optional();
 
+// numeric(5,1) column — nominal voltages like 12.6 (3S LiFePO4) are valid
+const optionalVoltage = z
+  .number()
+  .min(0)
+  .max(1000)
+  .refine(
+    (v) => Math.abs(v * 10 - Math.round(v * 10)) < 1e-6,
+    "Use at most one decimal place (e.g. 12.6)",
+  )
+  .nullable()
+  .optional();
+
 const optionalAmount = (max: number) => z.number().min(0).max(max).nullable().optional();
 
 const stringList = (maxLen: number) =>
@@ -74,7 +86,7 @@ const productFields = {
   costPrice,
   sourceUrl: nullableTrim(500),
   panelVoltage: optionalInt(1, 1000),
-  batteryVoltage: optionalInt(0, 1000),
+  batteryVoltage: optionalVoltage,
   batteryCapacityAh: optionalInt(0, 10000),
   batteryType: nullableTrim(60),
   solarPanelWatt: optionalInt(0, 100000),

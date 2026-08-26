@@ -45,7 +45,16 @@ const productSchema = z
     costPerPiece: z.coerce.number().min(0).max(10_000_000).optional(),
     sourceUrl: z.string().trim().max(500).optional(),
     panelVoltage: z.coerce.number().int().min(1).max(1000).optional(),
-    batteryVoltage: z.coerce.number().int().min(0).max(1000).optional(),
+    // numeric(5,1) column — nominal voltages like 12.6 (3S LiFePO4) are valid
+    batteryVoltage: z.coerce
+      .number()
+      .min(0)
+      .max(1000)
+      .refine(
+        (v) => Math.abs(v * 10 - Math.round(v * 10)) < 1e-6,
+        "Use at most one decimal place (e.g. 12.6)",
+      )
+      .optional(),
     batteryCapacityAh: z.coerce.number().int().min(0).max(10000).optional(),
     batteryType: z.string().trim().max(60).optional(),
     solarPanelWatt: z.coerce.number().int().min(0).max(100000).optional(),
