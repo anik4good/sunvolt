@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   SESSION_COOKIE,
@@ -44,11 +44,17 @@ export async function login(
   }
 
   clearAttempts(key);
+  // Mark the cookie Secure only when the request actually arrived over
+  // HTTPS (reverse proxy sets x-forwarded-proto). A hard-coded Secure
+  // flag breaks admin login on plain-HTTP access (e.g. http://IP:8085)
+  // because browsers refuse to store Secure cookies from insecure origins.
+  const hdrs = await headers();
+  const proto = (hdrs.get("x-forwarded-proto") ?? "").split(",")[0].trim();
   const store = await cookies();
   store.set(SESSION_COOKIE, createSessionToken(parsed.data.email.toLowerCase()), {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: proto === "https",
     path: "/",
     maxAge: 7 * 24 * 60 * 60,
   });
