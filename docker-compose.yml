@@ -6,6 +6,10 @@ services:
     restart: unless-stopped
     ports:
       - "8084:3000"
+    # Persist uploaded images and media across container rebuilds
+    volumes:
+      - ./public/products:/app/public/products
+      - ./public/uploads:/app/public/uploads
     # All credentials come from the .env file next to this compose file —
     # never baked into the image. See .env.example / DEPLOYMENT.md.
     env_file:
