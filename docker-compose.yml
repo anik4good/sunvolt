@@ -5,7 +5,7 @@ services:
     container_name: sunvolt
     restart: unless-stopped
     ports:
-      - "8084:3000"
+      - "8085:3000"
     # Persist uploaded images and media across container rebuilds
     volumes:
       - ./public/products:/app/public/products
