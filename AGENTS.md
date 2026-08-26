@@ -11,3 +11,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # Deployment
 
 Only commit and push — never deploy. The user deploys production themselves (no SSH deploys, `git pull`, `docker compose`, or container restarts on the server).
+
+# Documentation
+
+Keep `docs/CODEBASE.md` and `docs/DEVELOPERS.md` in sync with every change: any new feature, page, component, or schema change → update `docs/CODEBASE.md`; anything API-related (endpoints, auth, schemas) → also update `docs/DEVELOPERS.md`.

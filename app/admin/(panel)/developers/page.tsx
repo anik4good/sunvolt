@@ -64,9 +64,9 @@ export default async function AdminDevelopersPage() {
           <li>
             Give your AI assistant the key plus{" "}
             <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-xs">
-              DEVELOPERS.md
+              docs/DEVELOPERS.md
             </code>{" "}
-            (repo root) — or just the key:{" "}
+            — or just the key:{" "}
             <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-xs">
               GET /api/v1
             </code>{" "}

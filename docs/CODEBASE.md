@@ -85,6 +85,7 @@ app/
   admin/
     login/             Login page + form + credentials action
     (panel)/           Auth-guarded admin panel (layout calls requireAdmin)
+      loading.tsx      Panel-wide loading fallback (spinner) shown while pages fetch
       page.tsx         Dashboard: order counts, revenue, recent orders
       products/        List / new / [id] edit, toggle-active route, actions
       orders/          List + [id] detail, status update action
@@ -117,6 +118,7 @@ lib/
                        sizing, packages — the recommendation engine
   whatsapp.ts          WhatsApp deep-link helper
 scripts/               One-off maintenance scripts (tsx)
+docs/                  CODEBASE.md (this file) + DEVELOPERS.md (API reference)
 proxy.ts               Middleware: bounces anonymous users off /admin
 ```
 
@@ -206,6 +208,12 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   they serve). Every action: `await requireAdmin()` → Zod-validate → DB
   write → `revalidatePath("/", "layout")` (public pages read live data
   through cached query helpers) → `redirect`.
+- **`redirect()` throws — keep it outside `try/catch`.** A route handler
+  that calls a redirect-ending server action inside its try/catch swallows
+  the throw and returns 500 *after* the DB write already happened (this was
+  the toggle-active bug). JSON route handlers such as
+  `/admin/products/toggle-active` do the update + `revalidatePath` directly
+  and never redirect.
 - **Validation = Zod** at every boundary (forms, actions, API bodies).
 - **Money** = Drizzle `numeric` → JS **string**; convert with `Number(x)`
   and write back with `.toFixed(2)`. Format for display with
@@ -232,7 +240,7 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   images survive rebuilds).
 - Healthcheck: `GET /api/health` (returns `{ status, database }`).
 - All credentials via `.env` — never baked into the image. See
-  `DEPLOYMENT.md` for the full runbook.
+  `../DEPLOYMENT.md` (repo root) for the full runbook.
 
 ## 10. Common tasks
 
