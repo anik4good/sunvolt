@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, ne, sql } from "drizzle-orm";
 import {
   ClipboardList,
   Clock,
   Package,
+  Boxes,
   CheckCircle2,
   ShoppingCart,
 } from "lucide-react";
@@ -28,6 +29,7 @@ export default async function AdminDashboardPage() {
     confirmedOrders,
     completedOrders,
     activePackages,
+    activeProducts,
     recent,
     revenueRows,
   ] = await Promise.all([
@@ -54,7 +56,13 @@ export default async function AdminDashboardPage() {
       db
         .select({ value: sql<number>`count(*)::int` })
         .from(products)
-        .where(eq(products.active, true)),
+        .where(and(eq(products.active, true), eq(products.category, "package"))),
+    ),
+    count(
+      db
+        .select({ value: sql<number>`count(*)::int` })
+        .from(products)
+        .where(and(eq(products.active, true), ne(products.category, "package"))),
     ),
     db
       .select({
@@ -80,6 +88,7 @@ export default async function AdminDashboardPage() {
     { label: "Confirmed / Processing", value: confirmedOrders, icon: CheckCircle2 },
     { label: "Completed", value: completedOrders, icon: CheckCircle2 },
     { label: "Active Packages", value: activePackages, icon: Package },
+    { label: "Active Products", value: activeProducts, icon: Boxes },
     {
       label: "Order Value (not cancelled)",
       value: formatPrice(revenueRows[0]?.value ?? 0),
