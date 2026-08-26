@@ -10,7 +10,7 @@ export default async function AdminPanelLayout({
     <div className="min-h-screen bg-secondary/40 lg:flex">
       <AdminSidebar email={session.sub} />
       <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
-        <div className="mx-auto max-w-5xl">{children}</div>
+        <div className="w-full">{children}</div>
       </main>
     </div>
   );

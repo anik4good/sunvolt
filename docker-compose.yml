@@ -5,7 +5,7 @@ services:
     container_name: sunvolt
     restart: unless-stopped
     ports:
-      - "${SUNVOLT_PORT:-3000}:3000"
+      - "8084:3000"
     # All credentials come from the .env file next to this compose file —
     # never baked into the image. See .env.example / DEPLOYMENT.md.
     env_file:

@@ -13,6 +13,8 @@
     "db:import-surjoone": "tsx db/import-surjoone.ts"
   },
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.1.24",
+    "@tanstack/react-table": "^8.17.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
