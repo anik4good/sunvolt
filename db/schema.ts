@@ -39,6 +39,8 @@ export const products = pgTable("products", {
   batteryCapacityAh: integer("battery_capacity_ah"),
   batteryType: text("battery_type"),
   solarPanelWatt: integer("solar_panel_watt"),
+  /** Nominal system voltage (12/24/48…) for solar-panel products — picks the global per-watt rate. */
+  panelVoltage: integer("panel_voltage"),
   controllerWatt: integer("controller_watt"),
   backupHours: integer("backup_hours"),
   recommendedLoadWatt: integer("recommended_load_watt"),
@@ -59,12 +61,16 @@ export const products = pgTable("products", {
   highlights: jsonb("highlights").$type<string[]>(),
   // "Packaging and delivery" table (unit size, weight, selling units…)
   packaging: jsonb("packaging").$type<Record<string, string>>(),
-  // Supplier buying price (Alibaba ladder) for dashboard margin calc
-  costPrice: jsonb("cost_price").$type<{
-    moq: number;
-    currency: string;
-    ladder: Array<{ qtyMin: number; qtyMax: number | null; priceUsd: number }>;
-  }>(),
+  // Supplier buying price for margin calc — simple perPiece (BDT), or the
+  // legacy imported Alibaba USD ladder.
+  costPrice: jsonb("cost_price").$type<
+    | { perPiece: number }
+    | {
+        moq: number;
+        currency: string;
+        ladder: Array<{ qtyMin: number; qtyMax: number | null; priceUsd: number }>;
+      }
+  >(),
   // Source listing URL (e.g. the Alibaba product page)
   sourceUrl: text("source_url"),
   active: boolean("active").notNull().default(true),
@@ -228,7 +234,28 @@ export const settings = pgTable("settings", {
     .default("122.00"),
   /** Show the cost & margin column in the admin product list. */
   showMargin: boolean("show_margin").notNull().default(false),
+  /** Solar-panel selling rates as "volt:pricePerWatt" pairs, e.g. "12:30,24:28". */
+  panelRates: text("panel_rates").notNull().default(""),
 });
+
+// API keys for the /api/v1 management REST API (Admin → Developers).
+// Only the SHA-256 hash is stored; the plaintext key is shown once
+// at creation and can never be recovered.
+export const apiKeys = pgTable("api_keys", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(),
+  // Display prefix (first characters of the key) so keys can be
+  // recognized in lists without exposing them.
+  prefix: text("prefix").notNull(),
+  keyHash: text("key_hash").notNull().unique(),
+  lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
+  revokedAt: timestamp("revoked_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export type ApiKey = typeof apiKeys.$inferSelect;
 
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;

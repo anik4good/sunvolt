@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { Loader2, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ import {
   type ProductFormState,
 } from "@/app/admin/(panel)/products/actions";
 import type { Product } from "@/db/schema";
+import type { PanelRate } from "@/lib/panel-rates";
 
 function Field({
   label,
@@ -46,13 +47,49 @@ function specsToText(specs: Record<string, string> | null): string {
     .join("\n");
 }
 
-export function ProductForm({ product }: { product?: Product }) {
+export function ProductForm({
+  product,
+  panelRates,
+}: {
+  product?: Product;
+  panelRates: PanelRate[];
+}) {
+  // Bound server action — works with JS and without (progressive enhancement)
   const [state, formAction, pending] = useActionState<ProductFormState | undefined, FormData>(
-    (prev, formData) => saveProduct(product?.id ?? null, prev, formData),
+    saveProduct.bind(null, product?.id ?? null),
     undefined,
   );
   const [category, setCategory] = useState(product?.category ?? "package");
   const isPackage = category === "package";
+  const isPanel = category === "solar-panel";
+
+  // Panel wattage default: saved value, else parsed from the rated-power spec
+  const specsPower = product?.specs?.["Rated Power"] ?? product?.specs?.["Maximum Power (Pmax)"] ?? "";
+  const specsWatt = Number.parseInt(String(specsPower).replace(/[^0-9]/g, ""), 10);
+  const [price, setPrice] = useState(product ? String(Number(product.price)) : "");
+  const [panelVolt, setPanelVolt] = useState(
+    product?.panelVoltage ? String(product.panelVoltage) : "",
+  );
+  const [panelWatt, setPanelWatt] = useState(
+    String(product?.solarPanelWatt ?? (specsWatt || "") ?? ""),
+  );
+
+  // Live panel price from the global per-watt rate; fills the price field.
+  const selectedRate = panelRates.find((r) => String(r.volt) === panelVolt);
+  const wattNum = Number(panelWatt);
+  const computedPrice =
+    selectedRate && wattNum > 0
+      ? Math.round(selectedRate.perWatt * wattNum * 100) / 100
+      : null;
+  useEffect(() => {
+    if (computedPrice != null) setPrice(String(computedPrice));
+  }, [computedPrice]);
+
+  // Keep the saved voltage selectable even if its rate was removed in Settings
+  const voltOptions =
+    panelVolt && !panelRates.some((r) => String(r.volt) === panelVolt)
+      ? [{ volt: Number(panelVolt), perWatt: null as number | null }, ...panelRates]
+      : panelRates;
 
   return (
     <form action={formAction} className="mt-6 space-y-6">
@@ -177,7 +214,7 @@ export function ProductForm({ product }: { product?: Product }) {
                 placeholder={"Maximum Output Power: 65W\nInput (PV) Voltage Range: 15V – 60V"}
               />
             </Field>
-            <Field label="Features" hint="One per line — fallback when highlights are empty">
+            <Field label="Features" hint="One per line — top 8 shown on the product page">
               <Textarea
                 name="featuresText"
                 rows={5}
@@ -185,21 +222,10 @@ export function ProductForm({ product }: { product?: Product }) {
                 placeholder={"65W Maximum Output\nMPPT Solar Charging"}
               />
             </Field>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Highlights" hint="One per line — shown after the price on the product page">
-              <Textarea
-                name="highlightsText"
-                rows={6}
-                defaultValue={(product?.highlights ?? []).join("\n")}
-                placeholder={"600W Maximum PV Power\n12V/24V Adjustable Output\nCE Certified"}
-              />
-            </Field>
             <Field label="Packaging" hint="One per line — “Label: Value”">
               <Textarea
                 name="packagingText"
-                rows={6}
+                rows={5}
                 defaultValue={specsToText(product?.packaging ?? null)}
                 placeholder={"Selling Units: Single item\nSingle package size: 17.2X13.8X4.7 cm\nSingle gross weight: 1.35 kg"}
               />
@@ -207,13 +233,21 @@ export function ProductForm({ product }: { product?: Product }) {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Supplier cost price (JSON)" hint="Alibaba ladder — powers the dashboard margin column">
-              <Textarea
-                name="costPriceText"
-                rows={6}
-                className="font-mono text-xs"
-                defaultValue={product?.costPrice ? JSON.stringify(product.costPrice, null, 2) : ""}
-                placeholder={'{"moq":2,"currency":"USD","ladder":[{"qtyMin":2,"qtyMax":49,"priceUsd":30}]}'}
+            <Field
+              label="Supplier cost per piece (৳)"
+              hint="Your buying price for one unit — powers the margin column. Leave blank to keep the saved value."
+            >
+              <Input
+                name="costPerPiece"
+                type="number"
+                min={0}
+                step="0.01"
+                placeholder="1050"
+                defaultValue={
+                  product?.costPrice && "perPiece" in product.costPrice
+                    ? product.costPrice.perPiece
+                    : ""
+                }
               />
             </Field>
             <div className="space-y-2">
@@ -235,9 +269,63 @@ export function ProductForm({ product }: { product?: Product }) {
         </>
       )}
 
+      {isPanel ? (
+        <div className="grid gap-4 rounded-xl border border-solar/40 bg-solar-light/30 p-4 sm:grid-cols-3">
+          <Field
+            label="Panel system voltage"
+            hint={
+              panelRates.length > 0
+                ? "Picks the global ৳/W rate from Settings"
+                : "Set per-watt rates in Settings → Solar panel pricing first"
+            }
+          >
+            <Select name="panelVoltage" value={panelVolt} onValueChange={setPanelVolt}>
+              <SelectTrigger>
+                <SelectValue placeholder="—" />
+              </SelectTrigger>
+              <SelectContent>
+                {voltOptions.map((r) => (
+                  <SelectItem key={r.volt} value={String(r.volt)}>
+                    {r.volt}V{r.perWatt != null ? ` — ৳${r.perWatt}/W` : ""}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+          <Field label="Panel wattage (W)">
+            <Input
+              name="solarPanelWatt"
+              type="number"
+              min={1}
+              placeholder="150"
+              value={panelWatt}
+              onChange={(e) => setPanelWatt(e.target.value)}
+            />
+          </Field>
+          <Field label="Calculated price" hint="Rate × watts — fills Price below">
+            <div className="flex h-9 items-center rounded-md border bg-card px-3 text-sm font-semibold text-navy">
+              {computedPrice != null
+                ? `৳${computedPrice.toLocaleString()} (${selectedRate?.perWatt} × ${wattNum}W)`
+                : "—"}
+            </div>
+          </Field>
+        </div>
+      ) : null}
+
       <div className="grid gap-4 sm:grid-cols-3">
-        <Field label="Price (৳) *" hint="Selling price after discount">
-          <Input name="price" type="number" min={0} step="0.01" required defaultValue={product ? Number(product.price) : ""} />
+        <Field
+          label="Price (৳) *"
+          hint={isPanel ? "Auto-filled from rate × watts — still editable" : "Selling price after discount"}
+        >
+          <Input
+            name="price"
+            type="number"
+            min={0}
+            step="0.01"
+            required
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
         </Field>
         <Field label="Discount %" hint="0–90, shows a −% badge">
           <Input name="discountPct" type="number" min={0} max={90} defaultValue={product?.discountPct ?? 0} />

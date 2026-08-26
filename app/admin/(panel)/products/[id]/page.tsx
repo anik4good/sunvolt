@@ -3,6 +3,8 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { products } from "@/db/schema";
 import { ProductForm } from "@/components/admin/product-form";
+import { getSettings } from "@/lib/queries";
+import { parsePanelRates } from "@/lib/panel-rates";
 
 export const metadata = { title: "Edit Product | SunVolt Admin" };
 
@@ -12,7 +14,10 @@ interface PageProps {
 
 export default async function EditProductPage({ params }: PageProps) {
   const { id } = await params;
-  const rows = await db.select().from(products).where(eq(products.id, id)).limit(1);
+  const [rows, settings] = await Promise.all([
+    db.select().from(products).where(eq(products.id, id)).limit(1),
+    getSettings(),
+  ]);
   const product = rows[0];
   if (!product) notFound();
 
@@ -22,7 +27,7 @@ export default async function EditProductPage({ params }: PageProps) {
       <p className="mt-1 text-sm text-muted-foreground">
         Changes go live immediately — the website reads this data on every request.
       </p>
-      <ProductForm product={product} />
+      <ProductForm product={product} panelRates={parsePanelRates(settings.panelRates)} />
     </div>
   );
 }

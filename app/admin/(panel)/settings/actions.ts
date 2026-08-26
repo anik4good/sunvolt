@@ -7,6 +7,10 @@ import { z } from "zod";
 import { db } from "@/db";
 import { settings } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth";
+import { formatPanelRates, type PanelRate } from "@/lib/panel-rates";
+
+// Must match the row count rendered in settings-form.tsx
+const RATE_ROWS = 4;
 
 export interface AdminFormState {
   message: string;
@@ -76,6 +80,27 @@ export async function updateSettings(
   }
   const data = parsed.data;
 
+  // Voltage → price-per-watt rows; a row counts only when both fields are filled.
+  const panelRates: PanelRate[] = [];
+  for (let i = 0; i < RATE_ROWS; i++) {
+    const volt = Number(formData.get(`rateVolt${i}`) || NaN);
+    const perWatt = Number(formData.get(`ratePerW${i}`) || NaN);
+    const hasVolt = Number.isFinite(volt) && volt > 0;
+    const hasRate = Number.isFinite(perWatt) && perWatt > 0;
+    if (hasVolt && !hasRate) {
+      return { message: `Panel rate row ${i + 1}: price per watt is missing.` };
+    }
+    if (!hasVolt && hasRate) {
+      return { message: `Panel rate row ${i + 1}: voltage is missing.` };
+    }
+    if (hasVolt && hasRate) {
+      if (panelRates.some((r) => r.volt === volt)) {
+        return { message: `Panel rate for ${volt}V is set twice.` };
+      }
+      panelRates.push({ volt, perWatt });
+    }
+  }
+
   await db
     .update(settings)
     .set({
@@ -94,6 +119,7 @@ export async function updateSettings(
       controllerSizes: normalizeSizes(data.controllerSizes),
       usdToBdt: data.usdToBdt.toFixed(2),
       showMargin: data.showMargin,
+      panelRates: formatPanelRates(panelRates),
     })
     .where(eq(settings.id, 1));
 

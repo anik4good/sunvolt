@@ -28,47 +28,7 @@ import { formatPrice } from "@/lib/format";
 import { categoryLabel } from "@/lib/categories";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-interface Product {
-  id: string;
-  name: string;
-  nameBn: string | null;
-  category: string;
-  slug: string;
-  description: string | null;
-  brand: string | null;
-  model: string | null;
-  specs: Record<string, string> | null;
-  features: string[] | null;
-  batteryVoltage: string | null;
-  batteryCapacityAh: number | null;
-  batteryType: string | null;
-  solarPanelWatt: number | null;
-  controllerWatt: number | null;
-  backupHours: number | null;
-  recommendedLoadWatt: number | null;
-  exampleFanCount: number | null;
-  exampleLightCount: number | null;
-  price: string;
-  discountPct: number;
-  installationPrice: string | null;
-  warrantyMonths: number;
-  stock: number;
-  imageUrl: string | null;
-  images: string[] | null;
-  highlights: string[] | null;
-  packaging: Record<string, string> | null;
-  costPrice: {
-    moq: number;
-    currency: string;
-    ladder: Array<{ qtyMin: number; qtyMax: number | null; priceUsd: number }>;
-  } | null;
-  sourceUrl: string | null;
-  active: boolean;
-  featured: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import type { Product } from "@/db/schema";
 
 interface ProductsDataTableProps {
   data: Product[];
@@ -317,14 +277,28 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
       header: "Cost / Margin",
       cell: ({ row }) => {
         const product = row.original;
+
+        // Simple per-piece cost (entered directly in ৳)
+        if (product.costPrice && "perPiece" in product.costPrice) {
+          const costBdt = Math.round(product.costPrice.perPiece);
+          const margin = Math.round(Number(product.price) - costBdt);
+          return (
+            <div className="whitespace-nowrap text-xs">
+              <span className="text-muted-foreground">৳{costBdt.toLocaleString()}</span>{" "}
+              <span className="font-semibold text-leaf">+{formatPrice(margin)}</span>
+            </div>
+          );
+        }
+
+        // Legacy imported Alibaba USD ladder
         if (!product.costPrice?.ladder?.[0]) {
           return <span className="text-muted-foreground/50">—</span>;
         }
-        
+
         const firstTier = product.costPrice.ladder[0];
         const costBdt = Math.round(firstTier.priceUsd * usdRate);
         const margin = Math.round(Number(product.price) - costBdt);
-        
+
         return (
           <div className="whitespace-nowrap text-xs" title={`MOQ ${product.costPrice.moq} pcs · ${product.costPrice.ladder.map((l) => `${l.qtyMin}${l.qtyMax ? `-${l.qtyMax}` : "+"}=$${l.priceUsd}`).join(" · ")}`}>
             <span className="text-muted-foreground">

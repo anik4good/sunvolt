@@ -67,24 +67,41 @@ export default async function ProductDetailPage({ params }: PageProps) {
     // SKU variants arrive comma-joined ("300W, 350W") — show the primary
     return value && !notReal(value) ? value.split(",")[0].trim() : null;
   };
-  const keySpecs = (
-    [
-      { label: "Model", value: product.model ?? pick(["Model Number", "Model"]) },
-      { label: "Type", value: pick(["Type", "Controller Type", "Product Type"]) },
-      {
-        label: "System Voltage",
-        value: pick(["Rated Voltage", "System Voltage", "Rated Output Voltage", "Output Voltage"]),
-      },
-      { label: "Max Current", value: pick(["Maximum Current", "Max Current", "Maximum Output Current"]) },
-      { label: "Max PV Power", value: pick(["Max PV Power", "Maximum PV Power", "PV Power"]) },
-      {
-        label: "Max PV Voltage",
-        value: pick(["Max PV Voltage", "Maximum PV Voltage", "Max Voltage", "PV Voltage", "Input (PV) Voltage Range"]),
-      },
-      { label: "Display", value: pick(["Display", "Screen"]) ?? displayMatch },
-      { label: "Battery", value: pick(["Battery Type", "Battery Voltage"]) ?? batteryMatch },
-    ] as Array<{ label: string; value: string | null }>
-  ).filter((item): item is { label: string; value: string } => Boolean(item.value));
+  // Panels carry power/efficiency/cell specs rather than controller
+  // limits, so they get their own tile lookups.
+  const tileSet: Array<{ label: string; value: string | null }> =
+    product.category === "solar-panel"
+      ? [
+          { label: "Rated Power", value: pick(["Rated Power", "Rated Power Output", "Maximum Power (Pmax)"]) },
+          { label: "Efficiency", value: pick(["Module Efficiency"]) },
+          { label: "Cell Type", value: pick(["Solar Cell Type", "Cell Type", "Solar Technology"]) },
+          { label: "System Voltage", value: pick(["System Voltage"]) },
+          { label: "Voc", value: pick(["Open Circuit Voltage (Voc)", "Voltage (VOC)"]) },
+          { label: "Imp", value: pick(["Maximum Power Current (Imp)"]) },
+          { label: "Cells", value: pick(["Number of Cells"]) },
+          { label: "Weight", value: pick(["Weight"]) },
+        ]
+      : [
+          { label: "Model", value: (product.model ?? pick(["Model Number", "Model"])) ?? null },
+          { label: "Type", value: pick(["Type", "Controller Type", "Product Type", "Inverter Type", "Battery Chemistry", "Cell Format"]) },
+          { label: "Rated Power", value: pick(["Rated Power", "Rated Output Power", "Output Power", "Continuous Power", "Continuous Output Power"]) },
+          {
+            label: "System Voltage",
+            value: pick(["Rated Voltage", "System Voltage", "Rated Output Voltage", "Output Voltage", "Nominal Voltage"]),
+          },
+          { label: "Max Current", value: pick(["Maximum Current", "Max Current", "Maximum Output Current", "Output Current"]) },
+          { label: "Max PV Power", value: pick(["Max PV Power", "Maximum PV Power", "PV Power", "Maximum PV Input Power", "Max PV Array Power", "Solar Panel Power"]) },
+          {
+            label: "Max PV Voltage",
+            value: pick(["Max PV Voltage", "Maximum PV Voltage", "Max Voltage", "PV Voltage", "Input (PV) Voltage Range", "Maximum PV Input Voltage", "MPPT Voltage Range"]),
+          },
+          { label: "Capacity", value: pick(["Capacity"]) },
+          { label: "Display", value: (pick(["Display", "Screen"]) ?? displayMatch) ?? null },
+          { label: "Battery", value: (pick(["Battery Type", "Battery Voltage"]) ?? batteryMatch) ?? null },
+        ];
+  const keySpecs = tileSet.filter(
+    (item): item is { label: string; value: string } => Boolean(item.value),
+  );
   const cartItem = {
     slug: product.slug,
     name: product.name,
@@ -188,7 +205,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           </div>
 
           {/* Trust lines */}
-          <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
+          <ul className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
             <li className="flex items-center gap-1.5">
               <Wallet className="size-4 text-leaf" aria-hidden />
               {d.products.cod}
@@ -209,6 +226,23 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
         </div>
       </div>
+
+      {/* Key features — top 8, compact two-column list */}
+      {(product.features ?? []).length > 0 ? (
+        <section className="mt-12">
+          <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
+            Key features
+          </h2>
+          <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+            {(product.features ?? []).slice(0, 8).map((feature) => (
+              <li key={feature} className="flex items-center gap-2 text-sm font-medium text-navy">
+                <Check className="size-4 shrink-0 text-leaf" aria-hidden />
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       {/* Key attributes — two-column grid; Place of Origin hidden on page */}
       {specs.length > 0 ? (

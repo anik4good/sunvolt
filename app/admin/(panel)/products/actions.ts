@@ -9,6 +9,8 @@ import path from "path";
 import { db } from "@/db";
 import { orderItems, products } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth";
+import { getSettings } from "@/lib/queries";
+import { parsePanelRates } from "@/lib/panel-rates";
 
 const CATEGORY_SLUGS = [
   "package",
@@ -39,10 +41,10 @@ const productSchema = z
     model: z.string().trim().max(80).optional(),
     specsText: z.string().trim().max(6000).optional(),
     featuresText: z.string().trim().max(2000).optional(),
-    highlightsText: z.string().trim().max(2000).optional(),
     packagingText: z.string().trim().max(2000).optional(),
-    costPriceText: z.string().trim().max(2000).optional(),
+    costPerPiece: z.coerce.number().min(0).max(10_000_000).optional(),
     sourceUrl: z.string().trim().max(500).optional(),
+    panelVoltage: z.coerce.number().int().min(1).max(1000).optional(),
     batteryVoltage: z.coerce.number().int().min(0).max(1000).optional(),
     batteryCapacityAh: z.coerce.number().int().min(0).max(10000).optional(),
     batteryType: z.string().trim().max(60).optional(),
@@ -55,7 +57,7 @@ const productSchema = z
     price: z.coerce.number().min(0).max(10_000_000),
     discountPct: z.coerce.number().int().min(0).max(90).default(0),
     installationPrice: z.coerce.number().min(0).max(10_000_000).optional(),
-    warrantyMonths: z.coerce.number().int().min(0).max(120),
+    warrantyMonths: z.coerce.number().int().min(0).max(360),
     stock: z.coerce.number().int().min(0).max(100000),
     // Ordered image list; first entry is the cover image
     images: z
@@ -96,23 +98,17 @@ function parseSpecs(text: string | undefined): Record<string, string> | null {
   return entries.length > 0 ? Object.fromEntries(entries) : null;
 }
 
-function parseCostPrice(text: string | undefined) {
-  if (!text) return null;
-  try {
-    const parsed = JSON.parse(text) as {
-      moq?: number;
-      currency?: string;
-      ladder?: Array<{ qtyMin: number; qtyMax: number | null; priceUsd: number }>;
-    };
-    if (!parsed?.ladder?.length) return null;
-    return {
-      moq: parsed.moq ?? parsed.ladder[0].qtyMin ?? 1,
-      currency: parsed.currency ?? "USD",
-      ladder: parsed.ladder.slice(0, 8),
-    };
-  } catch {
-    return null;
-  }
+/** Auto-price a solar panel from the global per-watt rate for its voltage. */
+async function panelPriceFromRate(
+  volt: number | undefined,
+  watt: number | null | undefined,
+): Promise<number | null> {
+  if (!volt || !watt) return null;
+  const settings = await getSettings();
+  const rate = parsePanelRates(settings.panelRates).find((r) => r.volt === volt)
+    ?.perWatt;
+  if (!rate) return null;
+  return Math.round(rate * watt * 100) / 100;
 }
 
 function parseFeatures(text: string | undefined): string[] | null {
@@ -155,10 +151,10 @@ function parseForm(formData: FormData) {
     model: formData.get("model") || undefined,
     specsText: formData.get("specsText") || undefined,
     featuresText: formData.get("featuresText") || undefined,
-    highlightsText: formData.get("highlightsText") || undefined,
     packagingText: formData.get("packagingText") || undefined,
-    costPriceText: formData.get("costPriceText") || undefined,
+    costPerPiece: formData.get("costPerPiece") || undefined,
     sourceUrl: formData.get("sourceUrl") || undefined,
+    panelVoltage: formData.get("panelVoltage") || undefined,
     batteryVoltage: formData.get("batteryVoltage") || undefined,
     batteryCapacityAh: formData.get("batteryCapacityAh") || undefined,
     batteryType: formData.get("batteryType") || undefined,
@@ -192,10 +188,34 @@ export async function saveProduct(
 
   const parsed = parseForm(formData);
   if (!parsed.success) {
-    return { message: parsed.error.issues[0]?.message ?? "Check the form." };
+    const issue = parsed.error.issues[0];
+    const field = issue?.path?.[0];
+    const msg = issue?.message ?? "Check the form.";
+    return { message: field ? `${String(field)}: ${msg}` : msg };
   }
   const data = parsed.data;
   const slug = data.slug ?? slugify(data.name);
+
+  // Solar panels can be priced globally: rate × watts (Settings → Solar panel pricing).
+  const panelPrice =
+    data.category === "solar-panel"
+      ? await panelPriceFromRate(data.panelVoltage, data.solarPanelWatt)
+      : null;
+  const finalPrice = panelPrice ?? data.price;
+
+  // Keep the existing cost (e.g. imported Alibaba ladder) when the simple
+  // per-piece field is left blank on edit.
+  let costPrice: typeof products.$inferInsert.costPrice = data.costPerPiece
+    ? { perPiece: data.costPerPiece }
+    : null;
+  if (!data.costPerPiece && id) {
+    const existing = await db
+      .select({ costPrice: products.costPrice })
+      .from(products)
+      .where(eq(products.id, id))
+      .limit(1);
+    costPrice = existing[0]?.costPrice ?? null;
+  }
 
   const values = {
     name: data.name,
@@ -207,9 +227,10 @@ export async function saveProduct(
     model: data.model || null,
     specs: parseSpecs(data.specsText),
     features: parseFeatures(data.featuresText),
-    highlights: parseFeatures(data.highlightsText),
     packaging: parseSpecs(data.packagingText),
-    costPrice: parseCostPrice(data.costPriceText),
+    costPrice,
+    // Solar-panel products remember their nominal voltage for rate pricing
+    panelVoltage: data.category === "solar-panel" ? (data.panelVoltage ?? null) : null,
     sourceUrl: data.sourceUrl || null,
     batteryVoltage:
       data.category === "package" && data.batteryVoltage != null
@@ -226,7 +247,7 @@ export async function saveProduct(
       data.category === "package" ? (data.exampleFanCount ?? null) : null,
     exampleLightCount:
       data.category === "package" ? (data.exampleLightCount ?? null) : null,
-    price: data.price.toFixed(2),
+    price: finalPrice.toFixed(2),
     discountPct: data.discountPct,
     installationPrice: data.installationPrice ? data.installationPrice.toFixed(2) : null,
     warrantyMonths: data.warrantyMonths,

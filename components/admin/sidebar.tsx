@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   Calculator,
   ClipboardList,
+  Code2,
   ExternalLink,
   FileText,
   LayoutDashboard,
@@ -23,6 +24,7 @@ const NAV = [
   { href: "/admin/invoices", label: "Invoices", icon: FileText },
   { href: "/admin/appliances", label: "Appliances", icon: Plug },
   { href: "/admin/settings", label: "Settings", icon: Settings },
+  { href: "/admin/developers", label: "Developers", icon: Code2 },
 ];
 
 export function AdminSidebar({ email }: { email: string }) {
