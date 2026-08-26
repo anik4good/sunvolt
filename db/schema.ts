@@ -226,6 +226,8 @@ export const settings = pgTable("settings", {
   usdToBdt: numeric("usd_to_bdt", { precision: 8, scale: 2 })
     .notNull()
     .default("122.00"),
+  /** Show the cost & margin column in the admin product list. */
+  showMargin: boolean("show_margin").notNull().default(false),
 });
 
 export type Product = typeof products.$inferSelect;

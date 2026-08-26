@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Loader2, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import {
   updateSettings,
@@ -161,6 +162,10 @@ export function SettingsForm({ settings }: { settings: Settings }) {
             <p className="mt-1 text-xs text-muted-foreground">Converts supplier cost for the products margin column</p>
           </div>
         </div>
+        <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium">
+          <Checkbox name="showMargin" defaultChecked={settings.showMargin} className="size-5" />
+          Show cost &amp; margin column in the product list
+        </label>
       </div>
 
       {state?.message ? (

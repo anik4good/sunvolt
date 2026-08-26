@@ -103,7 +103,9 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
               <th className="px-4 py-3">Product</th>
               <th className="px-4 py-3">Category</th>
               <th className="px-4 py-3">Price</th>
-              <th className="px-4 py-3">Cost / Margin</th>
+              {settings.showMargin ? (
+                <th className="px-4 py-3">Cost / Margin</th>
+              ) : null}
               <th className="px-4 py-3">Stock</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Updated</th>
@@ -113,7 +115,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">
+                <td colSpan={settings.showMargin ? 8 : 7} className="px-4 py-10 text-center text-muted-foreground">
                   {filtering ? (
                     <>
                       No products match your filters.{" "}
@@ -191,6 +193,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
                       </span>
                     ) : null}
                   </td>
+                  {settings.showMargin ? (
                   <td className="px-4 py-3 whitespace-nowrap">
                     {product.costPrice?.ladder?.[0] ? (
                       <span title={`MOQ ${product.costPrice.moq} pcs · ${product.costPrice.ladder.map((l) => `${l.qtyMin}${l.qtyMax ? `-${l.qtyMax}` : "+"}=$${l.priceUsd}`).join(" · ")}`}>
@@ -206,6 +209,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
                       <span className="text-muted-foreground/50">—</span>
                     )}
                   </td>
+                  ) : null}
                   <td className="px-4 py-3 whitespace-nowrap">
                     <StockBadge stock={product.stock} />
                   </td>
