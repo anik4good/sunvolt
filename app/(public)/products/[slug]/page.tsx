@@ -64,7 +64,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
     /^(no|none|not included|n\/a|-)$/i.test(value.trim());
   const pick = (keys: string[]): string | null => {
     const value = specLookup(keys);
-    return value && !notReal(value) ? value : null;
+    // SKU variants arrive comma-joined ("300W, 350W") — show the primary
+    return value && !notReal(value) ? value.split(",")[0].trim() : null;
   };
   const keySpecs = (
     [

@@ -58,6 +58,54 @@ const MODEL_MAP: Array<{ storeModel: string; alibabaId: number; highlights: stri
     ],
   },
   {
+    storeModel: "WS-M100-14.6V",
+    alibabaId: 1600819676682,
+    highlights: [
+      "100W Maximum PV Power",
+      "14.6V LiFePO4 Battery Charging",
+      "MPPT Charging Technology",
+      "IP67 Waterproof",
+      "Up to 99% MPPT Efficiency",
+      "CE Certified",
+    ],
+  },
+  {
+    storeModel: "WS-M100-13.8V",
+    alibabaId: 1600819842410,
+    highlights: [
+      "100W Maximum PV Power",
+      "13.8V Lead-Acid Battery Charging",
+      "MPPT Charging Technology",
+      "IP67 Waterproof",
+      "Up to 99% MPPT Efficiency",
+      "CE Certified",
+    ],
+  },
+  {
+    storeModel: "WS-M150-14.6V",
+    alibabaId: 1600857126974,
+    highlights: [
+      "150W Maximum PV Power",
+      "14.6V LiFePO4 Battery Charging",
+      "MPPT Charging Technology",
+      "IP67 Waterproof",
+      "Up to 99% MPPT Efficiency",
+      "CE Certified",
+    ],
+  },
+  {
+    storeModel: "WS-M300-14.6V",
+    alibabaId: 1600857386750,
+    highlights: [
+      "300W Maximum PV Power",
+      "14.6V LiFePO4 Battery Charging",
+      "MPPT Charging Technology",
+      "IP67 Waterproof",
+      "Up to 99% MPPT Efficiency",
+      "CE Certified",
+    ],
+  },
+  {
     storeModel: "PD6501",
     alibabaId: 1601516601188, // 65W Solar Charger Type C PD Converter
     highlights: [

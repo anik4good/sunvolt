@@ -1,8 +1,8 @@
 {
   "source": "https://elejoy.en.alibaba.com/productgrouplist-928138041-1/MPPT_SOLAR_CHARGE_CONTROLLER.html",
   "supplier": "Elejoy electronics (Taizhou) Co., Ltd.",
-  "scraped_at": "2026-08-25T14:38:43.838989Z",
-  "product_count": 20,
+  "scraped_at": "2026-08-26T04:23:49.200992+00:00Z",
+  "product_count": 25,
   "products": [
     {
       "product_id": 1600819794666,
@@ -1571,6 +1571,404 @@
         "country": "China"
       },
       "sales": null
+    },
+    {
+      "product_id": 1600819676682,
+      "title": "ELEJOY FACTORY in CHINA CE IP67 100W MPPT SOLAR 99% MPPT SOLAR CHARGE CONTROLLER WS-M100-14.6V PATENT INTEGRATED CIRCUIT",
+      "url": "https://www.alibaba.com/product-detail/_1600819676682.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 28.76-32.05",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 7.8,
+          "price_local_formatted": "RM 32.05"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 199,
+          "price_usd": 7.5,
+          "price_local_formatted": "RM 30.81"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 7.2,
+          "price_local_formatted": "RM 29.58"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 7,
+          "price_local_formatted": "RM 28.76"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "14.6V"
+        ],
+        "Maximum Current": [
+          "8A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M100-14.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "100W",
+        "Max PV Voltage": "25V",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hddc4f6aa18364ba783fee986c89857b28.jpg",
+        "https://sc04.alicdn.com/kf/H0ccf3c5eca2a4205ab5387a5ede0699f9.jpg",
+        "https://sc04.alicdn.com/kf/H0640e049ff1f43b3bd380997ee3af71cj.jpg",
+        "https://sc04.alicdn.com/kf/H7a81be7876114f528be57f64a394d786J.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "8.0X5.0X2.5 cm",
+        "Single gross weight": "0.5 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "38 sold"
+    },
+    {
+      "product_id": 1600819842410,
+      "title": "ELEJOY FACTORY in CHINA CE IP67 100W MPPT SOLAR  99% SOLAR CHARGE CONTROLLER LEAD ACID WS-M100-13.8V PATENT INTEGRATED CIRCUIT",
+      "url": "https://www.alibaba.com/product-detail/_1600819842410.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 28.76-32.05",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 7.8,
+          "price_local_formatted": "RM 32.05"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 199,
+          "price_usd": 7.5,
+          "price_local_formatted": "RM 30.81"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 7.2,
+          "price_local_formatted": "RM 29.58"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 7,
+          "price_local_formatted": "RM 28.76"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "13.8V"
+        ],
+        "Maximum Current": [
+          "8A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M100-13.8V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "100W",
+        "Max PV Voltage": "25V",
+        "Warranty": "1 Year",
+        "PV Voltage": "25V",
+        "PV Power": "100W",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hcab84f08709741bb841ae36c0d2c6349l.jpg",
+        "https://sc04.alicdn.com/kf/H15c869ac5d6b48d7990e78d389fc8468d.jpg",
+        "https://sc04.alicdn.com/kf/Hfcf3a58e4e6441b8a7a6d132bbf3f04c9.jpg",
+        "https://sc04.alicdn.com/kf/H9f41ddd0d3434a3cb8c8917ceecd9ea58.jpg",
+        "https://sc04.alicdn.com/kf/H3238679006564d3680af3dc042e6cdf07.png",
+        "https://sc04.alicdn.com/kf/H15d3b21fa6aa49e0917c4747dd2383a98.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "8.0X5.0X2.5 cm",
+        "Single gross weight": "0.5 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "155 sold"
+    },
+    {
+      "product_id": 1600857386750,
+      "title": "ELEJOY WS-M300-14.6V MPPT SOLAR CHARGE CONTROLLER 99% MPPT EFFICIENCY SOLAR BATTERY CHARGE CONTROLLER NORMALLY OPEN",
+      "url": "https://www.alibaba.com/product-detail/_1600857386750.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 49.30-61.62",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 15,
+          "price_local_formatted": "RM 61.62"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 499,
+          "price_usd": 14,
+          "price_local_formatted": "RM 57.51"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": 999,
+          "price_usd": 13,
+          "price_local_formatted": "RM 53.41"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 12,
+          "price_local_formatted": "RM 49.30"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "14.6V"
+        ],
+        "Maximum Current": [
+          "24A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M300-14.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "300W, 350W",
+        "Max PV Voltage": "50V, 14.6V",
+        "Weight": "300g",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H6fe1146f12f041e1966471c5222b8708I.jpg",
+        "https://sc04.alicdn.com/kf/Hcfae8a0a630541a1918b3ef71fb1944f6.jpg",
+        "https://sc04.alicdn.com/kf/H71f228a03a5847d2badc0153ccddb854V.jpg",
+        "https://sc04.alicdn.com/kf/Hf4cafeaea75c430eb6813fa82b0a3f2d6.jpg",
+        "https://sc04.alicdn.com/kf/Hc7fb965a0d3345fb908031bb7ae558bb2.jpg",
+        "https://sc04.alicdn.com/kf/Hf27d7012c6fe4f41894bb3ee7c040fe1P.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "76.0X76.0X35.0 cm",
+        "Single gross weight": "0.6 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "1 sold"
+    },
+    {
+      "product_id": 1600857126974,
+      "title": "14.6V ELEJOY  MPPT SOLAR CHARGE CONTROLLER 150W SOLAR CHARGER 99% SOLAR BATTERY CHARGE CONTROLLER NORMALLY OPEN WS-M150-14.6V",
+      "url": "https://www.alibaba.com/product-detail/_1600857126974.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 30.81-36.98",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 9,
+          "price_local_formatted": "RM 36.98"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 499,
+          "price_usd": 8.5,
+          "price_local_formatted": "RM 34.92"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": 999,
+          "price_usd": 8,
+          "price_local_formatted": "RM 32.87"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 7.5,
+          "price_local_formatted": "RM 30.81"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "14.6V"
+        ],
+        "Maximum Current": [
+          "12A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS--M150-14.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Charger Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "150W",
+        "Max PV Voltage": "25V",
+        "WEIGHT": "130g",
+        "PV Voltage": "25V",
+        "PV Power": "150W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H39065f96e1ae4b81b20480b58319a059E.jpg",
+        "https://sc04.alicdn.com/kf/Hceb9708207524e59b47488f5e93ef51aT.jpg",
+        "https://sc04.alicdn.com/kf/H3f374ea40dad47afa55bf351cf12fc79v.jpg",
+        "https://sc04.alicdn.com/kf/Hc67f88aa9f41486cb320b2681891bf78P.jpg",
+        "https://sc04.alicdn.com/kf/He70e0d009bd343a8bc6497ead41babefD.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "7.6X4.2X2.5 cm",
+        "Single gross weight": "0.5 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "507 sold"
+    },
+    {
+      "product_id": 1600835714567,
+      "title": "ELEJOY CE FACTORY PRICE SOLAR CHARGE CONTROLLER MPPT 99% LEAD ACID MPPT SOLAR BATTERY CHARGE CONTROLLER WS-M300-27.6V",
+      "url": "https://www.alibaba.com/product-detail/_1600835714567.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 49.30-61.62",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 15,
+          "price_local_formatted": "RM 61.62"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 14,
+          "price_local_formatted": "RM 57.51"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 13,
+          "price_local_formatted": "RM 53.41"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 12,
+          "price_local_formatted": "RM 49.30"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "27.6V"
+        ],
+        "Maximum Current": [
+          "10A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "CHIINA",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M300-27.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "300W, 300W",
+        "Max PV Voltage": "50V, 50V",
+        "Color": "Silver",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H5ad8f2377eea40609a176a72ae09fdf53.png",
+        "https://sc04.alicdn.com/kf/H2affafecf596478abd1f1632f7c0843er.jpg",
+        "https://sc04.alicdn.com/kf/H819559772b4543828e5d86bffc89f803W.jpg",
+        "https://sc04.alicdn.com/kf/H147e2861a01d4b4f88304ff548a5fbbeg.jpg",
+        "https://sc04.alicdn.com/kf/H8074ee4f977d4590a8f1f82415ee7ab6M.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "7.6X7.6X3.5 cm",
+        "Single gross weight": "0.6 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "100 sold"
     }
   ]
 }
