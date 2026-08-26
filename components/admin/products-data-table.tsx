@@ -53,7 +53,17 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
   const handleToggleActive = async (productId: string, currentActive: boolean) => {
     // Optimistic update
     setOptimisticUpdates(prev => ({ ...prev, [productId]: !currentActive }));
-    
+
+    // Drop the override once the request settles so the button re-enables;
+    // on success router.refresh() brings the new server value, on failure
+    // this reverts the row to the saved state.
+    const clearOptimistic = () =>
+      setOptimisticUpdates(prev => {
+        const next = { ...prev };
+        delete next[productId];
+        return next;
+      });
+
     try {
       const response = await fetch('/admin/products/toggle-active', {
         method: 'POST',
@@ -68,13 +78,11 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
 
       if (response.ok) {
         router.refresh();
-      } else {
-        // Revert optimistic update on error
-        setOptimisticUpdates(prev => ({ ...prev, [productId]: currentActive }));
       }
-    } catch (error) {
-      // Revert optimistic update on error
-      setOptimisticUpdates(prev => ({ ...prev, [productId]: currentActive }));
+    } catch {
+      // network failure — clearing below reverts the optimistic flip
+    } finally {
+      clearOptimistic();
     }
   };
 
