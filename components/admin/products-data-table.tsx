@@ -98,7 +98,8 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
       const saved = localStorage.getItem('admin-products-column-visibility');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const savedVisibility = JSON.parse(saved) as VisibilityState;
+          return showMargin ? savedVisibility : { ...savedVisibility, cost_margin: false };
         } catch (e) {
           console.error('Failed to parse saved column visibility', e);
         }
@@ -128,6 +129,14 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(initializeColumnVisibility);
+
+  // The server setting is authoritative: disabling margin must hide it even
+  // when an older browser preference had previously enabled the column.
+  React.useEffect(() => {
+    if (!showMargin) {
+      setColumnVisibility((current) => ({ ...current, cost_margin: false }));
+    }
+  }, [showMargin]);
 
   // Save column visibility to localStorage whenever it changes
   React.useEffect(() => {
