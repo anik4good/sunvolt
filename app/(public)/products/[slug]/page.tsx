@@ -86,7 +86,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
         {/* Image gallery */}
         <ProductGallery
-          images={[product.imageUrl, ...(product.images ?? [])].filter(
+          images={[...new Set([product.imageUrl, ...(product.images ?? [])])].filter(
             (v): v is string => Boolean(v),
           )}
           name={product.name}
