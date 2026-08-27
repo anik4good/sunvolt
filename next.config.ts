@@ -19,6 +19,11 @@ const nextConfig: NextConfig = {
         hostname: "solarhousebd.com",
         pathname: "/wp-content/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "safebdes.com",
+        pathname: "/image/cache/catalog/**",
+      },
     ],
   },
   // Ensure Server Actions work properly in standalone builds

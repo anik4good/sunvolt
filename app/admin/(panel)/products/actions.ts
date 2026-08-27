@@ -24,6 +24,7 @@ const CATEGORY_SLUGS = [
   "dc-charger",
   "accessories",
   "battery",
+  "fan",
 ] as const;
 
 const productSchema = z

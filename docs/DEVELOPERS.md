@@ -78,7 +78,7 @@ keys like passwords; rotate by creating a new key and revoking the old one.
 `batteryCapacityAh`, `backupHours`, `recommendedLoadWatt` are **required**.
 Any other category is a standalone component. Valid categories:
 `package, solar-inverter, bms, solar-panel, inverter, diy-solar,
-mppt-charger, dc-charger, accessories, battery` (see `GET /categories`).
+mppt-charger, dc-charger, accessories, battery, fan` (see `GET /categories`).
 
 **Product fields**
 
