@@ -1,11 +1,14 @@
 import { ProductForm } from "@/components/admin/product-form";
-import { getSettings } from "@/lib/queries";
+import { getCategories, getSettings } from "@/lib/queries";
 import { parsePanelRates } from "@/lib/panel-rates";
 
 export const metadata = { title: "New Product | SunVolt Admin" };
 
 export default async function NewProductPage() {
-  const settings = await getSettings();
+  const [settings, categories] = await Promise.all([getSettings(), getCategories()]);
+  const options = categories
+    .filter((c) => c.active)
+    .map((c) => ({ slug: c.slug, label: c.label }));
 
   return (
     <div>
@@ -13,7 +16,7 @@ export default async function NewProductPage() {
       <p className="mt-1 text-sm text-muted-foreground">
         Create a solar backup package. It appears on the website as soon as it is active.
       </p>
-      <ProductForm panelRates={parsePanelRates(settings.panelRates)} />
+      <ProductForm panelRates={parsePanelRates(settings.panelRates)} categories={options} />
     </div>
   );
 }

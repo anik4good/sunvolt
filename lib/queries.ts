@@ -3,6 +3,7 @@ import { asc, desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import {
   appliances,
+  categories,
   invoiceItems,
   invoices,
   orderAppliances,
@@ -10,8 +11,45 @@ import {
   orders,
   products,
   settings,
+  type Category,
 } from "@/db/schema";
+import { PRODUCT_CATEGORIES } from "@/lib/categories";
 import type { CalculationSettings } from "@/lib/solar/types";
+
+/**
+ * Product categories from Admin → Categories, ordered by sort position.
+ * Falls back to the built-in list when the table is empty (fresh installs
+ * before seeding) so the site never renders without category labels.
+ */
+export const getCategories = cache(async (): Promise<Category[]> => {
+  const rows = await db
+    .select()
+    .from(categories)
+    .orderBy(asc(categories.sortOrder), asc(categories.label));
+  if (rows.length > 0) return rows;
+  return PRODUCT_CATEGORIES.map((c, i) => ({
+    id: c.slug,
+    slug: c.slug,
+    label: c.label,
+    labelBn: c.labelBn,
+    icon: c.icon,
+    active: true,
+    sortOrder: i,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }));
+});
+
+/** Mutation-time category check (sees rows created after boot). */
+export async function isValidCategorySlug(slug: string): Promise<boolean> {
+  const rows = await db
+    .select({ slug: categories.slug })
+    .from(categories)
+    .where(eq(categories.slug, slug))
+    .limit(1);
+  if (rows.length > 0) return true;
+  return PRODUCT_CATEGORIES.some((c) => c.slug === slug);
+}
 
 /** Settings singleton — every page needs it, so dedupe per request. */
 export const getSettings = cache(async () => {

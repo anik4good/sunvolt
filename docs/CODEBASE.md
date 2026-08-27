@@ -129,6 +129,7 @@ proxy.ts               Middleware: bounces anonymous users off /admin
 | Table | Purpose | Notes |
 | ----- | ------- | ----- |
 | `products` | **Packages AND components.** `category = 'package'` = complete backup package (calculator-recommendable); anything else is a standalone component (inverter, panel, battery…). | Slugs unique. JSONB columns: `specs`, `features`, `images[]` (gallery; cover is `imageUrl`), `highlights`, `packaging`, `costPrice`. Numeric columns are stored as strings. |
+| `categories` | **Product categories, managed in Admin → Categories** (slug, label, Bangla label, icon, active, sort order). Seeded with the built-in list from `lib/categories.ts`; the site falls back to that list when the table is empty. Deleting a category in use is blocked — disable it instead. |
 | `appliances` | Calculator load presets (name, icon, defaultWatt). | Soft-referenced by orders. |
 | `orders` | Customer orders (checkout or manual). Status enum: `pending → confirmed → processing → installed → completed / cancelled`. | Snapshot fields (`totalLoad`, `backupHours`, `requiredEnergy`) recomputed server-side at checkout. |
 | `order_items` | Line items per order — `productName`/`unitPrice` **snapshotted** so later product edits don't rewrite history. | Cascade-delete with order. |
@@ -277,7 +278,7 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 | Task | Where |
 | ---- | ----- |
 | Add/change a product field | `db/schema.ts` → `npm run db:push` → product zod schema + `values` mapping in `app/admin/(panel)/products/actions.ts` → `components/admin/product-form.tsx` → (if public) relevant components |
-| Add a category | `lib/categories.ts` only — form select, admin list/filters, admin + API zod schemas and the API index all derive from `PRODUCT_CATEGORIES`/`ALL_CATEGORY_SLUGS` |
+| Add a category | Admin → Categories (no code change). Built-in defaults seed/fallback list lives in `lib/categories.ts` — product form, admin list/filters, zod schemas and API index all read the DB via `getCategories()` |
 | Change calculator math/params | `lib/solar/*` (math) or the `settings` table (params) |
 | Add an admin section | Folder under `app/admin/(panel)/`, add nav entry in `components/admin/sidebar.tsx` |
 | Add an API endpoint | `app/api/v1/…` — follow `DEVELOPERS.md`, auth via `lib/api-auth.ts` |

@@ -15,6 +15,7 @@ import {
 } from "@/lib/api";
 import { productCreateSchema } from "@/lib/api-schemas";
 import { buildProductValues, missingPackageFields, slugify } from "@/lib/api-products";
+import { isValidCategorySlug } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -60,6 +61,14 @@ export const POST = withApiKey(async (request: NextRequest) => {
   const parsed = await parseBody(request, productCreateSchema);
   if (!parsed.ok) return parsed.response;
   const data = parsed.data;
+
+  if (!(await isValidCategorySlug(data.category))) {
+    return apiError(
+      400,
+      "validation_error",
+      `Unknown category "${data.category}". See GET /api/v1/categories.`,
+    );
+  }
 
   const values = await buildProductValues(data, null);
 

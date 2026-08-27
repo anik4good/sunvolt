@@ -7,8 +7,7 @@ import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { ProductCard } from "@/components/products/product-card";
 import { ProductGallery } from "@/components/products/product-gallery";
 import { ProductDetailsTabs } from "@/components/products/product-details-tabs";
-import { categoryLabel } from "@/lib/categories";
-import { getProductBySlug, getRelatedProducts, getSettings } from "@/lib/queries";
+import { getProductBySlug, getCategories, getRelatedProducts, getSettings } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { fmt, getDict } from "@/lib/i18n";
@@ -33,11 +32,15 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const product = await getProductBySlug(slug);
   if (!product || !product.active || product.category === "package") notFound();
 
-  const [{ d }, settings, related] = await Promise.all([
+  const [{ d }, settings, related, categories] = await Promise.all([
     getDict(),
     getSettings(),
     getRelatedProducts(slug, product.category),
+    getCategories(),
   ]);
+  const categoryLabel =
+    categories.find((c) => c.slug === product.category)?.label ??
+    product.category;
 
   const original =
     product.discountPct > 0
@@ -64,7 +67,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const cartItem = {
     slug: product.slug,
     name: product.name,
-    battery: [product.brand, product.model].filter(Boolean).join(" · ") || categoryLabel(product.category),
+    battery: [product.brand, product.model].filter(Boolean).join(" · ") || categoryLabel,
     price: Number(product.price),
   };
 
@@ -93,7 +96,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         {/* Info */}
         <div>
           <p className="text-sm font-semibold uppercase text-solar-dark">
-            {categoryLabel(product.category)}
+            {categoryLabel}
           </p>
           <h1 className="mt-1 text-3xl font-extrabold text-navy">{product.name}</h1>
           <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -217,11 +220,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
             Complete your system
           </h2>
           <p className="mt-2 text-muted-foreground">
-            {fmt(d.products.relatedSub, { n: categoryLabel(product.category) })}
+            {fmt(d.products.relatedSub, { n: categoryLabel })}
           </p>
           <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
             {related.map((item) => (
-              <ProductCard key={item.id} product={item} currency={settings.currency} d={d} />
+              <ProductCard
+                key={item.id}
+                product={item}
+                currency={settings.currency}
+                d={d}
+                categoryLabel={categoryLabel}
+              />
             ))}
           </div>
         </section>

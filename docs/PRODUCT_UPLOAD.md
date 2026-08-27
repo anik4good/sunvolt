@@ -16,7 +16,7 @@ sensible default — see §1.1. Only **price** is truly mandatory besides the na
 | # | Field | Notes |
 | - | ----- | ----- |
 | 1 | **Name** | Exact display name, e.g. `Microtek Vertiga 1050 Solar IPS/UPS Inverter`. Bengali name (`nameBn`) optional — assistant translates otherwise. |
-| 2 | **Category** | Must be one of: `solar-inverter`, `solar-panel`, `mppt-charger`, `dc-charger`, `inverter`, `battery`, `bms`, `diy-solar`, `accessories`. A full backup kit is `package` instead (extra fields required — see §2.2). |
+| 2 | **Category** | Any category from Admin → Categories (create one there first if it doesn't exist — no code change needed). Seeded defaults: `solar-inverter`, `solar-panel`, `mppt-charger`, `dc-charger`, `inverter`, `battery`, `bms`, `diy-solar`, `accessories`, `fan`. A full backup kit is `package` instead (extra fields required — see §2.2). |
 | 3 | **Price (BDT)** | Selling price, whole numbers fine (`18000`). Numeric-range prices (`1250VA–1450VA`) belong in specs, not here. |
 | 4 | Cost price *(optional)* | Supplier/reference buying price for the admin margin column. Set `showMargin` off in Settings to hide entirely. |
 | 5 | Discount % *(optional)* | Whole percent, stored on the product. |
@@ -52,13 +52,13 @@ Learned the hard way — each of these has broken an upload before.
    /api/v1/products/{idOrSlug}` works too (same validation, auto
    revalidation) — good for one-off tweaks, less durable than a committed
    script for seeding.
-2. **Categories come from one place now.** Add the slug to
-   `PRODUCT_CATEGORIES` in `lib/categories.ts` and everything else (admin
-   edit-form select, admin list/filters, admin + API zod schemas, `/api/v1`
-   index) derives from `ALL_CATEGORY_SLUGS` automatically. Before
-   2026-08-27 these were five separate hardcoded lists and new categories
-   silently missed the admin edit form — don't reintroduce literal category
-   arrays anywhere (see CODEBASE.md §10).
+2. **Categories are DB rows — managed in Admin → Categories.** To add one,
+   create it there (label, optional Bangla label, icon, auto slug) — no code
+   change needed; the product form, admin filters, public site and API all
+   read the DB. Built-in defaults are seeded from `lib/categories.ts`
+   (product code touches that file only to change the defaults themselves).
+   Deleting a category in use by products is blocked — disable it instead.
+   `"package"` is reserved for combo backup packages and can't be created.
 3. **Feature tiles REQUIRE `Label: Value` format.**
    `app/(public)/products/[slug]/page.tsx` splits each `features` item on the
    first colon; **lines without a colon are silently dropped from the page.**
@@ -140,7 +140,7 @@ Learned the hard way — each of these has broken an upload before.
 
 ```text
 [ ] Name (+ Bangla name wanted?)
-[ ] Category from the fixed list
+[ ] Category (existing, or create it in Admin → Categories first)
 [ ] Selling price
 [ ] Cost price? discount %?
 [ ] Spec sheet / product details attached / or "search online"

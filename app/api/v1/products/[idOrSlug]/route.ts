@@ -13,6 +13,7 @@ import {
 } from "@/lib/api";
 import { isUuid, productUpdateSchema } from "@/lib/api-schemas";
 import { buildProductValues, missingPackageFields, slugify } from "@/lib/api-products";
+import { isValidCategorySlug } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +43,17 @@ export const PATCH = withApiKey<Ctx>(async (request, ctx) => {
 
   const parsed = await parseBody(request, productUpdateSchema);
   if (!parsed.ok) return parsed.response;
+
+  if (
+    parsed.data.category !== undefined &&
+    !(await isValidCategorySlug(parsed.data.category))
+  ) {
+    return apiError(
+      400,
+      "validation_error",
+      `Unknown category "${parsed.data.category}". See GET /api/v1/categories.`,
+    );
+  }
 
   const values = await buildProductValues(parsed.data, existing);
 

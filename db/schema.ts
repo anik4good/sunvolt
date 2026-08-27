@@ -84,6 +84,27 @@ export const products = pgTable("products", {
     .$onUpdate(() => new Date()),
 });
 
+// Product categories, manageable from Admin → Categories. Seeded with the
+// built-in list from lib/categories.ts; the public site falls back to that
+// list when the table is empty (fresh installs before seeding).
+export const categories = pgTable("categories", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  slug: text("slug").notNull().unique(),
+  label: text("label").notNull(),
+  // Bengali display label (falls back to `label` when empty)
+  labelBn: text("label_bn"),
+  icon: text("icon").notNull().default("⚡"),
+  active: boolean("active").notNull().default(true),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+});
+
 export const appliances = pgTable("appliances", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
@@ -261,6 +282,8 @@ export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
 export type Appliance = typeof appliances.$inferSelect;
 export type NewAppliance = typeof appliances.$inferInsert;
+export type Category = typeof categories.$inferSelect;
+export type NewCategory = typeof categories.$inferInsert;
 export type Order = typeof orders.$inferSelect;
 export type NewOrder = typeof orders.$inferInsert;
 export type OrderItem = typeof orderItems.$inferSelect;

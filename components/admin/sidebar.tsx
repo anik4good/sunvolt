@@ -12,6 +12,7 @@ import {
   LogOut,
   Package,
   Settings,
+  Tags,
   Plug,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import { logout } from "@/app/admin/login/actions";
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/products", label: "Products", icon: Package },
+  { href: "/admin/categories", label: "Categories", icon: Tags },
   { href: "/admin/orders", label: "Orders", icon: ClipboardList },
   { href: "/admin/invoices", label: "Invoices", icon: FileText },
   { href: "/admin/appliances", label: "Appliances", icon: Plug },

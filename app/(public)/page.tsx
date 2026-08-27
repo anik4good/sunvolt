@@ -16,18 +16,14 @@ import {
   getCalculationSettings,
   getCategoryCounts,
   getHomeProducts,
+  getCategories,
   getSettings,
 } from "@/lib/queries";
 import { fmt, getDict, num } from "@/lib/i18n";
-import {
-  PRODUCT_CATEGORIES,
-  categoryIcon,
-  categoryLabelBn,
-} from "@/lib/categories";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 export default async function HomePage() {
-  const [{ lang, d }, settings, calcSettings, appliances, packages, homeProducts, categoryCounts] =
+  const [{ lang, d }, settings, calcSettings, appliances, packages, homeProducts, categoryCounts, categories] =
     await Promise.all([
       getDict(),
       getSettings(),
@@ -36,14 +32,17 @@ export default async function HomePage() {
       getBackupPackages(),
       getHomeProducts(6),
       getCategoryCounts(),
+      getCategories(),
     ]);
   // Show every package on the homepage; the featured one goes last (3rd).
   const popular = [...packages].sort(
     (a, b) => Number(a.featured) - Number(b.featured),
   );
-  const categoriesWithProducts = PRODUCT_CATEGORIES.filter(
-    (c) => (categoryCounts.get(c.slug) ?? 0) > 0,
-  ).map((c) => ({ ...c, count: categoryCounts.get(c.slug) ?? 0 }));
+  const categoriesWithProducts = categories
+    .filter((c) => c.active && (categoryCounts.get(c.slug) ?? 0) > 0)
+    .map((c) => ({ ...c, count: categoryCounts.get(c.slug) ?? 0 }));
+  const categoryLabelFor = (slug: string) =>
+    categories.find((c) => c.slug === slug)?.label;
 
   const howSteps = [
     { step: num(1, lang), title: d.how.s1t, desc: d.how.s1d },
@@ -195,6 +194,7 @@ export default async function HomePage() {
                 product={product}
                 currency={settings.currency}
                 d={d}
+                categoryLabel={categoryLabelFor(product.category)}
               />
             ))}
           </div>
@@ -216,10 +216,10 @@ export default async function HomePage() {
                 className="group rounded-2xl border bg-card p-5 text-center shadow-sm transition-shadow hover:shadow-md"
               >
                 <span className="text-3xl" aria-hidden>
-                  {categoryIcon(category.slug)}
+                  {category.icon}
                 </span>
                 <p className="mt-3 text-sm font-bold text-navy group-hover:underline">
-                  {lang === "bn" ? categoryLabelBn(category.slug) : category.label}
+                  {lang === "bn" ? (category.labelBn ?? category.label) : category.label}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {fmt(d.cat.items, { n: num(category.count, lang) })}

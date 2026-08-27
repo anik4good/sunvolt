@@ -4,11 +4,23 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import type { Product } from "@/db/schema";
-import { categoryLabel } from "@/lib/categories";
+import { categoryLabel as fallbackCategoryLabel } from "@/lib/categories";
 import { formatPrice } from "@/lib/format";
 import { fmt, type Dictionary } from "@/lib/i18n";
 
-export function ProductCard({ product, currency, d }: { product: Product; currency: string; d: Dictionary }) {
+export function ProductCard({
+  product,
+  currency,
+  d,
+  categoryLabel,
+}: {
+  product: Product;
+  currency: string;
+  d: Dictionary;
+  /** Resolved category label from the DB — falls back to the slug. */
+  categoryLabel?: string;
+}) {
+  const label = categoryLabel ?? fallbackCategoryLabel(product.category);
   const original =
     product.discountPct > 0
       ? Math.round(Number(product.price) / (1 - product.discountPct / 100))
@@ -50,7 +62,7 @@ export function ProductCard({ product, currency, d }: { product: Product; curren
 
       <CardContent className="flex flex-1 flex-col px-4 pt-3">
         <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {categoryLabel(product.category)}
+          {label}
         </p>
         <Link href={`/products/${product.slug}`} className="mt-1">
           <h3 className="line-clamp-2 min-h-11 text-sm font-semibold text-navy hover:underline">
@@ -84,7 +96,7 @@ export function ProductCard({ product, currency, d }: { product: Product; curren
           item={{
             slug: product.slug,
             name: product.name,
-            battery: [product.brand, product.model].filter(Boolean).join(" · ") || categoryLabel(product.category),
+            battery: [product.brand, product.model].filter(Boolean).join(" · ") || label,
             price: Number(product.price),
           }}
         />

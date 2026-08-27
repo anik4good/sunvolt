@@ -4,8 +4,7 @@ import { PackageSearch } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ProductCard } from "@/components/products/product-card";
 import { SortSelect } from "@/components/products/sort-select";
-import { PRODUCT_CATEGORIES } from "@/lib/categories";
-import { getCategoryCounts, getProducts, getSettings, type ProductSort } from "@/lib/queries";
+import { getCategoryCounts, getCategories, getProducts, getSettings, type ProductSort } from "@/lib/queries";
 import { fmt, getDict, num } from "@/lib/i18n";
 
 export const metadata: Metadata = {
@@ -34,7 +33,8 @@ function buildHref(params: { category?: string; q?: string; sort?: string }) {
 export default async function ProductsPage({ searchParams }: PageProps) {
   const { lang, d } = await getDict();
   const { category, q, sort } = await searchParams;
-  const validCategory = PRODUCT_CATEGORIES.some((c) => c.slug === category)
+  const categories = (await getCategories()).filter((c) => c.active);
+  const validCategory = categories.some((c) => c.slug === category)
     ? category
     : undefined;
   const validSort: ProductSort =
@@ -49,8 +49,10 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
   const totalCount = [...counts.values()].reduce((a, b) => a + b, 0);
   const currentLabel = validCategory
-    ? PRODUCT_CATEGORIES.find((c) => c.slug === validCategory)!.label
+    ? categories.find((c) => c.slug === validCategory)!.label
     : "All categories";
+  const categoryLabelFor = (slug: string) =>
+    categories.find((c) => c.slug === slug)?.label;
 
   const categoryNav = (
     <ul className="space-y-1" aria-label="Product categories">
@@ -66,7 +68,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
           <span className="text-xs opacity-70">{totalCount}</span>
         </Link>
       </li>
-      {PRODUCT_CATEGORIES.map((c) => {
+      {categories.map((c) => {
         const count = counts.get(c.slug) ?? 0;
         if (count === 0) return null;
         return (
@@ -135,7 +137,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             >
               {d.products.all}
             </Link>
-            {PRODUCT_CATEGORIES.map((c) => {
+            {categories.map((c) => {
               const count = counts.get(c.slug) ?? 0;
               if (count === 0) return null;
               return (
@@ -174,6 +176,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                   product={product}
                   currency={settings.currency}
                   d={d}
+                  categoryLabel={categoryLabelFor(product.category)}
                 />
               ))}
             </div>

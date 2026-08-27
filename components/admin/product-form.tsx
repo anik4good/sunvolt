@@ -24,7 +24,7 @@ import {
 import type { Product } from "@/db/schema";
 import type { PanelRate } from "@/lib/panel-rates";
 import { formatNumber } from "@/lib/format";
-import { PRODUCT_CATEGORIES } from "@/lib/categories";
+import type { CategoryOption } from "@/lib/categories";
 
 function Field({
   label,
@@ -53,9 +53,11 @@ function specsToText(specs: Record<string, string> | null): string {
 export function ProductForm({
   product,
   panelRates,
+  categories,
 }: {
   product?: Product;
   panelRates: PanelRate[];
+  categories: CategoryOption[];
 }) {
   // Bound server action — works with JS and without (progressive enhancement)
   const [state, formAction, pending] = useActionState<ProductFormState | undefined, FormData>(
@@ -113,7 +115,7 @@ export function ProductForm({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="package">Backup Package (combo)</SelectItem>
-              {PRODUCT_CATEGORIES.map((cat) => (
+              {categories.map((cat) => (
                 <SelectItem key={cat.slug} value={cat.slug}>
                   {cat.label}
                 </SelectItem>

@@ -11,14 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PRODUCT_CATEGORIES } from "@/lib/categories";
+import type { CategoryOption } from "@/lib/categories";
 
 /**
  * URL-driven filters for the admin products table: debounced text
  * search (name, Bengali name, brand, model, slug), category chips and
  * a status select. The page re-queries from the updated searchParams.
  */
-export function ProductsFilters() {
+export function ProductsFilters({
+  categories,
+}: {
+  categories: CategoryOption[];
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -102,7 +106,7 @@ export function ProductsFilters() {
         >
           Packages
         </button>
-        {PRODUCT_CATEGORIES.map((c) => (
+        {categories.map((c) => (
           <button
             key={c.slug}
             type="button"

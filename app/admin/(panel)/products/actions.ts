@@ -12,15 +12,13 @@ import { requireAdmin } from "@/lib/auth";
 import { getSettings } from "@/lib/queries";
 import { parsePanelRates } from "@/lib/panel-rates";
 import { sanitizeProductDescription } from "@/lib/product-description";
-import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
-
-const CATEGORY_SLUGS = ALL_CATEGORY_SLUGS;
+import { isValidCategorySlug } from "@/lib/queries";
 
 const productSchema = z
   .object({
     name: z.string().trim().min(2, "Name is required").max(120),
     nameBn: z.string().trim().max(160).optional(),
-    category: z.enum(CATEGORY_SLUGS).default("package"),
+    category: z.string().trim().min(1).max(60).default("package"),
     slug: z
       .string()
       .trim()
@@ -195,6 +193,11 @@ export async function saveProduct(
   }
   const data = parsed.data;
   const slug = data.slug ?? slugify(data.name);
+
+  // Categories are DB-managed (Admin → Categories) — validate after parse.
+  if (!(await isValidCategorySlug(data.category))) {
+    return { message: `category: unknown category "${data.category}".` };
+  }
 
   // Solar panels can be priced globally: rate × watts (Settings → Solar panel pricing).
   const panelPrice =

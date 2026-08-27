@@ -25,7 +25,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDate, formatNumber, formatPrice } from "@/lib/format";
-import { categoryLabel } from "@/lib/categories";
 import { useRouter } from "next/navigation";
 import type { Product } from "@/db/schema";
 
@@ -33,6 +32,7 @@ interface ProductsDataTableProps {
   data: Product[];
   showMargin: boolean;
   usdRate: number;
+  categoryLabels: Record<string, string>;
 }
 
 function StockBadge({ stock }: { stock: number }) {
@@ -45,7 +45,7 @@ function StockBadge({ stock }: { stock: number }) {
   return <Badge variant="outline" className="border-leaf text-leaf text-[10px] px-2 py-0.5">In stock · {stock}</Badge>;
 }
 
-export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTableProps) {
+export function ProductsDataTable({ data, showMargin, usdRate, categoryLabels }: ProductsDataTableProps) {
   const router = useRouter();
   const [optimisticUpdates, setOptimisticUpdates] = React.useState<Record<string, boolean>>({});
 
@@ -232,7 +232,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
             variant="outline"
             className={product.category === "package" ? "border-solar text-solar-dark text-[10px] px-2 py-0.5" : "border-navy/30 text-navy text-[10px] px-2 py-0.5"}
           >
-            {product.category === "package" ? "Package" : categoryLabel(product.category)}
+            {product.category === "package" ? "Package" : (categoryLabels[product.category] ?? product.category)}
           </Badge>
         );
       },

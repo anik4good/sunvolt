@@ -8,11 +8,9 @@ import { formatPrice } from "@/lib/format";
 import { getSettings } from "@/lib/queries";
 import { ProductsFilters } from "@/components/admin/products-filters";
 import { ProductsDataTable } from "@/components/admin/products-data-table";
-import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
+import { getCategories } from "@/lib/queries";
 
 export const metadata = { title: "Products | SunVolt Admin" };
-
-const CATEGORIES = ALL_CATEGORY_SLUGS;
 
 interface PageProps {
   searchParams: Promise<{
@@ -26,6 +24,12 @@ interface PageProps {
 
 export default async function AdminProductsPage({ searchParams }: PageProps) {
   const { saved, deleted, q, category, status } = await searchParams;
+  const categories = await getCategories();
+  const activeCategories = categories.filter((c) => c.active);
+  const categoryLabels: Record<string, string> = {
+    package: "Package",
+    ...Object.fromEntries(categories.map((c) => [c.slug, c.label])),
+  };
 
   const conditions: SQL[] = [];
   if (q) {
@@ -34,7 +38,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
       sql`(lower(${products.name}) like ${like} or lower(coalesce(${products.nameBn}, '')) like ${like} or lower(coalesce(${products.brand}, '')) like ${like} or lower(coalesce(${products.model}, '')) like ${like} or lower(${products.slug}) like ${like})`,
     );
   }
-  if (category && CATEGORIES.includes(category)) {
+  if (category && ["package", ...activeCategories.map((c) => c.slug)].includes(category)) {
     conditions.push(eq(products.category, category));
   }
   if (status === "active" || status === "disabled") {
@@ -78,7 +82,10 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
       ) : null}
 
       {/* key resets the search box when the URL's q changes (e.g. Clear filters) */}
-      <ProductsFilters key={q ?? ""} />
+      <ProductsFilters
+        key={q ?? ""}
+        categories={activeCategories.map((c) => ({ slug: c.slug, label: c.label }))}
+      />
 
       <div>
         {rows.length === 0 ? (
@@ -95,7 +102,12 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
             )}
           </div>
         ) : (
-          <ProductsDataTable data={rows} showMargin={showMargin} usdRate={usdRate} />
+          <ProductsDataTable
+            data={rows}
+            showMargin={showMargin}
+            usdRate={usdRate}
+            categoryLabels={categoryLabels}
+          />
         )}
       </div>
     </div>

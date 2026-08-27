@@ -1,13 +1,14 @@
 import { z } from "zod";
-import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
 
 /**
  * Zod schemas for the /api/v1 management API (JSON bodies — see
  * DEVELOPERS.md). Separate from the admin form schemas because the API
  * accepts native JSON (records/arrays) instead of textarea blobs.
+ *
+ * Categories are DB-managed (Admin → Categories), so `category` is parsed
+ * as a plain string and routes validate it against the DB with
+ * isValidCategorySlug() after parsing.
  */
-
-export const CATEGORY_SLUGS: readonly string[] = ALL_CATEGORY_SLUGS;
 
 const nullableTrim = (max: number) =>
   z.string().trim().max(max).nullable().optional();
@@ -63,7 +64,7 @@ const costPrice = z
 const productFields = {
   name: z.string().trim().min(2).max(120),
   nameBn: nullableTrim(160),
-  category: z.enum(CATEGORY_SLUGS),
+  category: z.string().trim().min(1).max(60),
   slug: z.string().trim().min(1).max(120).nullable().optional(),
   description: nullableTrim(20000),
   brand: nullableTrim(80),

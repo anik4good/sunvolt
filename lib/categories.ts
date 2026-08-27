@@ -17,6 +17,9 @@ export const PRODUCT_CATEGORIES = [
 
 export type ProductCategorySlug = (typeof PRODUCT_CATEGORIES)[number]["slug"];
 
+/** Minimal shape client components need to render category choices. */
+export type CategoryOption = { slug: string; label: string };
+
 export function categoryLabel(slug: string): string {
   return PRODUCT_CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
 }
@@ -30,13 +33,3 @@ export function categoryIcon(slug: string): string {
 }
 
 export const PACKAGE_CATEGORY = "package";
-
-/**
- * Every valid category slug (packages + components) in one place. Form
- * selects, the admin zod schema, the API schema/filters and the admin
- * product list all derive from this — adding a category here is enough.
- */
-export const ALL_CATEGORY_SLUGS: readonly string[] = [
-  PACKAGE_CATEGORY,
-  ...PRODUCT_CATEGORIES.map((c) => c.slug),
-];

@@ -76,9 +76,12 @@ keys like passwords; rotate by creating a new key and revoking the old one.
 `category = "package"` makes it a **backup package** (appears in
 /packages and calculator recommendations) — then `batteryVoltage`,
 `batteryCapacityAh`, `backupHours`, `recommendedLoadWatt` are **required**.
-Any other category is a standalone component. Valid categories:
-`package, solar-inverter, bms, solar-panel, inverter, diy-solar,
-mppt-charger, dc-charger, accessories, battery, fan` (see `GET /categories`).
+Any other category is a standalone component. Categories are DB-managed
+(Admin → Categories) — list them with `GET /categories` and send the `slug`.
+`"package"` plus the seeded built-ins (`solar-inverter`, `bms`,
+`solar-panel`, `inverter`, `diy-solar`, `mppt-charger`, `dc-charger`,
+`accessories`, `battery`, `fan`) exist by default; unknown slugs are
+rejected with a validation error.
 
 **Product fields**
 

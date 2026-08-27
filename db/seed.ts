@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { db } from "./index";
-import { appliances, products, settings } from "./schema";
+import { appliances, categories, products, settings } from "./schema";
+import { PRODUCT_CATEGORIES } from "../lib/categories";
 
 // Initial reference data from plan.md. Only inserts when a table is empty,
 // so re-running the seed never overwrites admin edits.
@@ -114,8 +115,27 @@ async function seedSettings() {
   console.log("settings: inserted 1 row");
 }
 
+// Top up any built-in categories missing from the table (never touches
+// admin-created or edited rows — conflicts on slug are skipped).
+async function seedCategories() {
+  await db
+    .insert(categories)
+    .values(
+      PRODUCT_CATEGORIES.map((c, i) => ({
+        slug: c.slug,
+        label: c.label,
+        labelBn: c.labelBn,
+        icon: c.icon,
+        sortOrder: i,
+      })),
+    )
+    .onConflictDoNothing({ target: categories.slug });
+  console.log(`categories: ensured ${PRODUCT_CATEGORIES.length} built-ins`);
+}
+
 async function main() {
   console.log(`Seeding ${process.env.DATABASE_URL?.replace(/:[^:@]*@/, ":***@")}`);
+  await seedCategories();
   await seedAppliances();
   await seedProducts();
   await seedSettings();

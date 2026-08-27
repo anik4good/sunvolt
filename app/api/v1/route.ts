@@ -1,6 +1,7 @@
 import { json, withApiKey } from "@/lib/api";
 import { API_ENDPOINTS } from "@/lib/api-endpoints";
-import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
+import { PACKAGE_CATEGORY } from "@/lib/categories";
+import { getCategories } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -9,8 +10,9 @@ export const dynamic = "force-dynamic";
  * of DEVELOPERS.md so an AI provider can discover the whole API from
  * one authenticated request.
  */
-export const GET = withApiKey(async () =>
-  json({
+export const GET = withApiKey(async () => {
+  const categories = await getCategories();
+  return json({
     name: "SunVolt Management API",
     version: 1,
     documentation: "/DEVELOPERS.md",
@@ -24,7 +26,7 @@ export const GET = withApiKey(async () =>
       errors: "{ error: { code, message, details? } }",
     },
     endpoints: API_ENDPOINTS,
-    productCategories: ALL_CATEGORY_SLUGS,
+    productCategories: [PACKAGE_CATEGORY, ...categories.map((c) => c.slug)],
     orderStatuses: ["pending", "confirmed", "processing", "installed", "completed", "cancelled"],
-  }),
-);
+  });
+});
