@@ -67,7 +67,8 @@ Learned the hard way — each of these has broken an upload before.
    those tiles instantly knows what the product is, what powers it, what it
    can run, and why it stands out — no two tiles saying the same thing.
    Cover the following aspects (skip the truly N/A ones for that product
-   type, e.g. solar input on a battery; never exceed 8 total):
+   type, e.g. solar input on a battery; cap at 8 unless the owner explicitly
+   asks for more items to be shown):
    - **Identity/size** — capacity or power rating (`Capacity`, `Power`)
    - **Output quality** — waveform/type (`Waveform`, `Type`)
    - **Electrical system** — voltage/battery/system config (`Battery`,

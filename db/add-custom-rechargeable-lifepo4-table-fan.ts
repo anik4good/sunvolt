@@ -18,7 +18,7 @@ const ROW = {
   category: "fan",
   slug: "custom-rechargeable-lifepo4-table-fan",
   description:
-    "The Custom Rechargeable LiFePO4 Table Fan is a 12-inch DC table fan with a built-in 12V 6Ah LiFePO4 battery that runs up to 7 hours on a single charge. Its efficient 12W DC motor spins at 1700 RPM and delivers 10 m³/min of air — ideal for load-shedding, study desks, shops and travel. Available in Green, Ivory and Maroon.",
+    "The Custom Rechargeable LiFePO4 Table Fan is a 12-inch DC table fan with a built-in 12V 6Ah LiFePO4 battery that runs up to 7 hours on a single charge. Multi-speed selection and an oscillation system let you set the airflow just right, while the efficient 12W DC motor delivers 10 m³/min of air — ideal for load-shedding, study desks, shops and travel. Available in Green, Ivory and Maroon.",
   specs: {
     Type: "Rechargeable Table Fan",
     Size: '12" (300mm)',
@@ -26,6 +26,8 @@ const ROW = {
     "Rated Voltage": "DC 12V",
     "Motor Type": "DC 12V",
     Speed: "1700 RPM",
+    "Speed Control": "Multi-Speed Selection",
+    Oscillation: "Yes",
     "Input Power": "12 Watt",
     Current: "1 Ampere",
     "Air Delivery": "10 m³/min",
@@ -42,6 +44,8 @@ const ROW = {
     "Speed: 1700 RPM",
     "Power: 12 Watt",
     "Air Flow: 10 m³/min",
+    "Speeds: Multi-Speed",
+    "Oscillation: Yes",
     "Colors: 3 Options",
   ] satisfies string[],
   price: "6500.00",
