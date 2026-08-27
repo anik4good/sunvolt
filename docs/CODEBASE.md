@@ -221,12 +221,19 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 - **Reads** go through `lib/queries.ts` helpers (React `cache`-deduped per
   request).
 - **Images**: uploads land in `public/products/` with generated filenames
-  (PNG/JPG/WebP/GIF, ≤5 MB), stored as site paths (`/products/<file>`).
-  Product URLs from Alibaba's `https://sc04.alicdn.com/kf/**` CDN are also
-  allowed by the Next.js image optimizer. The volume is mounted persistent in
-  Docker. The container entrypoint fixes ownership of bind-mounted upload
-  directories before dropping to the `nextjs` user, so admin uploads work in
-  production as well as local development.
+  (PNG/JPG/WebP/GIF, ≤5 MB), stored as site paths
+  (`/api/media/products/<file>`). Product URLs from Alibaba's
+  `https://sc04.alicdn.com/kf/**` CDN are also allowed by the Next.js image
+  optimizer. The volume is mounted persistent in Docker. The container
+  entrypoint fixes ownership of bind-mounted upload directories before
+  dropping to the `nextjs` user, so admin uploads work in production as well
+  as local development.
+- **Media route**: production Next.js only serves `public/` files that existed
+  at server startup, so freshly uploaded files would 404 until a restart.
+  `app/api/media/[...path]/route.ts` streams uploaded files from disk on every
+  request (`/api/media/products|uploads/<file>` — extension allowlist, no path
+  traversal). All uploaders return `/api/media/...` paths; legacy
+  `/products/<file>` URLs of pre-existing images keep working unchanged.
 - **Product detail tiles**: the `features` textarea accepts `Label: Value`
   lines; these drive the compact tiles shown after stock status. The `specs`
   object remains the detailed Technical specification table.

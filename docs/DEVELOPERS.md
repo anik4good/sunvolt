@@ -254,10 +254,16 @@ curl -X PATCH .../api/v1/settings \
 
 ```
 POST /api/v1/uploads          (multipart/form-data, field: file)
-→ { "path": "/products/1690000000-ab12cd.jpg" }
+→ { "path": "/api/media/products/1690000000-ab12cd.jpg" }
 ```
 
 PNG/JPG/WebP/GIF, ≤ 5 MB. Use the returned `path` in product `images`.
+
+The returned path is served by the public `GET /api/media/<dir>/<file>`
+handler (dirs: `products`, `uploads` — images only, no API key needed).
+Fresh uploads are readable immediately; production static-file serving only
+covers files that existed at server startup, which is why uploads use this
+route instead of `/products/<file>`.
 
 ## 10. Stats & categories
 

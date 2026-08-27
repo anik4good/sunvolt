@@ -54,5 +54,7 @@ export const POST = withApiKey(async (request: NextRequest) => {
   }
 
   revalidatePath("/admin/products");
-  return json({ path: `/products/${name}` }, 201);
+  // Served via /api/media — production static serving only covers files
+  // that existed at server startup, so fresh uploads need this route.
+  return json({ path: `/api/media/products/${name}` }, 201);
 });

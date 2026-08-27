@@ -341,6 +341,10 @@ const UPLOAD_TYPES: Record<string, string> = {
  * Save an uploaded product image into public/products and return its
  * site path. The stored filename is fully generated, so the original
  * name can't escape the directory or collide with existing files.
+ *
+ * Served through /api/media/... because production Next.js only serves
+ * public/ files that existed at startup — runtime uploads need the
+ * dynamic media route to be visible without a restart.
  */
 export async function uploadProductImage(file: File): Promise<UploadResult> {
   await requireAdmin();
@@ -367,5 +371,5 @@ export async function uploadProductImage(file: File): Promise<UploadResult> {
   }
 
   revalidatePath("/admin/products");
-  return { path: `/products/${name}` };
+  return { path: `/api/media/products/${name}` };
 }
