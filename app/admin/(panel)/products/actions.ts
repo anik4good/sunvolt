@@ -36,7 +36,7 @@ const productSchema = z
       .max(120)
       .optional()
       .transform((v) => (v ? v : undefined)),
-    description: z.string().trim().max(1000).optional(),
+    description: z.string().trim().max(2000).optional(),
     brand: z.string().trim().max(80).optional(),
     model: z.string().trim().max(80).optional(),
     specsText: z.string().trim().max(6000).optional(),

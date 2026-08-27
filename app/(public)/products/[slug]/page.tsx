@@ -94,10 +94,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
             {categoryLabel(product.category)}
           </p>
           <h1 className="mt-1 text-3xl font-extrabold text-navy">{product.name}</h1>
-          {product.description ? (
-            <p className="mt-3 leading-relaxed text-muted-foreground">{product.description}</p>
-          ) : null}
-
           <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <span className="bg-gradient-to-r from-solar-dark to-solar bg-clip-text text-3xl font-extrabold text-transparent">
               {formatPrice(product.price, settings.currency)}
@@ -183,6 +179,17 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
         </div>
       </div>
+
+      {product.description ? (
+        <section className="mt-12">
+          <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
+            Description
+          </h2>
+          <div className="mt-4 whitespace-pre-line rounded-2xl border bg-card px-4 py-5 leading-relaxed text-muted-foreground sm:px-6">
+            {product.description}
+          </div>
+        </section>
+      ) : null}
 
       {/* Key attributes — two-column grid; Place of Origin hidden on page */}
       {specs.length > 0 ? (

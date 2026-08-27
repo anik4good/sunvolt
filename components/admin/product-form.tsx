@@ -144,8 +144,17 @@ export function ProductForm({
         </div>
       </div>
 
-      <Field label="Description (Bengali, shown to customers)">
-        <Textarea name="description" rows={3} defaultValue={product?.description ?? ""} />
+      <Field
+        label="Description (shown before Key attributes)"
+        hint="Optional — paste any product description. Line breaks are preserved. Leave empty to hide it."
+      >
+        <Textarea
+          name="description"
+          rows={8}
+          maxLength={2000}
+          defaultValue={product?.description ?? ""}
+          placeholder="Paste the product description here…"
+        />
       </Field>
 
       {isPackage ? (
