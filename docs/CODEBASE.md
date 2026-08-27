@@ -222,9 +222,11 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   request).
 - **Images**: uploads land in `public/products/` with generated filenames
   (PNG/JPG/WebP/GIF, ≤5 MB), stored as site paths
-  (`/api/media/products/<file>`). Product URLs from Alibaba's
-  `https://sc04.alicdn.com/kf/**` CDN are also allowed by the Next.js image
-  optimizer. The volume is mounted persistent in Docker. The container
+  (`/api/media/products/<file>`). Product URLs from external CDNs are also
+  allowed by the Next.js image optimizer when their host is listed in
+  `next.config.ts` → `images.remotePatterns` (currently Alibaba's
+  `sc04.alicdn.com/kf/**` and `solarhousebd.com/wp-content/uploads/**`).
+  Add new hosts there before using them as product image URLs. The volume is mounted persistent in Docker. The container
   entrypoint fixes ownership of bind-mounted upload directories before
   dropping to the `nextjs` user, so admin uploads work in production as well
   as local development.

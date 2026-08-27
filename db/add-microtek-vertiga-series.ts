@@ -16,6 +16,9 @@ type Row = typeof products.$inferInsert;
 const COMMON_DESC =
   "The Microtek Vertiga series features a revolutionary vertical wall-mount design that blends seamlessly with modern interiors while saving valuable floor space. Engineered with pure sine wave technology, it ensures noiseless operation and total safety for sensitive electronics like computers and smart TVs. Its built-in solar charge controller helps reduce electricity bills by intelligently prioritizing solar power for battery charging.";
 
+// Shared live cover image (owner-provided URL, allowlisted in next.config.ts).
+const IMAGE_URL = "https://solarhousebd.com/wp-content/uploads/2026/07/Gemini_Generated_Image_3o9j2t3o9j2t3o9j.png";
+
 const SERIES: Row[] = [
   {
     name: "Microtek Vertiga 750 Solar IPS/UPS Inverter",
@@ -54,6 +57,7 @@ const SERIES: Row[] = [
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
+    imageUrl: IMAGE_URL,
     // Reference market price seen at BDStall.
     costPrice: { perPiece: 10500 },
     sourceUrl: "https://www.bdstall.com/details/microtek-vertiga-750-solar-inverter-ips-166312/",
@@ -101,8 +105,7 @@ const SERIES: Row[] = [
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
-    // Owner asked for no product images on this series.
-    imageUrl: null,
+    imageUrl: IMAGE_URL,
     images: null,
     // Reference market price seen at BDStall.
     costPrice: { perPiece: 11500 },
@@ -144,6 +147,7 @@ const SERIES: Row[] = [
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
+    imageUrl: IMAGE_URL,
   },
   {
     name: "Microtek Vertiga 1550 Solar IPS/UPS Inverter",
@@ -182,6 +186,7 @@ const SERIES: Row[] = [
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
+    imageUrl: IMAGE_URL,
     // Reference street price seen from local sellers (TM Electronic).
     costPrice: { perPiece: 12900 },
   },
