@@ -24,6 +24,11 @@
 .DS_Store
 *.pem
 
+# Product images are uploaded and persisted on the production host.
+# Keep them out of Git so production-only uploads are not pulled locally.
+/public/products/*
+/public/uploads/*
+
 # debug
 npm-debug.log*
 yarn-debug.log*
