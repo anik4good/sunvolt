@@ -89,8 +89,9 @@ mppt-charger, dc-charger, accessories, battery` (see `GET /categories`).
 | `category` | string | default `package` |
 | `slug` | string | auto-generated from `name` if omitted; unique |
 | `description`, `brand`, `model`, `sourceUrl` | string | |
-| `specs` | object | `{ "Key": "Value" }` spec sheet |
-| `features`, `highlights` | string[] | bullet lists |
+| `specs` | object | `{ "Key": "Value" }` detailed Key attributes sheet |
+| `features` | string[] | `Label: Value` lines drive compact product tiles after stock status |
+| `highlights` | string[] | bullet lists for marketing content |
 | `packaging` | object | packaging/delivery table |
 | `images` | string[] | ordered paths — **first is the cover**; upload via `POST /uploads` |
 | `price` ★ | number | BDT. ★ auto-computed for solar panels (below) |

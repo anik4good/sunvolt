@@ -21,22 +21,27 @@ WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \
-    HOSTNAME=0.0.0.0 \
-    PUBLIC_DIR=/app/public
+    HOSTNAME=0.0.0.0
 
-RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+# su-exec lets the entrypoint fix upload-dir ownership as root and
+# then drop back to the unprivileged runtime user.
+RUN apk add --no-cache su-exec \
+  && addgroup -S nodejs && adduser -S nextjs -G nodejs
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/.next/server ./.next/server
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-# Ensure proper permissions for product uploads
-RUN mkdir -p /app/public/products /app/public/uploads && \
-    chown -R nextjs:nodejs /app/public/products /app/public/uploads && \
-    chmod -R 755 /app/public
+RUN mkdir -p /app/public/products /app/public/uploads \
+  && chown -R nextjs:nodejs /app/public \
+  && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-USER nextjs
+# Starts as root so the entrypoint can chown the bind-mounted upload
+# dirs; it drops to "nextjs" before starting the server.
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check, Truck, Wallet, ShieldCheck } from "lucide-react";
+import { Truck, Wallet, ShieldCheck } from "lucide-react";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { ProductCard } from "@/components/products/product-card";

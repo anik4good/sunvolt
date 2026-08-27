@@ -222,7 +222,12 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   request).
 - **Images**: uploads land in `public/products/` with generated filenames
   (PNG/JPG/WebP/GIF, ≤5 MB), stored as site paths (`/products/<file>`).
-  The volume is mounted persistent in Docker.
+  The volume is mounted persistent in Docker. The container entrypoint fixes
+  ownership of bind-mounted upload directories before dropping to the `nextjs`
+  user, so admin uploads work in production as well as local development.
+- **Product detail tiles**: the `features` textarea accepts `Label: Value`
+  lines; these drive the compact tiles shown after stock status. The `specs`
+  object remains the detailed Key attributes table.
 - **Styling**: Tailwind utility classes with custom tokens — `navy`
   (primary dark), `solar` (accent), `leaf` (success), `secondary`
   (surface), `destructive` (danger). UI primitives in `components/ui/`.

@@ -356,40 +356,13 @@ export async function uploadProductImage(file: File): Promise<UploadResult> {
   }
 
   const name = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  
-  // Handle both local and Docker environments
-  const baseDir = process.env.PUBLIC_DIR || process.cwd();
-  const dir = path.join(baseDir, "public", "products");
-  const fullPath = path.join(dir, name);
-  
+  const dir = path.join(process.cwd(), "public", "products");
   try {
-    // Ensure directory exists with proper permissions
-    await fs.mkdir(dir, { recursive: true, mode: 0o755 });
-    
-    // Get file buffer
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    
-    // Write file
-    await fs.writeFile(fullPath, buffer, { mode: 0o644 });
-    
-    // Verify file was written
-    const stats = await fs.stat(fullPath);
-    if (stats.size === 0) {
-      return { error: "File was not written properly (0 bytes)." };
-    }
-    
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(path.join(dir, name), Buffer.from(await file.arrayBuffer()));
   } catch (error) {
     console.error("Image upload failed:", error);
-    
-    // Provide detailed error for debugging
-    if (error instanceof Error) {
-      return { 
-        error: `Upload failed: ${error.message}. Dir: ${dir}, File: ${name}, Size: ${file.size} bytes` 
-      };
-    }
-    
-    return { error: "Could not save the file on the server. Check directory permissions." };
+    return { error: "Could not save the file on the server." };
   }
 
   revalidatePath("/admin/products");
