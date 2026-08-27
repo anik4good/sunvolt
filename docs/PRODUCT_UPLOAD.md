@@ -21,7 +21,7 @@ sensible default — see §1.1. Only **price** is truly mandatory besides the na
 | 4 | Cost price *(optional)* | Supplier/reference buying price for the admin margin column. Set `showMargin` off in Settings to hide entirely. |
 | 5 | Discount % *(optional)* | Whole percent, stored on the product. |
 | 6 | Specs | Technical specification as `Label: Value` pairs. If absent, assistant researches reputable listings and states its sources. |
-| 7 | Feature tiles *(optional)* | The compact tiles under the stock badge. Assistant generates 8 short spec-derived items unless told otherwise. **Must be `Label: Value` — see §2.3.** |
+| 7 | Feature tiles *(optional)* | You can skip these entirely: hand over just the product details / technical description / listing text and **the assistant analyzes it and distills exactly 8 at-a-glance tiles** that represent the whole product (rule in §2.3). Supply your own only if specific ones must be forced. Whatever the source, **format is `Label: Value` — see §2.3.** |
 | 8 | Images | One of: (a) *none*, (b) *file(s)* to upload, (c) *live URL(s)*. External hosts need one-time config — see §2.4. Say explicitly which you want. |
 | 9 | Warranty *(optional)* | In months. Omitted = stored `0` = badge hidden on the site (never invent a warranty). |
 | 10 | Stock *(optional)* | Defaults to 10. |
@@ -61,9 +61,31 @@ Learned the hard way — each of these has broken an upload before.
    first colon; **lines without a colon are silently dropped from the page.**
    All feature items must look like `Capacity: 650VA / 520W`. Keep values
    short (~≤18 chars) — tiles truncate; full value shows as hover tooltip.
-   Standard set per component product: Capacity · Waveform/type · Battery /
-   system voltage · Controller type · Max solar input · Display · Design ·
-   one differentiator.
+   **The 8 tiles are the product's at-a-glance summary.** When the requester
+   provides product details / a technical description / listing text,
+   ANALYZE it and distill exactly 8 tiles such that a buyer reading only
+   those tiles instantly knows what the product is, what powers it, what it
+   can run, and why it stands out — no two tiles saying the same thing.
+   Cover the following aspects (skip the truly N/A ones for that product
+   type, e.g. solar input on a battery; never exceed 8 total):
+   - **Identity/size** — capacity or power rating (`Capacity`, `Power`)
+   - **Output quality** — waveform/type (`Waveform`, `Type`)
+   - **Electrical system** — voltage/battery/system config (`Battery`,
+     `System`)
+   - **Charging/solar tech** — controller type & max panel/load input
+     (`Controller`, `Solar Panel`, `Max Load`)
+   - **Usability** — display/meters/app control (`Display`)
+   - **Form factor** — design/mount/chassis (`Design`, `Chassis`)
+   - **Safety** — protection suite condensed to a few words (`Protection`)
+   - **One differentiator** — the strongest selling point that isn't yet
+     covered (`Surge: PC Ready`, `Boost: +30% Power`)
+   Worked example (Vertiga 1050): raw sheet "1050VA ~760W pure sine wave,
+   12V single battery, PWM controller, up to 600W panels, digital LCD, wall
+   mount" → tiles `Capacity: 1050VA / 760W` · `Waveform: Pure Sine` ·
+   `Battery: 12V Single` · `Controller: PWM` · `Solar Panel: up to 600W` ·
+   `Display: Digital LCD` · `Design: Wall-Mount` · `Surge: PC Ready`.
+   Self-check before writing rows: read your 8 tiles alone — could you pick
+   this product over its siblings from them? If not, rebalance.
 4. **Images.**
    - *Files* → save into `public/products/<slug>.jpg`; reference as
      `/api/media/products/<slug>.jpg` (served fresh via the media route).
@@ -117,8 +139,8 @@ Learned the hard way — each of these has broken an upload before.
 [ ] Category from the fixed list
 [ ] Selling price
 [ ] Cost price? discount %?
-[ ] Spec sheet attached / or "search online"
-[ ] Feature tiles: supply own or let assistant derive 8
+[ ] Spec sheet / product details attached / or "search online"
+[ ] Feature tiles: assistant derives 8 from your details (or supply own)
 [ ] Images: none / attach files / live URL (host already allowed?)
 [ ] Warranty? Stock?
 [ ] Source URL?
@@ -137,4 +159,6 @@ for m in re.findall(r'tracking-wide text-muted-foreground\">([^<]*)</p>\s*<p[^>]
 ```
 
 *Update history:* created 2026-08-27 after the Vertiga series imports
-(slug upsert pattern, colon-format tile drop, image-host allowlist lessons).
+(slug upsert pattern, colon-format tile drop, image-host allowlist lessons);
+same day — feature tiles redefined as the 8-tile at-a-glance product summary
+(assistant analyzes provided details, balanced coverage rule, self-check).
