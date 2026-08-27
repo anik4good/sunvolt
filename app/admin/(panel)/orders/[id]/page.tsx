@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getOrderWithDetails } from "@/lib/queries";
-import { formatPrice } from "@/lib/format";
+import { formatDateTime, formatPrice } from "@/lib/format";
 import { updateOrderStatus } from "../actions";
 
 export const metadata = { title: "Order Detail | SunVolt Admin" };
@@ -151,10 +151,7 @@ export default async function AdminOrderDetailPage({
             {order.notes ? info("Notes", order.notes) : null}
             {info(
               "Placed",
-              order.createdAt.toLocaleString("en-GB", {
-                dateStyle: "medium",
-                timeStyle: "short",
-              }),
+              formatDateTime(order.createdAt),
             )}
           </CardContent>
         </Card>

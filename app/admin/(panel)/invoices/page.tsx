@@ -6,7 +6,7 @@ import { invoiceItems, invoices } from "@/db/schema";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DeleteButton } from "@/components/admin/delete-button";
-import { formatPrice } from "@/lib/format";
+import { formatDate, formatPrice } from "@/lib/format";
 import { deleteInvoice } from "./actions";
 
 export const metadata = { title: "Invoices | SunVolt Admin" };
@@ -99,11 +99,7 @@ export default async function AdminInvoicesPage({ searchParams }: PageProps) {
                     {formatPrice(invoice.totalAmount)}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-muted-foreground">
-                    {invoice.createdAt.toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
+                    {formatDate(invoice.createdAt)}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-2">

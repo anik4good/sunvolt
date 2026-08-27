@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { orders, type Order } from "@/db/schema";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { formatPrice } from "@/lib/format";
+import { formatDate, formatPrice } from "@/lib/format";
 
 export const metadata = { title: "Orders | SunVolt Admin" };
 
@@ -142,11 +142,7 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
                     </Badge>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-muted-foreground">
-                    {order.createdAt.toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
+                    {formatDate(order.createdAt)}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <Link

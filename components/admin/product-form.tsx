@@ -23,6 +23,7 @@ import {
 } from "@/app/admin/(panel)/products/actions";
 import type { Product } from "@/db/schema";
 import type { PanelRate } from "@/lib/panel-rates";
+import { formatNumber } from "@/lib/format";
 
 function Field({
   label,
@@ -309,7 +310,7 @@ export function ProductForm({
           <Field label="Calculated price" hint="Rate × watts — fills Price below">
             <div className="flex h-9 items-center rounded-md border bg-card px-3 text-sm font-semibold text-navy">
               {computedPrice != null
-                ? `৳${computedPrice.toLocaleString()} (${selectedRate?.perWatt} × ${wattNum}W)`
+                ? `৳${formatNumber(computedPrice)} (${selectedRate?.perWatt} × ${wattNum}W)`
                 : "—"}
             </div>
           </Field>

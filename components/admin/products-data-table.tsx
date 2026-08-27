@@ -24,7 +24,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { formatPrice } from "@/lib/format";
+import { formatDate, formatNumber, formatPrice } from "@/lib/format";
 import { categoryLabel } from "@/lib/categories";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -86,66 +86,81 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
     }
   };
 
-  // Apply optimistic updates to data
-  const enrichedData = data.map(product => ({
-    ...product,
-    active: optimisticUpdates[product.id] !== undefined ? optimisticUpdates[product.id] : product.active,
-  }));
+  // Apply optimistic updates to data. Memoized: a fresh array identity on
+  // every render feeds useReactTable a new `data` ref, which re-derives all
+  // row models and (under React 19's scheduler) can cascade into an endless
+  // re-render loop that pins the tab.
+  const enrichedData = React.useMemo(
+    () =>
+      data.map(product => ({
+        ...product,
+        active:
+          optimisticUpdates[product.id] !== undefined
+            ? optimisticUpdates[product.id]
+            : product.active,
+      })),
+    [data, optimisticUpdates],
+  );
 
-  // Initialize column visibility from localStorage or use defaults
-  const initializeColumnVisibility = (): VisibilityState => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('admin-products-column-visibility');
-      if (saved) {
-        try {
-          const savedVisibility = JSON.parse(saved) as VisibilityState;
-          return showMargin ? savedVisibility : { ...savedVisibility, cost_margin: false };
-        } catch (e) {
-          console.error('Failed to parse saved column visibility', e);
-        }
-      }
-    }
-    
-    // Default columns to show (based on user request)
-    return {
-      product: true,
-      category: false,    // Hidden by default
-      brand: false,       // Hidden by default
-      model: false,       // Hidden by default
-      price: true,
-      cost_margin: showMargin,
-      warrantyMonths: true, // Warranty column
-      installationPrice: false, // Hidden by default
-      stock: true,
-      active: true,       // Status column
-      sourceUrl: false,   // Hidden by default
-      specs: false,       // Hidden by default
-      createdAt: true,    // Created column
-      updatedAt: true,     // Updated column
-      actions: true,
-    };
-  };
+  // Default columns to show (based on user request)
+  const defaultColumnVisibility = (showMargin: boolean): VisibilityState => ({
+    product: true,
+    category: false, // Hidden by default
+    brand: false, // Hidden by default
+    model: false, // Hidden by default
+    price: true,
+    cost_margin: showMargin,
+    warrantyMonths: true, // Warranty column
+    installationPrice: false, // Hidden by default
+    stock: true,
+    active: true, // Status column
+    sourceUrl: false, // Hidden by default
+    specs: false, // Hidden by default
+    createdAt: true, // Created column
+    updatedAt: true, // Updated column
+    actions: true,
+  });
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(initializeColumnVisibility);
+  // Initial state must match what the server rendered. Reading localStorage
+  // during render (the old approach) produced different columns on the
+  // client, broke hydration, and could leave the table stuck re-rendering.
+  // Saved preferences are merged in after hydration instead.
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(
+    () => defaultColumnVisibility(showMargin),
+  );
 
-  // The server setting is authoritative: disabling margin must hide it even
-  // when an older browser preference had previously enabled the column.
+  // Merge saved column visibility after mount, then re-apply the server
+  // setting: disabling margin must hide it even when an older browser
+  // preference had previously enabled the column.
   React.useEffect(() => {
-    if (!showMargin) {
-      setColumnVisibility((current) => ({ ...current, cost_margin: false }));
+    let saved: VisibilityState | null = null;
+    try {
+      const raw = localStorage.getItem("admin-products-column-visibility");
+      if (raw) saved = JSON.parse(raw) as VisibilityState;
+    } catch (e) {
+      console.error("Failed to parse saved column visibility", e);
+    }
+    if (saved || !showMargin) {
+      setColumnVisibility((current) => ({
+        ...defaultColumnVisibility(showMargin),
+        ...(saved ?? {}),
+        cost_margin: showMargin ? (saved?.cost_margin ?? true) : false,
+      }));
     }
   }, [showMargin]);
 
   // Save column visibility to localStorage whenever it changes
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('admin-products-column-visibility', JSON.stringify(columnVisibility));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("admin-products-column-visibility", JSON.stringify(columnVisibility));
     }
   }, [columnVisibility]);
 
-  const columns: ColumnDef<Product>[] = [
+  // Memoized for TanStack: a new columns identity on every render would make
+  // the table re-derive its models each pass and can loop renders endlessly.
+  const columns: ColumnDef<Product>[] = React.useMemo(() => [
     // Product column with image and name
     {
       accessorKey: "product",
@@ -155,6 +170,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
         return (
           <div className="flex items-center gap-1.5">
             <Link
+              prefetch={false}
               href={`/admin/products/${product.id}`}
               className="size-7 shrink-0 overflow-hidden rounded border bg-white"
             >
@@ -175,6 +191,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
             <div className="min-w-0 max-w-[180px]">
               <div className="flex items-center gap-1">
                 <Link
+                  prefetch={false}
                   href={`/admin/products/${product.id}`}
                   className="truncate font-semibold text-navy hover:underline text-xs"
                 >
@@ -301,7 +318,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
           const margin = Math.round(Number(product.price) - costBdt);
           return (
             <div className="whitespace-nowrap text-xs">
-              <span className="text-muted-foreground">৳{costBdt.toLocaleString()}</span>{" "}
+              <span className="text-muted-foreground">৳{formatNumber(costBdt)}</span>{" "}
               <span className="font-semibold text-leaf">+{formatPrice(margin)}</span>
             </div>
           );
@@ -319,7 +336,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
         return (
           <div className="whitespace-nowrap text-xs" title={`MOQ ${product.costPrice.moq} pcs · ${product.costPrice.ladder.map((l) => `${l.qtyMin}${l.qtyMax ? `-${l.qtyMax}` : "+"}=$${l.priceUsd}`).join(" · ")}`}>
             <span className="text-muted-foreground">
-              ${firstTier.priceUsd} (৳{costBdt.toLocaleString()})
+              ${firstTier.priceUsd} (৳{formatNumber(costBdt)})
             </span>{" "}
             <span className="font-semibold text-leaf">
               +{formatPrice(margin)}
@@ -489,16 +506,12 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
       cell: ({ row }) => {
         return (
           <div className="whitespace-nowrap text-muted-foreground text-[10px]">
-            {row.original.createdAt.toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
+            {formatDate(row.original.createdAt)}
           </div>
         );
       },
     },
-    
+
     // Updated date column
     {
       accessorKey: "updatedAt",
@@ -517,11 +530,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
       cell: ({ row }) => {
         return (
           <div className="whitespace-nowrap text-muted-foreground text-[10px]">
-            {row.original.updatedAt.toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
+            {formatDate(row.original.updatedAt)}
           </div>
         );
       },
@@ -548,7 +557,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
               {product.active ? "Disable" : "Enable"}
             </Button>
             <Button asChild variant="outline" size="sm" className="h-7 px-2 text-xs">
-              <Link href={`/admin/products/${product.id}`}>
+              <Link prefetch={false} href={`/admin/products/${product.id}`}>
                 <Pencil className="size-3" aria-hidden />
                 Edit
               </Link>
@@ -557,7 +566,8 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
         );
       },
     },
-  ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  ], [showMargin, usdRate, optimisticUpdates, router]);
 
   const table = useReactTable({
     data: enrichedData,

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { getOrderWithDetails, getSettings } from "@/lib/queries";
+import { formatDate } from "@/lib/format";
 import {
   InvoiceSheet,
   type InvoiceLineItem,
@@ -8,14 +9,6 @@ import {
 import { InvoiceToolbar } from "@/components/admin/invoice-toolbar";
 
 export const metadata = { title: "Invoice | SunVolt Admin" };
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-}
 
 /**
  * Standalone printable invoice for an order. Lives in the (print)

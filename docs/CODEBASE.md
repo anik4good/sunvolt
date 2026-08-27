@@ -220,6 +220,13 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 - **Money** = Drizzle `numeric` → JS **string**; convert with `Number(x)`
   and write back with `.toFixed(2)`. Format for display with
   `formatPrice()`.
+- **Dates & numbers in shared components must be deterministic** — use
+  `formatDate()` / `formatDateTime()` / `formatNumber()` from
+  `lib/format.ts`. Raw `toLocaleDateString()`-style calls render different
+  strings on the server (UTC) vs the browser (Asia/Dhaka), breaking
+  hydration; and in `ProductsDataTable` a hydration mismatch cascaded into
+  an endless re-render loop that froze the whole admin tab (fixed by the
+  memoized `columns`/`enrichedData` + post-hydration localStorage merge).
 - **Reads** go through `lib/queries.ts` helpers (React `cache`-deduped per
   request).
 - **Images**: uploads land in `public/products/` with generated filenames

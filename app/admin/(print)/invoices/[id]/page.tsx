@@ -1,18 +1,11 @@
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { getInvoiceWithItems, getSettings } from "@/lib/queries";
+import { formatDate } from "@/lib/format";
 import { InvoiceSheet } from "@/components/admin/invoice-sheet";
 import { InvoiceToolbar } from "@/components/admin/invoice-toolbar";
 
 export const metadata = { title: "Invoice | SunVolt Admin" };
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-}
 
 /**
  * Printable view of a manually-created invoice. Lives in the (print)

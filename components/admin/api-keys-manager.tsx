@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { formatDate, formatDateTime } from "@/lib/format";
 import { useRouter } from "next/navigation";
 import { KeyRound, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -118,11 +119,11 @@ export function ApiKeysManager({ keys }: { keys: ApiKeyRow[] }) {
                       {key.prefix}…
                     </td>
                     <td className="py-3 pr-4 text-muted-foreground">
-                      {new Date(key.createdAt).toLocaleDateString()}
+                      {formatDate(key.createdAt)}
                     </td>
                     <td className="py-3 pr-4 text-muted-foreground">
                       {key.lastUsedAt
-                        ? new Date(key.lastUsedAt).toLocaleString()
+                        ? formatDateTime(key.lastUsedAt)
                         : "Never"}
                     </td>
                     <td className="py-3 pr-4">
