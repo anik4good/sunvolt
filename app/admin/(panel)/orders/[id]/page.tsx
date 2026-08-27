@@ -184,7 +184,7 @@ export default async function AdminOrderDetailPage({
       {appliances.length > 0 ? (
         <Card>
           <CardContent className="p-5">
-            <h2 className="mb-2 font-bold text-navy">Customer's Calculation</h2>
+            <h2 className="mb-2 font-bold text-navy">Customer&rsquo;s Calculation</h2>
             <ul className="space-y-1 text-sm text-muted-foreground">
               {appliances.map((item) => (
                 <li key={item.id}>

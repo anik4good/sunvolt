@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -146,7 +147,7 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
         />
         <div className="mt-4">
           <Button asChild variant="outline">
-            <a href="/packages">{d.order.moreBtn}</a>
+            <Link href="/packages">{d.order.moreBtn}</Link>
           </Button>
         </div>
         <p className="mt-6 text-xs text-muted-foreground">

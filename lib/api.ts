@@ -47,9 +47,10 @@ export function withApiKey<C = unknown>(
     try {
       return await handler(request, ctx);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unexpected error";
+      // Full error goes to the server log; the client gets a generic
+      // message so DB/driver internals never leak through 500s.
       console.error(`[api] ${request.method} ${request.nextUrl.pathname}:`, error);
-      return apiError(500, "internal_error", message);
+      return apiError(500, "internal_error", "Internal server error.");
     }
   };
 }

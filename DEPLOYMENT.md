@@ -4,14 +4,14 @@
 
 - Docker (or OrbStack) on the server
 - The PostgreSQL database reachable from the container
-  (current live DB: `192.168.100.31:5432/sunvolt`)
+  (fill in your own DB host — do not commit real hosts/credentials)
 
 ## 1. Configure environment
 
 Copy `.env.example` to `.env` next to `docker-compose.yml` and fill in:
 
 ```env
-DATABASE_URL=postgresql://sunvolt:PASSWORD@192.168.100.31:5432/sunvolt
+DATABASE_URL=postgresql://<user>:<password>@<db-host>:5432/<db-name>
 ADMIN_EMAIL=admin@sunvolt.com
 ADMIN_PASSWORD=<strong password>          # admin panel login
 SESSION_SECRET=<random 64-char hex>       # openssl rand -hex 32
