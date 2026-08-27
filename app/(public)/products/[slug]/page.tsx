@@ -191,11 +191,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </section>
       ) : null}
 
-      {/* Key attributes — two-column grid; Place of Origin hidden on page */}
+      {/* Technical specification — two-column grid; Place of Origin hidden on page */}
       {specs.length > 0 ? (
         <section className="mt-12">
           <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
-            Key attributes
+            Technical specification
           </h2>
           <div className="mt-4 grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2">
             {specs

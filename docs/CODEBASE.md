@@ -229,9 +229,9 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   production as well as local development.
 - **Product detail tiles**: the `features` textarea accepts `Label: Value`
   lines; these drive the compact tiles shown after stock status. The `specs`
-  object remains the detailed Key attributes table.
+  object remains the detailed Technical specification table.
 - **Product descriptions**: the optional `description` field is rendered in a
-  dedicated Description section immediately before Key attributes. It supports
+  dedicated Description section immediately before Technical specification. It supports
   pasted multiline text (`whitespace-pre-line`) and an empty value hides the
   section.
 - **Styling**: Tailwind utility classes with custom tokens — `navy`

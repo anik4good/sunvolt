@@ -145,7 +145,7 @@ export function ProductForm({
       </div>
 
       <Field
-        label="Description (shown before Key attributes)"
+        label="Description (shown before Technical specification)"
         hint="Optional — paste any product description. Line breaks are preserved. Leave empty to hide it."
       >
         <Textarea
