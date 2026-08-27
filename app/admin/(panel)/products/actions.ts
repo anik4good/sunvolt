@@ -11,6 +11,7 @@ import { orderItems, products } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth";
 import { getSettings } from "@/lib/queries";
 import { parsePanelRates } from "@/lib/panel-rates";
+import { sanitizeProductDescription } from "@/lib/product-description";
 
 const CATEGORY_SLUGS = [
   "package",
@@ -36,7 +37,7 @@ const productSchema = z
       .max(120)
       .optional()
       .transform((v) => (v ? v : undefined)),
-    description: z.string().trim().max(2000).optional(),
+    description: z.string().trim().max(20000).optional(),
     brand: z.string().trim().max(80).optional(),
     model: z.string().trim().max(80).optional(),
     specsText: z.string().trim().max(6000).optional(),
@@ -231,7 +232,7 @@ export async function saveProduct(
     nameBn: data.nameBn || null,
     category: data.category,
     slug,
-    description: data.description || null,
+    description: sanitizeProductDescription(data.description) ,
     brand: data.brand || null,
     model: data.model || null,
     specs: parseSpecs(data.specsText),

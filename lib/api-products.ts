@@ -3,6 +3,7 @@ import { parsePanelRates } from "@/lib/panel-rates";
 import type { productCreateSchema, productUpdateSchema } from "@/lib/api-schemas";
 import type { Product } from "@/db/schema";
 import type { z } from "zod";
+import { sanitizeProductDescription } from "@/lib/product-description";
 
 /**
  * Shared mapping between API JSON bodies and the products table,
@@ -67,7 +68,7 @@ export async function buildProductValues(
     nameBn: specValue(data.nameBn !== undefined ? data.nameBn : (existing?.nameBn ?? null)),
     category,
     slug: data.slug || existing?.slug,
-    description: specValue(
+    description: sanitizeProductDescription(
       data.description !== undefined ? data.description : (existing?.description ?? null),
     ),
     brand: specValue(data.brand !== undefined ? data.brand : (existing?.brand ?? null)),

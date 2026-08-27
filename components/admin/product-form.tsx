@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductImagesEditor } from "@/components/admin/product-images-editor";
+import { ProductDescriptionEditor } from "@/components/admin/product-description-editor";
 import {
   saveProduct,
   type ProductFormState,
@@ -145,16 +146,10 @@ export function ProductForm({
       </div>
 
       <Field
-        label="Description (shown before Technical specification)"
-        hint="Optional — paste any product description. Line breaks are preserved. Leave empty to hide it."
+        label="Description (shown in the Description tab)"
+        hint="Optional — paste formatted text and images from another website. Leave empty to hide the tab."
       >
-        <Textarea
-          name="description"
-          rows={8}
-          maxLength={2000}
-          defaultValue={product?.description ?? ""}
-          placeholder="Paste the product description here…"
-        />
+        <ProductDescriptionEditor initialValue={product?.description} />
       </Field>
 
       {isPackage ? (

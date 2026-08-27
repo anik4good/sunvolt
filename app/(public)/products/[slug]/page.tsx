@@ -6,11 +6,13 @@ import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { ProductCard } from "@/components/products/product-card";
 import { ProductGallery } from "@/components/products/product-gallery";
+import { ProductDetailsTabs } from "@/components/products/product-details-tabs";
 import { categoryLabel } from "@/lib/categories";
 import { getProductBySlug, getRelatedProducts, getSettings } from "@/lib/queries";
 import { formatPrice } from "@/lib/format";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { fmt, getDict } from "@/lib/i18n";
+import { descriptionToText, sanitizeProductDescription } from "@/lib/product-description";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -22,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!product) return { title: "Product not found" };
   return {
     title: `${product.name} | ${product.brand ?? "SunVolt"}`,
-    description: product.description ?? undefined,
+    description: descriptionToText(product.description),
   };
 }
 
@@ -180,35 +182,10 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </div>
       </div>
 
-      {product.description ? (
-        <section className="mt-12">
-          <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
-            Description
-          </h2>
-          <div className="mt-4 whitespace-pre-line rounded-2xl border bg-card px-4 py-5 leading-relaxed text-muted-foreground sm:px-6">
-            {product.description}
-          </div>
-        </section>
-      ) : null}
-
-      {/* Technical specification — two-column grid; Place of Origin hidden on page */}
-      {specs.length > 0 ? (
-        <section className="mt-12">
-          <h2 className="font-bold tracking-tight text-navy text-3xl sm:text-4xl">
-            Technical specification
-          </h2>
-          <div className="mt-4 grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2">
-            {specs
-              .filter(([key]) => key.toLowerCase() !== "place of origin")
-              .map(([key, value]) => (
-                <div key={key} className="bg-card px-4 py-3 text-sm">
-                  <p className="text-xs font-medium text-muted-foreground">{key}</p>
-                  <p className="mt-0.5 font-semibold text-navy">{value}</p>
-                </div>
-              ))}
-          </div>
-        </section>
-      ) : null}
+      <ProductDetailsTabs
+        description={sanitizeProductDescription(product.description)}
+        specs={specs}
+      />
 
       {/* Packaging and delivery */}
       {packagingEntries.length > 0 ? (

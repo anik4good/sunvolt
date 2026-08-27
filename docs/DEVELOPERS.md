@@ -88,7 +88,7 @@ mppt-charger, dc-charger, accessories, battery` (see `GET /categories`).
 | `nameBn` | string | Bangla display name |
 | `category` | string | default `package` |
 | `slug` | string | auto-generated from `name` if omitted; unique |
-| `description`, `brand`, `model`, `sourceUrl` | string | `description` is optional customer-facing copy, up to 2000 characters; multiline text is preserved on the product page and blank values hide its section |
+| `description`, `brand`, `model`, `sourceUrl` | string | `description` is optional sanitized HTML (up to 20,000 characters); supports formatting, lists, links, and images; blank values hide the Description tab |
 | `specs` | object | `{ "Key": "Value" }` detailed Technical specification sheet |
 | `features` | string[] | `Label: Value` lines drive compact product tiles after stock status |
 | `highlights` | string[] | bullet lists for marketing content |

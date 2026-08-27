@@ -230,10 +230,11 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 - **Product detail tiles**: the `features` textarea accepts `Label: Value`
   lines; these drive the compact tiles shown after stock status. The `specs`
   object remains the detailed Technical specification table.
-- **Product descriptions**: the optional `description` field is rendered in a
-  dedicated Description section immediately before Technical specification. It supports
-  pasted multiline text (`whitespace-pre-line`) and an empty value hides the
-  section.
+- **Product descriptions**: the optional `description` field is edited with the
+  rich-text editor and stored as sanitized HTML. It supports pasted formatting,
+  lists, links, and uploaded images. The public product page shows it in a
+  Description tab beside Technical Specification; empty content hides that tab.
+  Unsafe tags, attributes, and URL schemes are removed server-side.
 - **Styling**: Tailwind utility classes with custom tokens — `navy`
   (primary dark), `solar` (accent), `leaf` (success), `secondary`
   (surface), `destructive` (danger). UI primitives in `components/ui/`.

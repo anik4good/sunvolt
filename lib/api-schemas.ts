@@ -75,7 +75,7 @@ const productFields = {
   nameBn: nullableTrim(160),
   category: z.enum(CATEGORY_SLUGS),
   slug: z.string().trim().min(1).max(120).nullable().optional(),
-  description: nullableTrim(2000),
+  description: nullableTrim(20000),
   brand: nullableTrim(80),
   model: nullableTrim(80),
   specs: recordField(),
