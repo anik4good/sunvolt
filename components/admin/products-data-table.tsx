@@ -27,7 +27,6 @@ import {
 import { formatDate, formatNumber, formatPrice } from "@/lib/format";
 import { categoryLabel } from "@/lib/categories";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import type { Product } from "@/db/schema";
 
 interface ProductsDataTableProps {
@@ -143,7 +142,7 @@ export function ProductsDataTable({ data, showMargin, usdRate }: ProductsDataTab
       console.error("Failed to parse saved column visibility", e);
     }
     if (saved || !showMargin) {
-      setColumnVisibility((current) => ({
+      setColumnVisibility(() => ({
         ...defaultColumnVisibility(showMargin),
         ...(saved ?? {}),
         cost_margin: showMargin ? (saved?.cost_margin ?? true) : false,
