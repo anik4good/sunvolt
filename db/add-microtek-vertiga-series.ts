@@ -5,10 +5,11 @@ import { products } from "./schema";
 
 /**
  * Add/update the Microtek Vertiga Solar IPS/UPS Inverter series under the
- * solar-inverter category. Only the 1050's selling price came from the
- * owner (৳18,000); the rest follow an even ৳3,000 ladder around it and can
- * be adjusted in Admin → Products. Specs sourced from owner-provided model
- * sheet + BDStall listings. No product images (owner request). Idempotent.
+ * solar-inverter category. Prices form an even ৳3,000 ladder across models
+ * (owner asked for a flat +৳3,000/unit raise on the original set).
+ * Specs sourced from owner-provided model sheet + BDStall listings. The
+ * cover image is an owner-provided live URL (host allowlisted in
+ * next.config.ts). Idempotent — safe to re-run.
  */
 
 type Row = typeof products.$inferInsert;
@@ -53,7 +54,7 @@ const SERIES: Row[] = [
       "Smart Solar Priority — Cuts Bills",
       "Runs 2–3 Fans + Lights + Router",
     ],
-    price: "15000.00",
+    price: "18000.00",
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
@@ -101,7 +102,7 @@ const SERIES: Row[] = [
       "High Surge Handling — PC Ready",
       "Runs 3–4 Fans + TV + Router",
     ],
-    price: "18000.00",
+    price: "21000.00",
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
@@ -143,7 +144,7 @@ const SERIES: Row[] = [
       "Extended Backup on Heavier Loads",
       "Runs 4–5 Fans + Large TV + CCTV",
     ],
-    price: "21000.00",
+    price: "24000.00",
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
@@ -182,7 +183,7 @@ const SERIES: Row[] = [
       "Heavy-Duty Load Support",
       "Solar-Ready up to 1200W Panels",
     ],
-    price: "24000.00",
+    price: "27000.00",
     discountPct: 0,
     warrantyMonths: 0,
     stock: 10,
