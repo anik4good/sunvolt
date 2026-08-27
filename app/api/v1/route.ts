@@ -1,5 +1,6 @@
 import { json, withApiKey } from "@/lib/api";
 import { API_ENDPOINTS } from "@/lib/api-endpoints";
+import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
 
@@ -23,18 +24,7 @@ export const GET = withApiKey(async () =>
       errors: "{ error: { code, message, details? } }",
     },
     endpoints: API_ENDPOINTS,
-    productCategories: [
-      "package",
-      "solar-inverter",
-      "bms",
-      "solar-panel",
-      "inverter",
-      "diy-solar",
-      "mppt-charger",
-      "dc-charger",
-      "accessories",
-      "battery",
-    ],
+    productCategories: ALL_CATEGORY_SLUGS,
     orderStatuses: ["pending", "confirmed", "processing", "installed", "completed", "cancelled"],
   }),
 );

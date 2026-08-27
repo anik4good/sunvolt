@@ -24,6 +24,7 @@ import {
 import type { Product } from "@/db/schema";
 import type { PanelRate } from "@/lib/panel-rates";
 import { formatNumber } from "@/lib/format";
+import { PRODUCT_CATEGORIES } from "@/lib/categories";
 
 function Field({
   label,
@@ -112,15 +113,11 @@ export function ProductForm({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="package">Backup Package (combo)</SelectItem>
-              <SelectItem value="solar-inverter">Solar Inverter</SelectItem>
-              <SelectItem value="bms">BMS</SelectItem>
-              <SelectItem value="solar-panel">Solar Panel</SelectItem>
-              <SelectItem value="inverter">Inverter</SelectItem>
-              <SelectItem value="diy-solar">DIY Solar</SelectItem>
-              <SelectItem value="mppt-charger">MPPT Charger</SelectItem>
-              <SelectItem value="dc-charger">DC Charger</SelectItem>
-              <SelectItem value="accessories">Accessories</SelectItem>
-              <SelectItem value="battery">Battery</SelectItem>
+              {PRODUCT_CATEGORIES.map((cat) => (
+                <SelectItem key={cat.slug} value={cat.slug}>
+                  {cat.label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </Field>

@@ -12,20 +12,9 @@ import { requireAdmin } from "@/lib/auth";
 import { getSettings } from "@/lib/queries";
 import { parsePanelRates } from "@/lib/panel-rates";
 import { sanitizeProductDescription } from "@/lib/product-description";
+import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
 
-const CATEGORY_SLUGS = [
-  "package",
-  "solar-inverter",
-  "bms",
-  "solar-panel",
-  "inverter",
-  "diy-solar",
-  "mppt-charger",
-  "dc-charger",
-  "accessories",
-  "battery",
-  "fan",
-] as const;
+const CATEGORY_SLUGS = ALL_CATEGORY_SLUGS;
 
 const productSchema = z
   .object({

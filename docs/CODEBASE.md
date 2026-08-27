@@ -277,7 +277,7 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 | Task | Where |
 | ---- | ----- |
 | Add/change a product field | `db/schema.ts` → `npm run db:push` → product zod schema + `values` mapping in `app/admin/(panel)/products/actions.ts` → `components/admin/product-form.tsx` → (if public) relevant components |
-| Add a category | `lib/categories.ts` **and** `CATEGORY_SLUGS` in products actions |
+| Add a category | `lib/categories.ts` only — form select, admin list/filters, admin + API zod schemas and the API index all derive from `PRODUCT_CATEGORIES`/`ALL_CATEGORY_SLUGS` |
 | Change calculator math/params | `lib/solar/*` (math) or the `settings` table (params) |
 | Add an admin section | Folder under `app/admin/(panel)/`, add nav entry in `components/admin/sidebar.tsx` |
 | Add an API endpoint | `app/api/v1/…` — follow `DEVELOPERS.md`, auth via `lib/api-auth.ts` |

@@ -8,10 +8,11 @@ import { formatPrice } from "@/lib/format";
 import { getSettings } from "@/lib/queries";
 import { ProductsFilters } from "@/components/admin/products-filters";
 import { ProductsDataTable } from "@/components/admin/products-data-table";
+import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
 
 export const metadata = { title: "Products | SunVolt Admin" };
 
-const CATEGORIES = ["package", "solar-inverter", "bms", "solar-panel", "inverter", "diy-solar", "mppt-charger", "dc-charger", "accessories", "battery"] as const;
+const CATEGORIES = ALL_CATEGORY_SLUGS;
 
 interface PageProps {
   searchParams: Promise<{
@@ -33,7 +34,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
       sql`(lower(${products.name}) like ${like} or lower(coalesce(${products.nameBn}, '')) like ${like} or lower(coalesce(${products.brand}, '')) like ${like} or lower(coalesce(${products.model}, '')) like ${like} or lower(${products.slug}) like ${like})`,
     );
   }
-  if (category && (CATEGORIES as readonly string[]).includes(category)) {
+  if (category && CATEGORIES.includes(category)) {
     conditions.push(eq(products.category, category));
   }
   if (status === "active" || status === "disabled") {

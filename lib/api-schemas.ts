@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ALL_CATEGORY_SLUGS } from "@/lib/categories";
 
 /**
  * Zod schemas for the /api/v1 management API (JSON bodies — see
@@ -6,18 +7,7 @@ import { z } from "zod";
  * accepts native JSON (records/arrays) instead of textarea blobs.
  */
 
-export const CATEGORY_SLUGS = [
-  "package",
-  "solar-inverter",
-  "bms",
-  "solar-panel",
-  "inverter",
-  "diy-solar",
-  "mppt-charger",
-  "dc-charger",
-  "accessories",
-  "battery",
-] as const;
+export const CATEGORY_SLUGS: readonly string[] = ALL_CATEGORY_SLUGS;
 
 const nullableTrim = (max: number) =>
   z.string().trim().max(max).nullable().optional();

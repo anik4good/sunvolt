@@ -52,10 +52,13 @@ Learned the hard way — each of these has broken an upload before.
    /api/v1/products/{idOrSlug}` works too (same validation, auto
    revalidation) — good for one-off tweaks, less durable than a committed
    script for seeding.
-2. **Categories are closed enum-ish.** Slug must exist in both
-   `lib/categories.ts` and `CATEGORY_SLUGS` in
-   `app/admin/(panel)/products/actions.ts`. New category = code change in
-   both places (see CODEBASE.md §10).
+2. **Categories come from one place now.** Add the slug to
+   `PRODUCT_CATEGORIES` in `lib/categories.ts` and everything else (admin
+   edit-form select, admin list/filters, admin + API zod schemas, `/api/v1`
+   index) derives from `ALL_CATEGORY_SLUGS` automatically. Before
+   2026-08-27 these were five separate hardcoded lists and new categories
+   silently missed the admin edit form — don't reintroduce literal category
+   arrays anywhere (see CODEBASE.md §10).
 3. **Feature tiles REQUIRE `Label: Value` format.**
    `app/(public)/products/[slug]/page.tsx` splits each `features` item on the
    first colon; **lines without a colon are silently dropped from the page.**
