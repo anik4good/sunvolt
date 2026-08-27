@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { ImagePlus, Link as LinkIcon, Loader2, Star, X } from "lucide-react";
+import { useRef, useState, useCallback } from "react";
+import { ImagePlus, Link as LinkIcon, Loader2, Star, X, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { uploadProductImage } from "@/app/admin/(panel)/products/actions";
@@ -10,20 +10,22 @@ import { uploadProductImage } from "@/app/admin/(panel)/products/actions";
  * Ordered product image list for the admin product form.
  * Position 1 is the cover image (used by cards and the cart); the
  * rest become the detail-page gallery. Images can be uploaded from
- * the admin's device or referenced by URL.
+ * the admin's device or referenced by URL with drag-and-drop support.
  */
 export function ProductImagesEditor({ initial }: { initial: string[] }) {
   const [images, setImages] = useState<string[]>(initial);
   const [url, setUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [dragActive, setDragActive] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const dragCounter = useRef(0);
 
-  const addUploaded = async (files: FileList) => {
+  const addUploaded = async (files: FileList | File[]) => {
     setError(null);
     setUploading(true);
     try {
-      for (const file of files) {
+      for (const file of Array.from(files)) {
         const result = await uploadProductImage(file);
         if (result.error || !result.path) {
           setError(result.error ?? "Upload failed.");
@@ -54,6 +56,47 @@ export function ProductImagesEditor({ initial }: { initial: string[] }) {
       const [item] = next.splice(index, 1);
       return [item, ...next];
     });
+
+  // Drag and drop handlers
+  const handleDrag = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDragIn = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current++;
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setDragActive(true);
+    }
+  }, []);
+
+  const handleDragOut = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current--;
+    if (dragCounter.current === 0) {
+      setDragActive(false);
+    }
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    dragCounter.current = 0;
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      addUploaded(e.dataTransfer.files);
+    }
+  }, []);
+
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      addUploaded(e.target.files);
+    }
+  };
 
   return (
     <div className="space-y-3">
@@ -102,9 +145,30 @@ export function ProductImagesEditor({ initial }: { initial: string[] }) {
           ))}
         </ul>
       ) : (
-        <p className="rounded-lg border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
-          No images yet — upload one or paste a URL.
-        </p>
+        <div
+          className={`relative rounded-lg border-2 border-dashed transition-colors ${
+            dragActive
+              ? "border-primary bg-primary/10"
+              : "border-muted-foreground/25 bg-secondary/20"
+          }`}
+          onDragEnter={handleDragIn}
+          onDragLeave={handleDragOut}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
+          <div className="flex flex-col items-center justify-center px-4 py-8 text-center">
+            <Upload
+              className={`mb-3 size-10 ${dragActive ? "text-primary" : "text-muted-foreground"}`}
+              aria-hidden
+            />
+            <p className="text-sm font-medium text-foreground">
+              {dragActive ? "Drop images here" : "No images yet"}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Drag & drop images, or click to upload
+            </p>
+          </div>
+        </div>
       )}
 
       <div className="flex flex-wrap items-center gap-2">
@@ -114,11 +178,7 @@ export function ProductImagesEditor({ initial }: { initial: string[] }) {
           accept="image/png,image/jpeg,image/webp,image/gif"
           multiple
           className="hidden"
-          onChange={(e) => {
-            if (e.target.files && e.target.files.length > 0) {
-              addUploaded(e.target.files);
-            }
-          }}
+          onChange={handleFileInput}
           aria-label="Upload images from device"
         />
         <Button
@@ -156,10 +216,16 @@ export function ProductImagesEditor({ initial }: { initial: string[] }) {
       </div>
 
       {error ? (
-        <p role="alert" className="text-xs font-medium text-destructive">
+        <p role="alert" className="rounded-lg bg-destructive/10 px-3 py-2 text-xs font-medium text-destructive">
           {error}
         </p>
       ) : null}
+
+      {uploading && (
+        <p className="text-xs text-muted-foreground">
+          Uploading image(s)...
+        </p>
+      )}
     </div>
   );
 }

@@ -21,7 +21,8 @@ WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \
-    HOSTNAME=0.0.0.0
+    HOSTNAME=0.0.0.0 \
+    PUBLIC_DIR=/app/public
 
 RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 
@@ -29,6 +30,11 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/.next/server ./.next/server
+
+# Ensure proper permissions for product uploads
+RUN mkdir -p /app/public/products /app/public/uploads && \
+    chown -R nextjs:nodejs /app/public/products /app/public/uploads && \
+    chmod -R 755 /app/public
 
 USER nextjs
 EXPOSE 3000
