@@ -2,7 +2,8 @@
 
 Complete map of the SunVolt codebase: architecture, data model, business
 rules, and conventions. Read this before making changes.
-For the management REST API see **[DEVELOPERS.md](./DEVELOPERS.md)**.
+For the management REST API see **[DEVELOPERS.md](./DEVELOPERS.md)**;
+for adding products see **[PRODUCT_UPLOAD.md](./PRODUCT_UPLOAD.md)**.
 
 ---
 
@@ -118,7 +119,8 @@ lib/
                        sizing, packages — the recommendation engine
   whatsapp.ts          WhatsApp deep-link helper
 scripts/               One-off maintenance scripts (tsx)
-docs/                  CODEBASE.md (this file) + DEVELOPERS.md (API reference)
+docs/                  CODEBASE.md (this file), DEVELOPERS.md (API reference),
+                       PRODUCT_UPLOAD.md (product upload runbook)
 proxy.ts               Middleware: bounces anonymous users off /admin
 ```
 
