@@ -1,0 +1,1974 @@
+{
+  "source": "https://elejoy.en.alibaba.com/productgrouplist-928138041-1/MPPT_SOLAR_CHARGE_CONTROLLER.html",
+  "supplier": "Elejoy electronics (Taizhou) Co., Ltd.",
+  "scraped_at": "2026-08-26T04:23:49.200992+00:00Z",
+  "product_count": 25,
+  "products": [
+    {
+      "product_id": 1600819794666,
+      "title": "CE ELEJOY EL-MD300SP MANUFACTURER 300W 12/24V ADJUSTABLE MPPT SOLAR CHARGE CONTROLLER 99% LED DISPLAY STEP-DOWN SMART BUCK",
+      "url": "https://www.alibaba.com/product-detail/_1600819794666.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 69.96-86.42",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 21,
+          "price_local_formatted": "RM 86.42"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 20,
+          "price_local_formatted": "RM 82.31"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 999,
+          "price_usd": 19,
+          "price_local_formatted": "RM 78.19"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 17,
+          "price_local_formatted": "RM 69.96"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-30V`"
+        ],
+        "Maximum Current": [
+          "25A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EL-MD300SP",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Charger Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "300W",
+        "Max PV Voltage": "17-55V",
+        "PV Voltage": "55V",
+        "PV Power": "300W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H0e8b909de9d148598bd1c93f04bb6955L.jpg",
+        "https://sc04.alicdn.com/kf/Hb997ce12fb2d43dcb7be8caa112a0b301.jpg",
+        "https://sc04.alicdn.com/kf/H20de5ece486847b8989c131db3fd1693W.jpg",
+        "https://sc04.alicdn.com/kf/H192307307dc349f5964cdad4c52ea9f9p.jpg",
+        "https://sc04.alicdn.com/kf/Hd053efa2c4e143638d5bd4ee2df3599d6.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "1 sold"
+    },
+    {
+      "product_id": 1600819807438,
+      "title": "CE ELEJOY EMD600W Manufacturer 600W 12/24V Adjustable MPPT Solar Charge Controller 99% LCD Display 40A MPPT Type Smart Buck",
+      "url": "https://www.alibaba.com/product-detail/_1600819807438.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 98.77-123.46",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 30,
+          "price_local_formatted": "RM 123.46"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 28,
+          "price_local_formatted": "RM 115.23"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 26,
+          "price_local_formatted": "RM 107"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-30V"
+        ],
+        "Maximum Current": [
+          "40A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD600W",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "600W",
+        "Max PV Voltage": "85V",
+        "PV Voltage": "55V",
+        "PV Power": "600W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H227df74210d645a6854d8d832ad22f721.jpg",
+        "https://sc04.alicdn.com/kf/H925a1a15ae1a439994c0ca6d4e1ea8b66.png",
+        "https://sc04.alicdn.com/kf/Hfcb07f6443cb4fd0acd09afc18b3ce5ap.jpg",
+        "https://sc04.alicdn.com/kf/H6cdf79a5933b42419bfdf3dcf331475cE.jpg",
+        "https://sc04.alicdn.com/kf/Haf6244765e944ab4a143ea16936da834s.jpg",
+        "https://sc04.alicdn.com/kf/Hc7dcdb20859144b1b0ae3ffb88df0c95x.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "581 sold"
+    },
+    {
+      "product_id": 1600819848291,
+      "title": "For ELEJOY EL-MU400SP 400W MPPT Solar Charge Controller CE Certified 99% LED Display Step-Up Controller Manufacturer's Product",
+      "url": "https://www.alibaba.com/product-detail/_1600819848291.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 74.08-90.54",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 22,
+          "price_local_formatted": "RM 90.54"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 99,
+          "price_usd": 20,
+          "price_local_formatted": "RM 82.31"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 499,
+          "price_usd": 19,
+          "price_local_formatted": "RM 78.19"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 18,
+          "price_local_formatted": "RM 74.08"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "24-85v"
+        ],
+        "Maximum Current": [
+          "15A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EL-MU400SP",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Charger Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "400W",
+        "Max PV Voltage": "17-55V",
+        "PV Voltage": "85V",
+        "PV Power": "400W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H2113282d210449b7a848f297fad39479y.jpg",
+        "https://sc04.alicdn.com/kf/Haa6a5de9ac894271893c89bf64cbc9f5F.jpg",
+        "https://sc04.alicdn.com/kf/H17cee4dd3bce438b89eaec6e942cf9fcF.jpg",
+        "https://sc04.alicdn.com/kf/H39c72297737c4db38094c82f500c8d0cT.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "134 sold"
+    },
+    {
+      "product_id": 1600857005967,
+      "title": "IP65 CE ELEJOY FACTORY EMD600W 600W 12/24V ADJUSTABLE MPPT SOLAR CHARGE CONTROLLER 99% LCD DISPLAY BATTERY CHARGER SMART BUCK",
+      "url": "https://www.alibaba.com/product-detail/_1600857005967.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 98.77-123.46",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 30,
+          "price_local_formatted": "RM 123.46"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 27,
+          "price_local_formatted": "RM 111.12"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 26,
+          "price_local_formatted": "RM 107"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-30V"
+        ],
+        "Maximum Current": [
+          "40A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD600W",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "600W",
+        "Max PV Voltage": "85V",
+        "PV Voltage": "85V",
+        "PV Power": "600W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H717b30efe4e44cb59895cba5d172a1e94.jpg",
+        "https://sc04.alicdn.com/kf/H17f0d5c7b5644a0db14b45d98373a690p.png",
+        "https://sc04.alicdn.com/kf/Hfdd245d3474f481eb8642bd3c345025fu.jpg",
+        "https://sc04.alicdn.com/kf/H4581951500ff404294769f22ec0f5e239.jpg",
+        "https://sc04.alicdn.com/kf/Ha6dba5f875c9465ca0146e26a82f7fd6G.jpg",
+        "https://sc04.alicdn.com/kf/H44fd3e90b7434e7dbdf739fb86b04abbp.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "758 sold"
+    },
+    {
+      "product_id": 1600857365592,
+      "title": "CE ELEJOY EL-MD400SP FACTORY 400W 12/24V ADJUSTABLE MPPT SOLAR CHARGE CONTROLLER 99% LED DISPLAY BATTERY CHARGER SMART BUCK",
+      "url": "https://www.alibaba.com/product-detail/_1600857365592.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 74.08-90.54",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 22,
+          "price_local_formatted": "RM 90.54"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 99,
+          "price_usd": 20,
+          "price_local_formatted": "RM 82.31"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 499,
+          "price_usd": 19,
+          "price_local_formatted": "RM 78.19"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 18,
+          "price_local_formatted": "RM 74.08"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-30V"
+        ],
+        "Maximum Current": [
+          "25A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EL-MD400SP",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "400W",
+        "Max PV Voltage": "55V",
+        "PV Voltage": "55V",
+        "PV Power": "400W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hec4ae081de7e471db50e52a6264f401fN.jpg",
+        "https://sc04.alicdn.com/kf/H1989719e7bf84ce1aa810a91e573d5ea9.jpg",
+        "https://sc04.alicdn.com/kf/He916692b0c814dba9ff792d5e58832b0s.jpg",
+        "https://sc04.alicdn.com/kf/H968680b7d58842a28849ebd31d67de7cG.png",
+        "https://sc04.alicdn.com/kf/H0b109b1759f247c5b0b6a76b8d2643961.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": null
+    },
+    {
+      "product_id": 1600857602137,
+      "title": "CE ELEJOY EL-MU400SP MANUFACTURER 400W MPPT SOLAR CHARGE CONTROLLER 99% LED DISPLAY STEP-UP SOLAR CONTROLLER MPPT",
+      "url": "https://www.alibaba.com/product-detail/_1600857602137.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 74.08-90.54",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 22,
+          "price_local_formatted": "RM 90.54"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 20,
+          "price_local_formatted": "RM 82.31"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 19,
+          "price_local_formatted": "RM 78.19"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 18,
+          "price_local_formatted": "RM 74.08"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "24-85v"
+        ],
+        "Maximum Current": [
+          "15A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EL-MU400SP",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Charger Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "400W",
+        "Max PV Voltage": "17-55V",
+        "PV Voltage": "85V",
+        "PV Power": "400W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/He1de8d8ee4844490914d675c108d7504G.jpg",
+        "https://sc04.alicdn.com/kf/Hb4e14a5134774402b2d642e7f3ef4496Z.jpg",
+        "https://sc04.alicdn.com/kf/Haf107bdd1ab7424993b9b48228ed9f959.png",
+        "https://sc04.alicdn.com/kf/Hf49144487a7542e6a09d6472528aafeeZ.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "52 sold"
+    },
+    {
+      "product_id": 1600857906003,
+      "title": "CE ELEJOY EL-MU300SP MANUFACTURER 300W SOLAR CHARGE CONTROLLER MPPT 99% LED DISPLAY STEP-UP BATTERY 24-85V ADJUSTABLE",
+      "url": "https://www.alibaba.com/product-detail/_1600857906003.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 69.96-86.42",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 21,
+          "price_local_formatted": "RM 86.42"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 20,
+          "price_local_formatted": "RM 82.31"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 999,
+          "price_usd": 19,
+          "price_local_formatted": "RM 78.19"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 17,
+          "price_local_formatted": "RM 69.96"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "24-85V"
+        ],
+        "Maximum Current": [
+          "15A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EL-MU300SP",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Charger Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "300W",
+        "Max PV Voltage": "17-55V",
+        "PV Voltage": "85V",
+        "PV Power": "300W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H45f299c859aa43b5873b230a28e8d060Q.jpg",
+        "https://sc04.alicdn.com/kf/H8e237b31ae90480d855b0665f7f2704a2.jpg",
+        "https://sc04.alicdn.com/kf/H7c5af3e845694db583943b3cc026e802M.jpg",
+        "https://sc04.alicdn.com/kf/Hc8a3cfd7211a4d789d30c6fbd870939dG.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "3 sold"
+    },
+    {
+      "product_id": 1600982327290,
+      "title": "CE ELEJOY EMD600W MANUFACTURER 600W 12/24V ADJUSTABLE MPPT SOLAR CHARGE CONTROLLER 99% LCD DISPLAY BATTERY CHARGER SMART BUCK",
+      "url": "https://www.alibaba.com/product-detail/_1600982327290.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 98.77-123.46",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 30,
+          "price_local_formatted": "RM 123.46"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 27,
+          "price_local_formatted": "RM 111.12"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 26,
+          "price_local_formatted": "RM 107"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-30V"
+        ],
+        "Maximum Current": [
+          "40A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD600W",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "600W",
+        "Max PV Voltage": "85V",
+        "PV Voltage": "85V",
+        "PV Power": "600W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Heb41176f422841d2a0e4406ce1d14c858.png",
+        "https://sc04.alicdn.com/kf/H529d0007d3e3459387a5a762592f6961M.jpg",
+        "https://sc04.alicdn.com/kf/H1f9cc9dd85d94f31ba82de9cf0eef553o.jpg",
+        "https://sc04.alicdn.com/kf/Hf6c3c228a3bf4c19b7ec194c6d417d37T.jpg",
+        "https://sc04.alicdn.com/kf/H044a44eb63264f7e86fa74aaf474090dv.jpg",
+        "https://sc04.alicdn.com/kf/H9b47ac9c009e482194174bcfbe25ddact.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "394 sold"
+    },
+    {
+      "product_id": 1601040823309,
+      "title": "ELEJOY 14.6V 20A Smart Battery Charger CE Certified OLED Display Anderson Lithium LiFePO4 Deep Cycle Boat RV Golf Vehicle",
+      "url": "https://www.alibaba.com/product-detail/_1601040823309.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Consumer Electronics",
+        "Chargers, Batteries & Power Supplies",
+        "Battery Chargers"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 90.54-102.88",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 25,
+          "price_local_formatted": "RM 102.88"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 23,
+          "price_local_formatted": "RM 94.65"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 22,
+          "price_local_formatted": "RM 90.54"
+        }
+      ],
+      "sku_attributes": {
+        "color": [
+          "Black"
+        ],
+        "Socket Standard": [
+          "UK",
+          "US",
+          "Universal",
+          "JPJP",
+          "EU",
+          "AU",
+          "For UK",
+          "For Italy",
+          "For E.U.",
+          "For Brazil",
+          "For Australia/New Zealand"
+        ]
+      },
+      "specifications": {
+        "is led lamp illumination": "Yes",
+        "output": "12V 10A, 12V 15A, 12V 20A, 12V 25A, 24V 10A, 24V 15A, 24V 20A, 24V 30A, 14.6V 20A",
+        "type": "Portable",
+        "use": "Industrial, Scooter, Standard Battery, electr bike, Electric Car, Professional",
+        "model number": "EY-BC1220",
+        "brand name": "ELEJOY",
+        "place of origin": "Zhejiang, China",
+        "input": "100-140V, 180-260V",
+        "output power": "300W, 450W, 600W, 750W",
+        "Private Mold": "Yes"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H6cfde4e657a648e2a2322c974d5d9cdcP.png",
+        "https://sc04.alicdn.com/kf/H3a42a8d2a41346ddbebfb8b3320d42b3J.jpg",
+        "https://sc04.alicdn.com/kf/H7bdb118d2b9245f4929280926a5a0ff1s.png",
+        "https://sc04.alicdn.com/kf/H8f034269f3ed42c487ab36a5a966bed5l.jpg",
+        "https://sc04.alicdn.com/kf/Hbbc8c013eb6149a182eff3f10ca3ae2fQ.jpg",
+        "https://sc04.alicdn.com/kf/H7fc89052ac664df1ad5a1ae819e39bddo.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": null
+    },
+    {
+      "product_id": 1601271430003,
+      "title": "ELEJOY 14.6V 30A CE Smart OLED Battery Charger for Anderson Lithium LiFePO4 Deep Cycle Recharge 12V Vehicle Charger Golf Charger",
+      "url": "https://www.alibaba.com/product-detail/_1601271430003.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Consumer Electronics",
+        "Chargers, Batteries & Power Supplies",
+        "Battery Chargers"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 90.54-102.88",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 25,
+          "price_local_formatted": "RM 102.88"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 23,
+          "price_local_formatted": "RM 94.65"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 22,
+          "price_local_formatted": "RM 90.54"
+        }
+      ],
+      "sku_attributes": {
+        "color": [
+          "Black"
+        ],
+        "Socket Standard": [
+          "UK",
+          "US",
+          "Universal",
+          "JPJP",
+          "EU",
+          "AU",
+          "For UK",
+          "For Italy",
+          "For E.U.",
+          "For Brazil",
+          "For Australia/New Zealand"
+        ]
+      },
+      "specifications": {
+        "is led lamp illumination": "Yes",
+        "output": "12V 30A",
+        "type": "Portable",
+        "use": "Industrial, electr bike, Electric Car, Professional",
+        "model number": "EY-BC1230",
+        "brand name": "ELEJOY",
+        "place of origin": "Zhejiang, China",
+        "input": "100-140V, 180-260V",
+        "output power": "750W",
+        "Private Mold": "Yes"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H77be2376033042d7b42f8889bb9a0010T.png",
+        "https://sc04.alicdn.com/kf/H7f4fc59e31c345c3b345e7da358b8218m.jpg",
+        "https://sc04.alicdn.com/kf/Hbe5fca16c6dd4fc9b43be9e028fb3c513.png",
+        "https://sc04.alicdn.com/kf/Hef84f60feb464e849107c5f663acbb36f.jpg",
+        "https://sc04.alicdn.com/kf/Hb3d5e54a9ed443f5b63b7d6b18220738w.jpg",
+        "https://sc04.alicdn.com/kf/H9ad96defb70e4e4c9ae770d09daa05dbF.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": null
+    },
+    {
+      "product_id": 1601275286231,
+      "title": "CE ELEJOY FACTORY EMD600W 600W 12/24V ADJUSTABLE MPPT SOLAR CHARGE CONTROLLER 99% LCD DISPLAY BATTERY CHARGER SMART BUCK",
+      "url": "https://www.alibaba.com/product-detail/_1601275286231.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 1,
+      "unit": 4,
+      "price_range_local": "RM 98.77-123.46",
+      "price_ladder_usd": [
+        {
+          "qty_min": 1,
+          "qty_max": 49,
+          "price_usd": 30,
+          "price_local_formatted": "RM 123.46"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 27,
+          "price_local_formatted": "RM 111.12"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 26,
+          "price_local_formatted": "RM 107"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-30V"
+        ],
+        "Maximum Current": [
+          "40A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD600W",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "600W",
+        "Max PV Voltage": "85V",
+        "PV Voltage": "85V",
+        "PV Power": "600W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H7ef3de085e3f4e5faf2538a01ca0889dZ.jpg",
+        "https://sc04.alicdn.com/kf/Hbbba82dac93b4c10adc386f2093dcee56.png",
+        "https://sc04.alicdn.com/kf/He7bc6dbc035a4d3b83fb8661f6ed79983.png",
+        "https://sc04.alicdn.com/kf/Hff3cb7e9d0ea48b4b2f554443419963dl.jpg",
+        "https://sc04.alicdn.com/kf/H0af4fbc3a04f474fb5dfdeac1ad122886.png",
+        "https://sc04.alicdn.com/kf/H4d0e1cc187e34809b73819d1f1e348abu.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "328 sold"
+    },
+    {
+      "product_id": 1601288844354,
+      "title": "ELEJOY 12V 30A Smart Battery Charger CE OLED Certified Anderson Lithium Deep Cycle Rechargeable for Industrial Professional",
+      "url": "https://www.alibaba.com/product-detail/_1601288844354.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Consumer Electronics",
+        "Chargers, Batteries & Power Supplies",
+        "Battery Chargers"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 94.65-107",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 26,
+          "price_local_formatted": "RM 107"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 25,
+          "price_local_formatted": "RM 102.88"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 23,
+          "price_local_formatted": "RM 94.65"
+        }
+      ],
+      "sku_attributes": {
+        "color": [
+          "Black"
+        ],
+        "Socket Standard": [
+          "UK",
+          "US",
+          "Universal",
+          "JPJP",
+          "EU",
+          "AU",
+          "For UK",
+          "For Italy",
+          "For E.U.",
+          "For Brazil",
+          "For Australia/New Zealand"
+        ]
+      },
+      "specifications": {
+        "is led lamp illumination": "Yes",
+        "output": "12V 30A",
+        "type": "Portable",
+        "use": "Industrial, electr bike, Electric Car, Professional",
+        "model number": "EY-BC1230",
+        "brand name": "ELEJOY",
+        "place of origin": "Zhejiang, China",
+        "input": "100-140V, 180-260V",
+        "output power": "750W",
+        "Private Mold": "Yes"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H1bd2fca7cee44bb3ae8dc9a2841979faE.png",
+        "https://sc04.alicdn.com/kf/H7d4130cf2d33464e92f705015e03461c0.jpg",
+        "https://sc04.alicdn.com/kf/H968e4eb92a3747f082f8bb27c998a5a47.jpg",
+        "https://sc04.alicdn.com/kf/H04b3eb2d24ee4453bd40897fb3bf9ec0s.jpg",
+        "https://sc04.alicdn.com/kf/Hda5b020c675c418fa7908398531dbe4du.jpg",
+        "https://sc04.alicdn.com/kf/H1c0d2d53b412460c89a4db50ccf60b6co.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": null
+    },
+    {
+      "product_id": 1601289056010,
+      "title": "ELEJOY CE OLED 24V 30A LiFePO4 Battery Charger Smart Anderson Lead Acid Lithium Deep Cycle Battery Vehicle Charger Golf Charger",
+      "url": "https://www.alibaba.com/product-detail/_1601289056010.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Consumer Electronics",
+        "Chargers, Batteries & Power Supplies",
+        "Battery Chargers"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 94.65-119.35",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 29,
+          "price_local_formatted": "RM 119.35"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 27,
+          "price_local_formatted": "RM 111.12"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 999,
+          "price_usd": 25,
+          "price_local_formatted": "RM 102.88"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 23,
+          "price_local_formatted": "RM 94.65"
+        }
+      ],
+      "sku_attributes": {
+        "color": [
+          "Black"
+        ],
+        "Socket Standard": [
+          "UK",
+          "US",
+          "Universal",
+          "JPJP",
+          "EU",
+          "AU",
+          "For UK",
+          "For Italy",
+          "For E.U.",
+          "For Brazil",
+          "For Australia/New Zealand"
+        ]
+      },
+      "specifications": {
+        "is led lamp illumination": "Yes",
+        "output": "24V 30a",
+        "type": "Portable",
+        "use": "Industrial, electr bike, Electric Car, Professional",
+        "model number": "EY-BC2430",
+        "brand name": "ELEJOY",
+        "place of origin": "Zhejiang, China",
+        "input": "100-140V, 180-260V",
+        "output power": "900W",
+        "Private Mold": "Yes"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H26f5a37938994b45b6fbf27bf5f0978b1.png",
+        "https://sc04.alicdn.com/kf/Hddbb4cac56204e8cbe220ea7425b73acO.png",
+        "https://sc04.alicdn.com/kf/H923863e7319244b2abe4d51a183e8b820.jpg",
+        "https://sc04.alicdn.com/kf/H66bfb391c08a43c7af9c1fad4eeef77ae.jpg",
+        "https://sc04.alicdn.com/kf/H61a607f73a0b4d58a32a9c3c97998420P.jpg",
+        "https://sc04.alicdn.com/kf/H54253c3f282543b8b7df069c40317014h.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": null
+    },
+    {
+      "product_id": 1601291511408,
+      "title": "CE IP65 Certified ELEJOY EMD600W 600W 12/24V Adjustable MPPT Solar Char Controller 99% LCD Display 40A Smart Buck Manufacturer",
+      "url": "https://www.alibaba.com/product-detail/_1601291511408.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 98.77-123.46",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 30,
+          "price_local_formatted": "RM 123.46"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 27,
+          "price_local_formatted": "RM 111.12"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 26,
+          "price_local_formatted": "RM 107"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 24,
+          "price_local_formatted": "RM 98.77"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-30V"
+        ],
+        "Maximum Current": [
+          "40A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD600W",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "600W",
+        "Max PV Voltage": "85V",
+        "PV Voltage": "85V",
+        "PV Power": "600W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hccd9130b9f934aeb8a86fa78873a70f1f.png",
+        "https://sc04.alicdn.com/kf/Hd68ddf564e974db88c3a5bef14a32e0eC.jpg",
+        "https://sc04.alicdn.com/kf/Hff5d9932d3734260b25735c8ffdd70f4B.png",
+        "https://sc04.alicdn.com/kf/H394620b201e54a04905d87ab74c81190F.png",
+        "https://sc04.alicdn.com/kf/He5c5f702ef274627a1d892012db356e0n.png",
+        "https://sc04.alicdn.com/kf/H848ddcba24694b28945986f6e0850fa3T.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "702 sold"
+    },
+    {
+      "product_id": 1601292380170,
+      "title": "CE Rohs FCC Certified EMD60A 2700W Adjustable MPPT Solar Charge Controller 12/24/36/48V 99% LCD Display 50A/60A Smart Buck Type",
+      "url": "https://www.alibaba.com/product-detail/_1601292380170.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 1,
+      "unit": 4,
+      "price_range_local": "RM 201.65-246.92",
+      "price_ladder_usd": [
+        {
+          "qty_min": 1,
+          "qty_max": 49,
+          "price_usd": 60,
+          "price_local_formatted": "RM 246.92"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 99,
+          "price_usd": 55,
+          "price_local_formatted": "RM 226.34"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 299,
+          "price_usd": 52,
+          "price_local_formatted": "RM 213.99"
+        },
+        {
+          "qty_min": 300,
+          "qty_max": null,
+          "price_usd": 49,
+          "price_local_formatted": "RM 201.65"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-60V"
+        ],
+        "Maximum Current": [
+          "60 A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD60A",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "2700W",
+        "Max PV Voltage": "130V",
+        "PV Voltage": "130V",
+        "PV Power": "2700W",
+        "Warranty": "1 year",
+        "Certificate": "CE ROHS FCC"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hfb6ca0dbed6942719183a968b011afa3Y.png",
+        "https://sc04.alicdn.com/kf/H2a0981f2a9fa4e669265d789e74a21f32.png",
+        "https://sc04.alicdn.com/kf/H1177a78435bb4660a985eb31e9fa133fC.png",
+        "https://sc04.alicdn.com/kf/Hd3009dbedcdf4f93a5a27f6c91ed44a5J.png",
+        "https://sc04.alicdn.com/kf/Hd7c4d1b99a0f44fa93b5477f9c618315s.jpg",
+        "https://sc04.alicdn.com/kf/H0fc40d9250b54a9597313bf51106f3a2r.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "34 sold"
+    },
+    {
+      "product_id": 1601293203591,
+      "title": "CE FCC Rohs Certified EMD60A 2700W Adjustable MPPT Solar Charge Controller 12/24/36/48V 99% LCD Display 50A/60A Smart Buck 130V",
+      "url": "https://www.alibaba.com/product-detail/_1601293203591.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 1,
+      "unit": 4,
+      "price_range_local": "RM 201.65-246.92",
+      "price_ladder_usd": [
+        {
+          "qty_min": 1,
+          "qty_max": 49,
+          "price_usd": 60,
+          "price_local_formatted": "RM 246.92"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 99,
+          "price_usd": 55,
+          "price_local_formatted": "RM 226.34"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 299,
+          "price_usd": 52,
+          "price_local_formatted": "RM 213.99"
+        },
+        {
+          "qty_min": 300,
+          "qty_max": null,
+          "price_usd": 49,
+          "price_local_formatted": "RM 201.65"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-60V"
+        ],
+        "Maximum Current": [
+          "60 A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD60A",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charge controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "2700W",
+        "Max PV Voltage": "130V",
+        "PV Voltage": "130V",
+        "PV Power": "2700W",
+        "Warranty": "1 year",
+        "Certificate": "CE RoHS FCC"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H3c105701e7764119ab0a3a03d68451300.png",
+        "https://sc04.alicdn.com/kf/H5bb1a43c7c8d41aca07742870bc7be20r.png",
+        "https://sc04.alicdn.com/kf/Hff71199d7f764911b80cf3d285d33ef0C.png",
+        "https://sc04.alicdn.com/kf/H99352d77472e48448e64107475758d1bj.png",
+        "https://sc04.alicdn.com/kf/Hfcf0fe1e1e2b44bdb8dc99607ff81c68y.jpg",
+        "https://sc04.alicdn.com/kf/Hc340db1856324bc781375d5ba24b35e1a.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "1 sold"
+    },
+    {
+      "product_id": 1601395343254,
+      "title": "ELEJOY EMX20A 1200W Adjustable MPPT Solar Charge Controller 99% Smart Buck Boost LED Display Battery Charger CE Approved",
+      "url": "https://www.alibaba.com/product-detail/_1601395343254.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 111.12-152.27",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 37,
+          "price_local_formatted": "RM 152.27"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 34,
+          "price_local_formatted": "RM 139.92"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 31,
+          "price_local_formatted": "RM 127.58"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 27,
+          "price_local_formatted": "RM 111.12"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "25-85V"
+        ],
+        "Maximum Current": [
+          "20A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMX20A",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "1200W",
+        "Max PV Voltage": "85V",
+        "PV Voltage": "85V",
+        "PV Power": "1200W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/He162431b8aeb41439f42c68131ad2da7f.jpg",
+        "https://sc04.alicdn.com/kf/H610e2c0fd6894a6ba5a4ce739a220b79E.png",
+        "https://sc04.alicdn.com/kf/H4fdf627aa5604c62bb4822115950df82m.jpg",
+        "https://sc04.alicdn.com/kf/Hd2de65e8b3e44a578a15bf0360fbbf3fx.png",
+        "https://sc04.alicdn.com/kf/Hc1941095cd794796b0a6905f02324a78v.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "15 sold"
+    },
+    {
+      "product_id": 1601401237084,
+      "title": "CE Certified ELEJOY EMD60A 2700W Adjustable MPPT Solar Charge Controller 12/24/36/48V 99% LCD Display 50A/60A Smart Buck Type",
+      "url": "https://www.alibaba.com/product-detail/_1601401237084.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 201.65-246.92",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 60,
+          "price_local_formatted": "RM 246.92"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 99,
+          "price_usd": 55,
+          "price_local_formatted": "RM 226.34"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 299,
+          "price_usd": 52,
+          "price_local_formatted": "RM 213.99"
+        },
+        {
+          "qty_min": 300,
+          "qty_max": null,
+          "price_usd": 49,
+          "price_local_formatted": "RM 201.65"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "10-60V"
+        ],
+        "Maximum Current": [
+          "60 A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMD60A",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charge controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "2700W",
+        "Max PV Voltage": "130V",
+        "PV Voltage": "130V",
+        "PV Power": "2700W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hb9f2b1a4784745b9b1879a0e6ceecf26f.jpg",
+        "https://sc04.alicdn.com/kf/Hf9373e0325de4558bf1dfedd9696b6a6b.jpg",
+        "https://sc04.alicdn.com/kf/H43838fca0e85482f991095d0978bdd08k.png",
+        "https://sc04.alicdn.com/kf/H3b5522a7f3f44646a617ef5802f30c60N.png",
+        "https://sc04.alicdn.com/kf/H2a95dec824a14bb1961ea67dc5623603I.png",
+        "https://sc04.alicdn.com/kf/H5b46e4998c7d4fac83639fafdb64d34fe.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "132 sold"
+    },
+    {
+      "product_id": 1601450964346,
+      "title": "CE ELEJOY FACTORY IP65 EMU800W BOOST 800W 24-85V ADJUSTABLE MPPT SOLAR CHARGE CONTROLLER 99% LCD DISPLAY BATTERY CHARGER SMART",
+      "url": "https://www.alibaba.com/product-detail/_1601450964346.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 1,
+      "unit": 4,
+      "price_range_local": "RM 107-131.69",
+      "price_ladder_usd": [
+        {
+          "qty_min": 1,
+          "qty_max": 99,
+          "price_usd": 32,
+          "price_local_formatted": "RM 131.69"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 299,
+          "price_usd": 30,
+          "price_local_formatted": "RM 123.46"
+        },
+        {
+          "qty_min": 300,
+          "qty_max": 999,
+          "price_usd": 28,
+          "price_local_formatted": "RM 115.23"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 26,
+          "price_local_formatted": "RM 107"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "24-85V"
+        ],
+        "Maximum Current": [
+          "15A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "EMU800W",
+        "Type": "MPPT",
+        "Application": "Solar System Controller, Voltage Controller, Charger Controller, Charger controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "800W",
+        "Max PV Voltage": "65V",
+        "PV Voltage": "65V",
+        "PV Power": "800W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H9e8d3d34f7244ffc8f20d732be997144L.png",
+        "https://sc04.alicdn.com/kf/H903ab0f901724bdaa267adbe9e97ef18t.jpg",
+        "https://sc04.alicdn.com/kf/H858147cb03344e90a7d2ee6d1ca3c2e5D.jpg",
+        "https://sc04.alicdn.com/kf/H6d5cc28a5dc945c385ca245bdd41c265O.jpg",
+        "https://sc04.alicdn.com/kf/Hdef3f7de5cc74917b1645b8607bf0470d.jpg",
+        "https://sc04.alicdn.com/kf/Hd6aaa3e69aea4654ae5f6d4f3bcd78be1.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": "16 sold"
+    },
+    {
+      "product_id": 1601516601188,
+      "title": "ELEJOY 65W Solar Charger Type C Output PV PD Converter for Cell Phone Computer iPad Lithium Battery 5V 9V 12V 15V 20V 3A 3.25A",
+      "url": "https://www.alibaba.com/product-detail/_1601516601188.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Applications",
+        "Solar Charger"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 37.04-53.50",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 13,
+          "price_local_formatted": "RM 53.50"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 11,
+          "price_local_formatted": "RM 45.27"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 10,
+          "price_local_formatted": "RM 41.16"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 9,
+          "price_local_formatted": "RM 37.04"
+        }
+      ],
+      "sku_attributes": {
+        "Color": [
+          "Black"
+        ],
+        "Solar Power (W)": [
+          "65W"
+        ],
+        "Output": [
+          "65W"
+        ],
+        "Capacity": [
+          "65W"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "PD6501",
+        "Battery": "NO",
+        "Folding Size": "113*100*86mm",
+        "Type": "MPPT",
+        "Current": "3A",
+        "PV Voltage": "15-60V",
+        "PV Power": "65W",
+        "Application": "Cell phone Computer Ipad Power bank",
+        "Warranty": "1 year"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H8c1125e7826143eeadaf19bdaaf3a431y.png",
+        "https://sc04.alicdn.com/kf/He139cf6b81d34471a68f5d2e74ebda10P.png",
+        "https://sc04.alicdn.com/kf/H80cca26dc2814fe88558381e471c5748G.png",
+        "https://sc04.alicdn.com/kf/H63cea911314e42b29e00741cf6c2cf88b.png",
+        "https://sc04.alicdn.com/kf/Hde6a4ecfc7d84259ad7c529351a20308h.jpg",
+        "https://sc04.alicdn.com/kf/H231aed80732d4d54b46ddadf0e3a6290W.jpg"
+      ],
+      "video": null,
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "years": null,
+        "country": "China"
+      },
+      "sales": null
+    },
+    {
+      "product_id": 1600819676682,
+      "title": "ELEJOY FACTORY in CHINA CE IP67 100W MPPT SOLAR 99% MPPT SOLAR CHARGE CONTROLLER WS-M100-14.6V PATENT INTEGRATED CIRCUIT",
+      "url": "https://www.alibaba.com/product-detail/_1600819676682.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 28.76-32.05",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 7.8,
+          "price_local_formatted": "RM 32.05"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 199,
+          "price_usd": 7.5,
+          "price_local_formatted": "RM 30.81"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 7.2,
+          "price_local_formatted": "RM 29.58"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 7,
+          "price_local_formatted": "RM 28.76"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "14.6V"
+        ],
+        "Maximum Current": [
+          "8A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M100-14.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "100W",
+        "Max PV Voltage": "25V",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hddc4f6aa18364ba783fee986c89857b28.jpg",
+        "https://sc04.alicdn.com/kf/H0ccf3c5eca2a4205ab5387a5ede0699f9.jpg",
+        "https://sc04.alicdn.com/kf/H0640e049ff1f43b3bd380997ee3af71cj.jpg",
+        "https://sc04.alicdn.com/kf/H7a81be7876114f528be57f64a394d786J.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "8.0X5.0X2.5 cm",
+        "Single gross weight": "0.5 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "38 sold"
+    },
+    {
+      "product_id": 1600819842410,
+      "title": "ELEJOY FACTORY in CHINA CE IP67 100W MPPT SOLAR  99% SOLAR CHARGE CONTROLLER LEAD ACID WS-M100-13.8V PATENT INTEGRATED CIRCUIT",
+      "url": "https://www.alibaba.com/product-detail/_1600819842410.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 28.76-32.05",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 7.8,
+          "price_local_formatted": "RM 32.05"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 199,
+          "price_usd": 7.5,
+          "price_local_formatted": "RM 30.81"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 7.2,
+          "price_local_formatted": "RM 29.58"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 7,
+          "price_local_formatted": "RM 28.76"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "13.8V"
+        ],
+        "Maximum Current": [
+          "8A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M100-13.8V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "100W",
+        "Max PV Voltage": "25V",
+        "Warranty": "1 Year",
+        "PV Voltage": "25V",
+        "PV Power": "100W",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/Hcab84f08709741bb841ae36c0d2c6349l.jpg",
+        "https://sc04.alicdn.com/kf/H15c869ac5d6b48d7990e78d389fc8468d.jpg",
+        "https://sc04.alicdn.com/kf/Hfcf3a58e4e6441b8a7a6d132bbf3f04c9.jpg",
+        "https://sc04.alicdn.com/kf/H9f41ddd0d3434a3cb8c8917ceecd9ea58.jpg",
+        "https://sc04.alicdn.com/kf/H3238679006564d3680af3dc042e6cdf07.png",
+        "https://sc04.alicdn.com/kf/H15d3b21fa6aa49e0917c4747dd2383a98.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "8.0X5.0X2.5 cm",
+        "Single gross weight": "0.5 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "155 sold"
+    },
+    {
+      "product_id": 1600857386750,
+      "title": "ELEJOY WS-M300-14.6V MPPT SOLAR CHARGE CONTROLLER 99% MPPT EFFICIENCY SOLAR BATTERY CHARGE CONTROLLER NORMALLY OPEN",
+      "url": "https://www.alibaba.com/product-detail/_1600857386750.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 49.30-61.62",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 15,
+          "price_local_formatted": "RM 61.62"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 499,
+          "price_usd": 14,
+          "price_local_formatted": "RM 57.51"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": 999,
+          "price_usd": 13,
+          "price_local_formatted": "RM 53.41"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 12,
+          "price_local_formatted": "RM 49.30"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "14.6V"
+        ],
+        "Maximum Current": [
+          "24A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M300-14.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "300W, 350W",
+        "Max PV Voltage": "50V, 14.6V",
+        "Weight": "300g",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H6fe1146f12f041e1966471c5222b8708I.jpg",
+        "https://sc04.alicdn.com/kf/Hcfae8a0a630541a1918b3ef71fb1944f6.jpg",
+        "https://sc04.alicdn.com/kf/H71f228a03a5847d2badc0153ccddb854V.jpg",
+        "https://sc04.alicdn.com/kf/Hf4cafeaea75c430eb6813fa82b0a3f2d6.jpg",
+        "https://sc04.alicdn.com/kf/Hc7fb965a0d3345fb908031bb7ae558bb2.jpg",
+        "https://sc04.alicdn.com/kf/Hf27d7012c6fe4f41894bb3ee7c040fe1P.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "76.0X76.0X35.0 cm",
+        "Single gross weight": "0.6 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "1 sold"
+    },
+    {
+      "product_id": 1600857126974,
+      "title": "14.6V ELEJOY  MPPT SOLAR CHARGE CONTROLLER 150W SOLAR CHARGER 99% SOLAR BATTERY CHARGE CONTROLLER NORMALLY OPEN WS-M150-14.6V",
+      "url": "https://www.alibaba.com/product-detail/_1600857126974.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 30.81-36.98",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 99,
+          "price_usd": 9,
+          "price_local_formatted": "RM 36.98"
+        },
+        {
+          "qty_min": 100,
+          "qty_max": 499,
+          "price_usd": 8.5,
+          "price_local_formatted": "RM 34.92"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": 999,
+          "price_usd": 8,
+          "price_local_formatted": "RM 32.87"
+        },
+        {
+          "qty_min": 1000,
+          "qty_max": null,
+          "price_usd": 7.5,
+          "price_local_formatted": "RM 30.81"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "14.6V"
+        ],
+        "Maximum Current": [
+          "12A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "Zhejiang, China",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS--M150-14.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Charger Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "150W",
+        "Max PV Voltage": "25V",
+        "WEIGHT": "130g",
+        "PV Voltage": "25V",
+        "PV Power": "150W",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H39065f96e1ae4b81b20480b58319a059E.jpg",
+        "https://sc04.alicdn.com/kf/Hceb9708207524e59b47488f5e93ef51aT.jpg",
+        "https://sc04.alicdn.com/kf/H3f374ea40dad47afa55bf351cf12fc79v.jpg",
+        "https://sc04.alicdn.com/kf/Hc67f88aa9f41486cb320b2681891bf78P.jpg",
+        "https://sc04.alicdn.com/kf/He70e0d009bd343a8bc6497ead41babefD.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "7.6X4.2X2.5 cm",
+        "Single gross weight": "0.5 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "507 sold"
+    },
+    {
+      "product_id": 1600835714567,
+      "title": "ELEJOY CE FACTORY PRICE SOLAR CHARGE CONTROLLER MPPT 99% LEAD ACID MPPT SOLAR BATTERY CHARGE CONTROLLER WS-M300-27.6V",
+      "url": "https://www.alibaba.com/product-detail/_1600835714567.html",
+      "brand": "ELEJOY",
+      "category_path": [
+        "Renewable Energy",
+        "Solar Energy Products",
+        "Solar Charge Controller"
+      ],
+      "moq": 2,
+      "unit": 4,
+      "price_range_local": "RM 49.30-61.62",
+      "price_ladder_usd": [
+        {
+          "qty_min": 2,
+          "qty_max": 49,
+          "price_usd": 15,
+          "price_local_formatted": "RM 61.62"
+        },
+        {
+          "qty_min": 50,
+          "qty_max": 199,
+          "price_usd": 14,
+          "price_local_formatted": "RM 57.51"
+        },
+        {
+          "qty_min": 200,
+          "qty_max": 499,
+          "price_usd": 13,
+          "price_local_formatted": "RM 53.41"
+        },
+        {
+          "qty_min": 500,
+          "qty_max": null,
+          "price_usd": 12,
+          "price_local_formatted": "RM 49.30"
+        }
+      ],
+      "sku_attributes": {
+        "Rated Voltage": [
+          "27.6V"
+        ],
+        "Maximum Current": [
+          "10A"
+        ]
+      },
+      "specifications": {
+        "Place of Origin": "CHIINA",
+        "Brand Name": "ELEJOY",
+        "Model Number": "WS-M300-27.6V",
+        "Type": "MPPT",
+        "Application": "Solar Working Station, Solar System Controller, Voltage Controller, Charger Controller, Voltage Controller",
+        "Work Time (h)": "100000 hours",
+        "Max PV Power": "300W, 300W",
+        "Max PV Voltage": "50V, 50V",
+        "Color": "Silver",
+        "Warranty": "1 year",
+        "Certificate": "CE"
+      },
+      "images": [
+        "https://sc04.alicdn.com/kf/H5ad8f2377eea40609a176a72ae09fdf53.png",
+        "https://sc04.alicdn.com/kf/H2affafecf596478abd1f1632f7c0843er.jpg",
+        "https://sc04.alicdn.com/kf/H819559772b4543828e5d86bffc89f803W.jpg",
+        "https://sc04.alicdn.com/kf/H147e2861a01d4b4f88304ff548a5fbbeg.jpg",
+        "https://sc04.alicdn.com/kf/H8074ee4f977d4590a8f1f82415ee7ab6M.jpg"
+      ],
+      "video": null,
+      "packaging": {
+        "Selling Units": "Single item",
+        "Single package size": "7.6X7.6X3.5 cm",
+        "Single gross weight": "0.6 kg"
+      },
+      "supplier": {
+        "company": "Elejoy electronics (Taizhou) Co., Ltd.",
+        "country": "China"
+      },
+      "sales": "100 sold"
+    }
+  ]
+}

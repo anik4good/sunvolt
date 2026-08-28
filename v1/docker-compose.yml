@@ -1,0 +1,24 @@
+services:
+  sunvolt:
+    build: .
+    image: sunvolt:latest
+    container_name: sunvolt
+    restart: unless-stopped
+    ports:
+      - "8085:3000"
+    # Persist uploaded images and media across container rebuilds
+    volumes:
+      - ./public/products:/app/public/products
+      - ./public/uploads:/app/public/uploads
+    # All credentials come from the .env file next to this compose file —
+    # never baked into the image. See .env.example / DEPLOYMENT.md.
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3

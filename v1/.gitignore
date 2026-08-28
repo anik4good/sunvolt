@@ -46,6 +46,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local working copies and downloaded templates (not part of the deployed app)
+
+# extra folder
 /kachabazar-react-next-js-ecommerce-solution
-/materio-1.0.0
