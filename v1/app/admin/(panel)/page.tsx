@@ -143,8 +143,8 @@ export default async function AdminDashboardPage() {
         title="Dashboard"
         description="Store performance at a glance."
         actions={
-          <Button asChild variant="outline" size="sm">
-            <Link href="/admin/products/new">+ New Product</Link>
+          <Button asChild size="sm" className="font-semibold">
+            <Link href="/admin/products/new">+ Add Product</Link>
           </Button>
         }
       />
@@ -180,7 +180,7 @@ export default async function AdminDashboardPage() {
                       </p>
                     ) : null}
                   </div>
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-solar-light text-solar-dark dark:bg-solar/15 dark:text-solar">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400">
                     <Icon className="size-5" aria-hidden />
                   </span>
                 </div>

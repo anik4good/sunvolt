@@ -48,7 +48,7 @@ export default async function AdminInvoicesPage({ searchParams }: PageProps) {
       />
 
       {deleted ? (
-        <p className="rounded-xl border border-leaf/30 bg-leaf/10 px-4 py-3 text-sm font-medium text-leaf">
+        <p className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-400">
           Invoice deleted.
         </p>
       ) : null}

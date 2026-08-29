@@ -38,8 +38,8 @@ export function RevenueChart({ data }: { data: RevenuePoint[] }) {
         <AreaChart data={data} margin={{ top: 8, right: 12, left: 4, bottom: 0 }}>
           <defs>
             <linearGradient id="revenueFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="var(--solar)" stopOpacity={0.35} />
-              <stop offset="100%" stopColor="var(--solar)" stopOpacity={0.02} />
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.3} />
+              <stop offset="100%" stopColor="var(--primary)" stopOpacity={0.02} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
@@ -68,7 +68,7 @@ export function RevenueChart({ data }: { data: RevenuePoint[] }) {
           <Area
             type="monotone"
             dataKey="revenue"
-            stroke="var(--solar-dark)"
+            stroke="var(--primary)"
             strokeWidth={2}
             fill="url(#revenueFill)"
           />
@@ -84,12 +84,12 @@ export interface StatusSlice {
 }
 
 const STATUS_COLORS: Record<Order["status"], string> = {
-  pending: "var(--solar)",
-  confirmed: "var(--chart-2)",
-  processing: "var(--chart-4)",
-  installed: "var(--chart-5)",
-  completed: "var(--leaf)",
-  cancelled: "var(--destructive)",
+  pending: "#f59e0b",
+  confirmed: "#0ea5e9",
+  processing: "#6366f1",
+  installed: "#14b8a6",
+  completed: "#10b981",
+  cancelled: "#ef4444",
 };
 
 const STATUS_LABELS: Record<Order["status"], string> = {

@@ -2,14 +2,14 @@ import type { Order } from "@/db/schema";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
+/** KachaBazar-style tinted status pills (no border, rounded-full). */
 const STATUS_STYLES: Record<Order["status"], string> = {
-  pending:
-    "border-solar/60 bg-solar-light text-solar-dark dark:border-solar/40 dark:bg-solar/15 dark:text-solar",
-  confirmed: "border-primary/30 bg-primary/10 text-primary",
-  processing: "border-primary/30 bg-primary/10 text-primary",
-  installed: "border-leaf/50 bg-leaf/10 text-leaf",
-  completed: "border-leaf/50 bg-leaf/10 text-leaf",
-  cancelled: "border-destructive/40 bg-destructive/10 text-destructive",
+  pending: "border-transparent bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
+  confirmed: "border-transparent bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400",
+  processing: "border-transparent bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400",
+  installed: "border-transparent bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-400",
+  completed: "border-transparent bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
+  cancelled: "border-transparent bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400",
 };
 
 export function OrderStatusBadge({
@@ -38,12 +38,12 @@ export function ActiveStatusBadge({
       variant="outline"
       className={cn(
         active
-          ? "border-leaf/50 bg-leaf/10 text-leaf"
-          : "border-border bg-muted text-muted-foreground",
+          ? "border-transparent bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400"
+          : "border-transparent bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400",
         className,
       )}
     >
-      {active ? "active" : "disabled"}
+      {active ? "Active" : "Disabled"}
     </Badge>
   );
 }

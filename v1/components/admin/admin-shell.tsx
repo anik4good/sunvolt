@@ -13,7 +13,9 @@ export function AdminShell({
 }) {
   return (
     <AdminThemeProvider>
-      <div className="flex min-h-screen bg-secondary/40 dark:bg-background">
+      {/* admin-scope flips primary/navy tokens to the KachaBazar emerald
+          theme for everything inside the admin shell (see globals.css) */}
+      <div className="admin-scope flex min-h-screen bg-gray-50 dark:bg-gray-900">
         <AdminSidebar email={email} />
         <div className="flex min-w-0 flex-1 flex-col">
           <AdminHeader email={email} />

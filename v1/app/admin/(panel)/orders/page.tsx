@@ -66,8 +66,8 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
               className={cn(
                 "rounded-full border px-3 py-1.5 text-sm font-medium capitalize transition-colors",
                 filter === f
-                  ? "border-transparent bg-primary text-primary-foreground shadow-sm"
-                  : "bg-background text-muted-foreground hover:bg-secondary hover:text-foreground",
+                  ? "border-transparent bg-emerald-600 text-white shadow-sm"
+                  : "border-transparent bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700",
               )}
             >
               {f} ({count})

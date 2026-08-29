@@ -84,13 +84,16 @@ app/
     order/[id]/        Customer order confirmation
     about/ contact/    Static-ish content pages
   admin/
-    login/             Login page + form + credentials action
+    login/             Two-panel login page (brand panel + form card)
     (panel)/           Auth-guarded admin panel (AdminShell: sidebar + header,
                        dark mode; layout calls requireAdmin)
       loading.tsx      Panel-wide loading fallback (spinner) shown while pages fetch
       page.tsx         Dashboard: stat cards with MoM deltas, revenue area chart,
                        orders-by-status donut (recharts), recent orders
-      products/        List / new / [id] edit, toggle-active route, actions
+      products/        List (server-side filters/sort/pagination via URL
+                       params; bulk publish/unpublish/delete + CSV export
+                       routes; inline Published/Featured toggles) / new /
+                       [id] edit, toggle-active route, actions
       orders/          List + [id] detail, status update action
       invoices/        List, new (manual invoices), actions
       appliances/      Calculator appliance catalog CRUD
@@ -104,14 +107,19 @@ app/
     v1/                Management REST API — see DEVELOPERS.md
 components/
   admin/               Admin-only components:
-    admin-shell.tsx    Shell composition (theme provider + sidebar + header)
+    admin-shell.tsx    Shell composition (theme provider + sidebar + header);
+                       wrapper carries .admin-scope which flips the theme
+                       tokens to KachaBazar's emerald (see globals.css) so
+                       buttons/pills/links inside the admin match the
+                       template while the public site keeps navy/solar
     admin-theme.tsx    Admin-only dark mode (`dark` class on <html> while the
                        admin shell is mounted; public site always stays light)
-    sidebar.tsx        Sectioned nav sidebar, collapsible rail + mobile sheet
-    admin-header.tsx   Sticky header: sidebar toggle, dark-mode toggle,
-                       profile dropdown (view site / sign out)
+    sidebar.tsx        Dark-slate sectioned nav sidebar (emerald active pill,
+                       white logo card), collapsible rail + mobile sheet
+    admin-header.tsx   Sticky header: sidebar toggle, product search, dark-mode
+                       toggle, profile dropdown (view store / sign out)
     admin-page-header.tsx  Shared page title/description/actions row
-    status-badge.tsx   Order status + active/disabled badges
+    status-badge.tsx   Tinted status pills (order status + active/disabled)
     dashboard-charts.tsx   recharts revenue area chart + status donut (client)
     … forms, tables, editors for each entity
   ui/                  Generic UI primitives (button, card, input…)

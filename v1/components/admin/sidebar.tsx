@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   ClipboardList,
@@ -14,7 +15,6 @@ import {
   Plug,
   Settings,
   Tags,
-  Zap,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ interface NavItem {
 
 const NAV_SECTIONS: { label: string; items: NavItem[] }[] = [
   {
-    label: "Overview",
+    label: "General",
     items: [
       { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
     ],
@@ -50,7 +50,7 @@ const NAV_SECTIONS: { label: string; items: NavItem[] }[] = [
     ],
   },
   {
-    label: "System",
+    label: "Settings",
     items: [
       { href: "/admin/settings", label: "Settings", icon: Settings },
       { href: "/admin/developers", label: "Developers", icon: Code2 },
@@ -61,6 +61,8 @@ const NAV_SECTIONS: { label: string; items: NavItem[] }[] = [
 function isActive(pathname: string, href: string, exact?: boolean) {
   return exact ? pathname === href : pathname.startsWith(href);
 }
+
+const SIDEBAR_BG = "bg-[#1b283b]";
 
 /** Shared nav body — used by the desktop sidebar and the mobile sheet. */
 export function AdminSidebarNav({
@@ -77,13 +79,13 @@ export function AdminSidebarNav({
       {NAV_SECTIONS.map((section) => (
         <div key={section.label}>
           <p
-            className={`px-3 pb-1.5 text-[0.68rem] font-semibold tracking-widest text-muted-foreground/70 uppercase ${
+            className={`px-4 pb-1.5 text-[10px] font-semibold tracking-widest text-gray-400/70 uppercase ${
               collapsed ? "lg:px-0 lg:text-center" : ""
             }`}
           >
             <span className={collapsed ? "lg:hidden" : ""}>{section.label}</span>
           </p>
-          <ul className="space-y-1">
+          <ul className="space-y-0.5">
             {section.items.map((item) => {
               const active = isActive(pathname, item.href, item.exact);
               const Icon = item.icon;
@@ -94,12 +96,12 @@ export function AdminSidebarNav({
                     onClick={onNavigate}
                     title={collapsed ? item.label : undefined}
                     aria-current={active ? "page" : undefined}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors ${
                       collapsed ? "lg:justify-center lg:px-0" : ""
                     } ${
                       active
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                        ? "rounded-md bg-emerald-600 text-white shadow-sm"
+                        : "text-gray-300 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     <Icon className="size-4 shrink-0" aria-hidden />
@@ -119,26 +121,36 @@ export function SidebarLogo({ collapsed = false }: { collapsed?: boolean }) {
   return (
     <Link
       href="/admin"
-      className={`flex items-center gap-2.5 rounded-lg px-1 py-0.5 ${collapsed ? "lg:justify-center lg:px-0" : ""}`}
+      className={`block rounded-lg bg-white px-3 py-2 ${collapsed ? "lg:px-2" : ""}`}
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-solar shadow-sm">
-        <Zap className="size-5" aria-hidden />
-      </span>
-      <span className={`leading-tight ${collapsed ? "lg:hidden" : ""}`}>
-        <span className="block text-base font-bold tracking-tight">SunVolt</span>
-        <span className="block text-xs text-muted-foreground">Admin Panel</span>
-      </span>
+      {collapsed ? (
+        <>
+          <span className="hidden items-center justify-center lg:flex">
+            <Image src="/logo.png" alt="SunVolt" width={36} height={36} className="h-9 w-auto" />
+          </span>
+          <span className="flex items-center gap-2.5 lg:hidden">
+            <Image src="/logo.png" alt="SunVolt" width={120} height={30} className="h-7 w-auto" />
+          </span>
+        </>
+      ) : (
+        <Image src="/logo.png" alt="SunVolt" width={150} height={34} className="h-8 w-auto" priority />
+      )}
     </Link>
   );
 }
 
 export function SidebarFooterLinks({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <div className="space-y-1">
-      <Button asChild variant="ghost" size="sm" className="w-full justify-start text-muted-foreground">
+    <div className="space-y-0.5">
+      <Button
+        asChild
+        variant="ghost"
+        size="sm"
+        className="w-full justify-start text-gray-300 hover:bg-white/10 hover:text-white"
+      >
         <Link href="/" target="_blank" onClick={onNavigate}>
           <ExternalLink aria-hidden />
-          View Website
+          View Store
         </Link>
       </Button>
       <form action={logout}>
@@ -146,7 +158,7 @@ export function SidebarFooterLinks({ onNavigate }: { onNavigate?: () => void }) 
           type="submit"
           variant="ghost"
           size="sm"
-          className="w-full justify-start text-destructive hover:text-destructive"
+          className="w-full justify-start text-red-300 hover:bg-white/10 hover:text-red-200"
         >
           <LogOut aria-hidden />
           Sign out
@@ -186,7 +198,7 @@ export function AdminSidebar({ email }: { email: string }) {
 
   return (
     <aside
-      className={`hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:shrink-0 lg:flex-col lg:border-r lg:bg-sidebar lg:transition-[width] lg:duration-200 ${
+      className={`hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:shrink-0 lg:flex-col lg:transition-[width] lg:duration-200 ${SIDEBAR_BG} ${
         collapsed ? "lg:w-[76px]" : "lg:w-64"
       }`}
     >
@@ -199,9 +211,9 @@ export function AdminSidebar({ email }: { email: string }) {
           <AdminSidebarNav collapsed={collapsed} />
         </div>
 
-        <div className="border-t pt-3">
+        <div className="border-t border-white/10 pt-3">
           <p
-            className={`truncate px-3 text-xs text-muted-foreground ${collapsed ? "lg:hidden" : ""}`}
+            className={`truncate px-4 text-xs text-gray-400 ${collapsed ? "lg:hidden" : ""}`}
             title={email}
           >
             {email}

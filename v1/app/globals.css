@@ -155,6 +155,29 @@
   }
 }
 
+/* ── Admin panel scope (KachaBazar emerald theme) ─────────────────
+   The class sits on the admin shell wrapper only, so buttons, pills,
+   links and focus rings inside the admin use KachaBazar's emerald
+   instead of the site-wide navy. The public site never renders it. */
+.admin-scope {
+  --primary: #059669; /* emerald-600 */
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6; /* gray-100 */
+  --secondary-foreground: #1f2937;
+  --ring: #10b981; /* emerald-500 */
+  --accent: #ecfdf5; /* emerald-50 */
+  --accent-foreground: #047857; /* emerald-700 */
+}
+.dark .admin-scope {
+  --primary: #10b981; /* emerald-500 */
+  --primary-foreground: #052e21;
+  --secondary: #1f2937; /* gray-800 */
+  --secondary-foreground: #f3f4f6;
+  --ring: #10b981;
+  --accent: #064e3b; /* emerald-900 */
+  --accent-foreground: #a7f3d0; /* emerald-200 */
+}
+
 /* ── Invoice printing (admin invoice generator) ────────────────── */
 
 @page {
