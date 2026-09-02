@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, Eye, EyeOff, Pencil, Star } from "lucide-react";
+import { ArrowUpDown, ChevronDown, Copy, Eye, EyeOff, Pencil, Star } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatDate, formatNumber, formatPrice } from "@/lib/format";
 import { useRouter } from "next/navigation";
+import { cloneProduct } from "@/app/admin/(panel)/products/actions";
 import type { Product } from "@/db/schema";
 
 interface ProductsDataTableProps {
@@ -43,6 +44,34 @@ function StockBadge({ stock }: { stock: number }) {
     return <Badge variant="outline" className="border-solar text-solar-dark text-[10px] px-2 py-0.5">Low · {stock}</Badge>;
   }
   return <Badge variant="outline" className="border-leaf text-leaf text-[10px] px-2 py-0.5">In stock · {stock}</Badge>;
+}
+
+/** Clones the product server-side (disabled draft) and opens its edit form. */
+function CloneProductButton({ product }: { product: Product }) {
+  const [state, formAction, pending] = React.useActionState(cloneProduct, undefined);
+
+  return (
+    <form action={formAction} className="flex flex-col items-end gap-0.5">
+      <input type="hidden" name="id" value={product.id} />
+      <Button
+        type="submit"
+        variant="outline"
+        size="sm"
+        disabled={pending}
+        aria-label={`Clone ${product.name}`}
+        title="Duplicate as a disabled draft and open it for editing"
+        className="h-7 px-2 text-xs"
+      >
+        <Copy className="size-3" aria-hidden />
+        Clone
+      </Button>
+      {state?.message ? (
+        <p className="max-w-44 text-right text-[10px] font-medium text-destructive" role="alert">
+          {state.message}
+        </p>
+      ) : null}
+    </form>
+  );
 }
 
 export function ProductsDataTable({ data, showMargin, usdRate, categoryLabels }: ProductsDataTableProps) {
@@ -555,6 +584,7 @@ export function ProductsDataTable({ data, showMargin, usdRate, categoryLabels }:
               {product.active ? <EyeOff className="size-3" aria-hidden /> : <Eye className="size-3" aria-hidden />}
               {product.active ? "Disable" : "Enable"}
             </Button>
+            <CloneProductButton product={product} />
             <Button asChild variant="outline" size="sm" className="h-7 px-2 text-xs">
               <Link prefetch={false} href={`/admin/products/${product.id}`}>
                 <Pencil className="size-3" aria-hidden />

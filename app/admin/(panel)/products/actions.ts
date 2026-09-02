@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { eq, like } from "drizzle-orm";
 import { promises as fs } from "fs";
 import path from "path";
 import { db } from "@/db";
@@ -316,6 +316,64 @@ export async function deleteProduct(
   await db.delete(products).where(eq(products.id, id));
   revalidatePath("/", "layout");
   redirect("/admin/products?deleted=1");
+}
+
+/**
+ * Duplicate a product as a new disabled draft and open its edit form.
+ * The copy starts inactive so an unfinished duplicate never appears on
+ * the site next to the original.
+ */
+export async function cloneProduct(
+  _prev: ProductFormState | undefined,
+  formData: FormData,
+): Promise<ProductFormState> {
+  await requireAdmin();
+  const id = String(formData.get("id") ?? "");
+  if (!id) return { message: "Missing product id." };
+
+  const [source] = await db.select().from(products).where(eq(products.id, id)).limit(1);
+  if (!source) return { message: "Product not found." };
+
+  // First free "{slug}-copy", "{slug}-copy-2", … — slug is unique in the
+  // DB, so scan existing prefixes (LIKE wildcards escaped) for candidates.
+  const baseSlug = `${source.slug}-copy`.slice(0, 116);
+  const prefix = baseSlug.replace(/[\\%_]/g, "\\$&");
+  const siblings = await db
+    .select({ slug: products.slug })
+    .from(products)
+    .where(like(products.slug, `${prefix}%`));
+  const taken = new Set(siblings.map((row) => row.slug));
+  let slug = baseSlug;
+  for (let n = 2; taken.has(slug); n += 1) {
+    slug = `${baseSlug}-${n}`;
+  }
+
+  // Stay within the form schema's 120-char name limit.
+  const suffix = " (copy)";
+  const name =
+    source.name.length + suffix.length > 120
+      ? source.name.slice(0, 120 - suffix.length) + suffix
+      : source.name + suffix;
+
+  // Copy every column, but let the DB generate the new row's identity and
+  // timestamps (Drizzle skips undefined values → column defaults apply).
+  let newId: string;
+  try {
+    const [created] = await db
+      .insert(products)
+      .values({ ...source, id: undefined, createdAt: undefined, updatedAt: undefined, name, slug, active: false })
+      .returning({ id: products.id });
+    newId = created.id;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (message.includes("products_slug_unique") || message.includes("duplicate key")) {
+      return { message: "Slug collision while cloning — try again." };
+    }
+    throw error;
+  }
+
+  revalidatePath("/", "layout");
+  redirect(`/admin/products/${newId}`);
 }
 
 export interface UploadResult {

@@ -6,6 +6,12 @@ How products get added to SunVolt — use this every time. It has two halves:
 Followed since the Microtek Vertiga series import; update it whenever a new
 gotcha appears.
 
+> **Fast path for a similar product:** Admin → Products → **Clone** on any
+> row duplicates it as a **disabled** draft ("{name} (copy)", slug
+> `{slug}-copy`, `-copy-2`… if taken) and opens the edit form — adjust
+> name/price/stock, upload, then tick **active**. Fine for one-off manual
+> additions; bulk/precise imports still follow §3 below.
+
 ---
 
 ## 1. What to provide with each product request
@@ -165,4 +171,5 @@ for m in re.findall(r'tracking-wide text-muted-foreground\">([^<]*)</p>\s*<p[^>]
 *Update history:* created 2026-08-27 after the Vertiga series imports
 (slug upsert pattern, colon-format tile drop, image-host allowlist lessons);
 same day — feature tiles redefined as the 8-tile at-a-glance product summary
-(assistant analyzes provided details, balanced coverage rule, self-check).
+(assistant analyzes provided details, balanced coverage rule, self-check);
+2026-09-02 — added Admin → Products → Clone fast path for similar products.
