@@ -2,6 +2,7 @@ node_modules
 .next
 .git
 .gitignore
+v1
 .env
 .env.*
 !.env.example

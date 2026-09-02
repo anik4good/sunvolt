@@ -152,9 +152,11 @@ docs/                  CODEBASE.md (this file — read FIRST), DEVELOPERS.md
                        (API reference), PRODUCT_UPLOAD.md (upload runbook)
 proxy.ts               Middleware: bounces anonymous users off /admin
 v1/                    ⚠️ ARCHIVED design prototype (admin re-skin experiment).
-                       NOT part of the live app — nothing imports it and it
-                       does not type-check. Never read, import, or build on
-                       it; exclude v1/ paths from searches and tsc output.
+                       NOT part of the live app — nothing imports it, it does
+                       not compile, and it is excluded from the TypeScript
+                       project (tsconfig `exclude`) and Docker build context
+                       (.dockerignore). Never read, import, or build on it;
+                       exclude v1/ paths from searches.
 ```
 
 ## 5. Data model (`db/schema.ts`)
