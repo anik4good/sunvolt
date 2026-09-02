@@ -58,7 +58,7 @@ npm run dev                 # http://localhost:3000
 | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | The single admin login (there is no users table) |
 | `SESSION_SECRET` | ≥16 chars, HMAC-signs the admin session cookie |
 | `NEXT_PUBLIC_SITE_URL` | Public URL for sitemap/robots/metadata |
-| `SUNVOLT_PORT` | Host port for docker compose (container always 3000) |
+| `SUNVOLT_PORT` | Legacy host port — current `docker-compose.yml` hardcodes `8085:3000` and no longer reads this |
 
 ### npm scripts
 
@@ -75,9 +75,15 @@ npm run dev                 # http://localhost:3000
 
 ```
 app/
+  layout.tsx           Root layout (fonts Manrope + Noto Sans Bengali, metadata, global CSS)
+  globals.css          Tailwind 4 theme tokens (navy/solar/leaf…)
+  error.tsx            Root error boundary
+  not-found.tsx        404 page
+  robots.ts sitemap.ts SEO endpoints
   (public)/            Public site (route group — no URL prefix)
+    layout.tsx         CartProvider + site header/footer, floating CTA, WhatsApp button
     page.tsx           Home: hero, featured products, packages, calculator
-    products/          Component catalog + [slug] detail page
+    products/          Component catalog + [slug] detail page (gallery lightbox)
     packages/          Backup packages listing + [slug] detail
     calculator/        Interactive load calculator
     cart/ checkout/    Cart (client state) and checkout (server action order)
@@ -87,8 +93,10 @@ app/
     login/             Login page + form + credentials action
     (panel)/           Auth-guarded admin panel (layout calls requireAdmin)
       loading.tsx      Panel-wide loading fallback (spinner) shown while pages fetch
+      error.tsx        Panel error boundary (retry button)
       page.tsx         Dashboard: order counts, revenue, recent orders
-      products/        List / new / [id] edit, toggle-active route, actions
+      products/        List / new / [id] edit, toggle-active route, clone & delete actions
+      categories/      List / new / [id] edit — DB-backed category CRUD
       orders/          List + [id] detail, status update action
       invoices/        List, new (manual invoices), actions
       appliances/      Calculator appliance catalog CRUD
@@ -99,29 +107,54 @@ app/
     orders.ts          createOrder — public checkout server action
   api/
     health/            Liveness + DB probe (used by Docker healthcheck)
+    media/[...path]/   Streams public/products + public/uploads from disk
+                       (extension allowlist, nosniff header) — see §8 Media route
     v1/                Management REST API — see DEVELOPERS.md
 components/
-  admin/               Admin-only components (forms, tables, sidebar…)
+  admin/               Admin-only components (product form + images/description
+                       editors, data table, filters, sidebar, delete/clone
+                       buttons, invoice sheet/toolbar, API keys manager…)
   ui/                  Generic UI primitives (button, card, input…)
-  site/ products/ cart/ checkout/ calculator/ home/  Public site components
+  site/                Header, footer, package card, lang toggle, WhatsApp/floating CTA
+  products/            Product card, gallery (lightbox), details tabs, sort select
+  cart/ checkout/      Cart provider/view, add-to-cart, checkout form
+  calculator/ home/    Calculator client, home calculator section
+  appliance-icon.tsx   Appliance icon renderer/picker
 db/
   schema.ts            Drizzle schema (single source of truth for tables)
   index.ts             Lazy Postgres client cached on globalThis
   seed.ts              Seeding
+  add-*.ts import-*.ts One-off product import/upsert scripts (PRODUCT_UPLOAD.md §3)
 lib/
   auth.ts              Admin session (HMAC cookie), login throttle
-  queries.ts           Cached read helpers (getSettings, getProducts…)
-  categories.ts        Product category slugs/labels/icons
+  queries.ts           Cached read helpers (getSettings, getProducts,
+                       getCategories, isValidCategorySlug…)
+  categories.ts        Built-in category slugs/labels/icons (seed + fallback)
   panel-rates.ts       Parse/format solar-panel per-watt rates
   order-status.ts      Order status labels (Bangla) + colors
   format.ts            ৳ price / W / Wh formatting, Bengali digits
+  i18n.ts              Server-side language from cookie (default Bangla)
+  dictionaries.ts      bn/en calculator strings + LANG_COOKIE
+  product-description.ts  Rich-text sanitizer for product descriptions
+  taka-in-words.ts     Invoice amount-in-words (lakh/crore grouping)
+  whatsapp.ts          WhatsApp deep-link helper
   solar/               Pure solar math (no React/DB): calculator, battery,
                        sizing, packages — the recommendation engine
-  whatsapp.ts          WhatsApp deep-link helper
+  api.ts               /api/v1 plumbing: withApiKey guard, JSON envelopes,
+                       pagination, generic 500s (no internals leak)
+  api-auth.ts          API key hashing/verification (SHA-256)
+  api-schemas.ts       Zod schemas for /api/v1 request bodies
+  api-products.ts      buildProductValues/slugify shared by API product routes
+  api-endpoints.ts     Endpoint reference table shown in Admin → Developers
+  utils.ts             cn() class-merge helper
 scripts/               One-off maintenance scripts (tsx)
-docs/                  CODEBASE.md (this file), DEVELOPERS.md (API reference),
-                       PRODUCT_UPLOAD.md (product upload runbook)
+docs/                  CODEBASE.md (this file — read FIRST), DEVELOPERS.md
+                       (API reference), PRODUCT_UPLOAD.md (upload runbook)
 proxy.ts               Middleware: bounces anonymous users off /admin
+v1/                    ⚠️ ARCHIVED design prototype (admin re-skin experiment).
+                       NOT part of the live app — nothing imports it and it
+                       does not type-check. Never read, import, or build on
+                       it; exclude v1/ paths from searches and tsc output.
 ```
 
 ## 5. Data model (`db/schema.ts`)
@@ -153,8 +186,19 @@ disable (`active = false`) instead.
   `backupHours`, `recommendedLoadWatt` (enforced by the product form schema).
 - Any other category → shown in **/products** catalog. Package-only fields
   are nulled for components.
-- Category slugs live in `lib/categories.ts` and are mirrored in the product
-  zod schema (`CATEGORY_SLUGS` in `app/admin/(panel)/products/actions.ts`).
+- Categories are **DB rows** managed in Admin → Categories. Product writes
+  validate the category with `isValidCategorySlug()` (`lib/queries.ts`) —
+  the `categories` table, falling back to the built-in `lib/categories.ts`
+  list. `package` is reserved and cannot be created as a category row.
+
+### Managing products in admin
+
+- **Admin → Products** lists everything with search/filters, per-row
+  Enable/Disable, **Clone**, and Edit. Clone (`cloneProduct` in
+  `app/admin/(panel)/products/actions.ts`) duplicates a product as a
+  **disabled** draft — "{name} (copy)" with slug `…-copy` (`…-copy-2`… if
+  taken) — and opens its edit form; the fastest way to add a similar
+  product (see PRODUCT_UPLOAD.md fast path).
 
 ### Solar-panel auto-pricing
 
@@ -203,7 +247,10 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 - Constant-time comparisons everywhere (`timingSafeEqual`).
 - The `/api/v1` management API authenticates with **API keys**
   (`Authorization: Bearer sv_live_…`) — creation/revocation in
-  Admin → Developers.
+  Admin → Developers. Every handler is wrapped by `withApiKey()`
+  (`lib/api.ts`): unexpected errors are logged server-side and answered
+  with a generic `500 {"error":{"code":"internal_error"}}` so DB/driver
+  internals never leak to clients.
 
 ## 8. Conventions
 
@@ -234,8 +281,9 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   (PNG/JPG/WebP/GIF, ≤5 MB), stored as site paths
   (`/api/media/products/<file>`). Product URLs from external CDNs are also
   allowed by the Next.js image optimizer when their host is listed in
-  `next.config.ts` → `images.remotePatterns` (currently Alibaba's
-  `sc04.alicdn.com/kf/**` and `solarhousebd.com/wp-content/uploads/**`).
+  `next.config.ts` → `images.remotePatterns` (currently
+  `sc04.alicdn.com/kf/**`, `solarhousebd.com/wp-content/uploads/**`, and
+  `safebdes.com/image/cache/catalog/**`).
   Add new hosts there before using them as product image URLs. The volume is mounted persistent in Docker. The container
   entrypoint fixes ownership of bind-mounted upload directories before
   dropping to the `nextjs` user, so admin uploads work in production as well
@@ -244,8 +292,12 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   at server startup, so freshly uploaded files would 404 until a restart.
   `app/api/media/[...path]/route.ts` streams uploaded files from disk on every
   request (`/api/media/products|uploads/<file>` — extension allowlist, no path
-  traversal). All uploaders return `/api/media/...` paths; legacy
+  traversal, `X-Content-Type-Options: nosniff`). All uploaders return
+  `/api/media/...` paths; legacy
   `/products/<file>` URLs of pre-existing images keep working unchanged.
+- **Product gallery**: `components/products/product-gallery.tsx` renders a
+  full-fit cover with a thumbnail strip; clicking opens a click-to-zoom
+  lightbox with prev/next arrows and keyboard navigation.
 - **Product detail tiles**: the `features` textarea accepts `Label: Value`
   lines; these drive the compact tiles shown after stock status. The `specs`
   object remains the detailed Technical specification table.
@@ -266,7 +318,9 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 ## 9. Deployment
 
 - `Dockerfile` builds the **standalone** Next.js server; container listens
-  on 3000, compose maps `SUNVOLT_PORT` (currently **8085**) on the host.
+  on 3000, `docker-compose.yml` maps host **8085** → container 3000
+  (hardcoded in its `ports:` — the legacy `SUNVOLT_PORT` env var is no
+  longer read by compose).
 - Persistent volumes: `./public/products` and `./public/uploads` (uploaded
   images survive rebuilds).
 - Healthcheck: `GET /api/health` (returns `{ status, database }`).
@@ -277,6 +331,7 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
 
 | Task | Where |
 | ---- | ----- |
+| Create a similar product | Admin → Products → **Clone** (disabled draft → edit → enable). Bulk/one-off imports: committed `db/add-*.ts` script per PRODUCT_UPLOAD.md §3 |
 | Add/change a product field | `db/schema.ts` → `npm run db:push` → product zod schema + `values` mapping in `app/admin/(panel)/products/actions.ts` → `components/admin/product-form.tsx` → (if public) relevant components |
 | Add a category | Admin → Categories (no code change). Built-in defaults seed/fallback list lives in `lib/categories.ts` — product form, admin list/filters, zod schemas and API index all read the DB via `getCategories()` |
 | Change calculator math/params | `lib/solar/*` (math) or the `settings` table (params) |

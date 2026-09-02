@@ -15,3 +15,8 @@ Only commit and push — never deploy. The user deploys production themselves (n
 # Documentation
 
 Keep `docs/CODEBASE.md` and `docs/DEVELOPERS.md` in sync with every change: any new feature, page, component, or schema change → update `docs/CODEBASE.md`; anything API-related (endpoints, auth, schemas) → also update `docs/DEVELOPERS.md`.
+
+# Docs first, and never read `v1/`
+
+- For ANY question about this codebase — architecture, pages, components, database schema, API, conventions, deployment — read the `docs/` folder FIRST, starting with `docs/CODEBASE.md`, before opening any source file. `docs/DEVELOPERS.md` covers the REST API and `docs/PRODUCT_UPLOAD.md` covers adding products. The docs are kept up to date and are the authoritative map of the app; use source files to confirm specifics, not to explore blind.
+- NEVER read, import, reference, copy from, or build on anything in the `v1/` folder. It is an archived design prototype (old admin re-skin experiment) that is NOT part of the live app — nothing imports it and it does not type-check. Always exclude `v1/` paths from greps, file searches, and type-check output; its code must never influence changes to the real app.
