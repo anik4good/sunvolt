@@ -24,6 +24,15 @@ export function formatWh(wh: number | null | undefined): string {
   return wh === null || wh === undefined ? "—" : `${Math.round(wh)}Wh`;
 }
 
+/** Human-readable file size for upload info: 780 KB, 5.3 MB. */
+export function formatBytes(bytes: number): string {
+  if (!Number.isFinite(bytes) || bytes < 0) return "—";
+  if (bytes < 1024) return `${bytes} B`;
+  const kb = bytes / 1024;
+  if (kb < 1024) return `${Math.round(kb)} KB`;
+  return `${(kb / 1024).toFixed(1)} MB`;
+}
+
 export function formatHours(hours: number | null | undefined): string {
   return hours === null || hours === undefined ? "—" : `${hours} ঘণ্টা`;
 }

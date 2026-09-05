@@ -133,6 +133,7 @@ lib/
   panel-rates.ts       Parse/format solar-panel per-watt rates
   order-status.ts      Order status labels (Bangla) + colors
   format.ts            ৳ price / W / Wh formatting, Bengali digits
+  compress-image.ts    Browser-side upload compression (≤1600px JPEG, size report)
   i18n.ts              Server-side language from cookie (default Bangla)
   dictionaries.ts      bn/en calculator strings + LANG_COOKIE
   product-description.ts  Rich-text sanitizer for product descriptions
@@ -281,7 +282,11 @@ factor (no stacking) — see the comment atop `lib/solar/calculator.ts`.
   request).
 - **Images**: uploads land in `public/products/` with generated filenames
   (PNG/JPG/WebP/GIF, ≤5 MB), stored as site paths
-  (`/api/media/products/<file>`). Product URLs from external CDNs are also
+  (`/api/media/products/<file>`). Uploads are **auto-compressed in the
+  browser first** (`lib/compress-image.ts`: downscale to ≤1600 px, JPEG
+  ~82%, transparency flattened onto white; GIF/SVG/≤150 KB files pass
+  through unchanged) and the admin editors show the original → compressed
+  size per file. Product URLs from external CDNs are also
   allowed by the Next.js image optimizer from **any HTTPS host**
   (`next.config.ts` → `images.remotePatterns` = `hostname: "**"` — safe
   because only the single admin can set image URLs). HTTP (non-TLS) image

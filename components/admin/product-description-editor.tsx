@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Bold, Heading2, ImagePlus, Italic, Link as LinkIcon, List, ListOrdered, Loader2, Redo2, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { uploadProductImage } from "@/app/admin/(panel)/products/actions";
+import { compressImage, describeCompression } from "@/lib/compress-image";
 
 function escapeHtml(value: string): string {
   return value
@@ -31,6 +32,7 @@ function textToHtml(value: string): string {
 export function ProductDescriptionEditor({ initialValue }: { initialValue?: string | null }) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [compressNote, setCompressNote] = useState<string | null>(null);
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
@@ -67,15 +69,24 @@ export function ProductDescriptionEditor({ initialValue }: { initialValue?: stri
     if (!editor || files.length === 0) return;
     setUploadError(null);
     setUploading(true);
+    const notes: string[] = [];
     try {
       for (const file of files) {
-        const result = await uploadProductImage(file);
+        const compressed = await compressImage(file);
+        notes.push(describeCompression(file.name, compressed));
+        const result = await uploadProductImage(compressed.file);
         if (result.error || !result.path) {
           setUploadError(result.error ?? "Could not upload image.");
           continue;
         }
         editor.chain().focus().setImage({ src: result.path }).run();
       }
+      setCompressNote(notes.length > 0 ? notes.join("  ·  ") : null);
+    } catch {
+      // Server-action transport failures (e.g. body limit) throw instead
+      // of returning { error }.
+      setUploadError("Upload failed — the file may be too large.");
+      setCompressNote(notes.length > 0 ? notes.join("  ·  ") : null);
     } finally {
       setUploading(false);
     }
@@ -130,6 +141,9 @@ export function ProductDescriptionEditor({ initialValue }: { initialValue?: stri
         Paste formatted text or images directly. Images are saved with the product.
       </p>
       {uploadError ? <p className="px-3 pb-2 text-xs font-medium text-destructive">{uploadError}</p> : null}
+      {compressNote ? (
+        <p className="px-3 pb-2 text-xs text-leaf">{compressNote}</p>
+      ) : null}
     </div>
   );
 }

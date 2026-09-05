@@ -99,6 +99,10 @@ Learned the hard way — each of these has broken an upload before.
 4. **Images.**
    - *Files* → save into `public/products/<slug>.jpg`; reference as
      `/api/media/products/<slug>.jpg` (served fresh via the media route).
+     Uploads are **auto-compressed in the browser** (≤1600 px JPEG) and the
+     editor shows "original → compressed" per file — oversized phone
+     photos are fine; the 5 MB server cap now only really applies to
+     files the browser cannot compress (GIF/SVG/unreadable).
    - *Live URLs* → must be **HTTPS**; any host is allowed since 2026-09-06
      (`next.config.ts` → `images.remotePatterns` = `hostname: "**"`).
      HTTP URLs are rejected by the image optimizer at render.
@@ -176,4 +180,7 @@ same day — feature tiles redefined as the 8-tile at-a-glance product summary
 category defaults (DB row ensured by the same upsert script);
 2026-09-06 — image-host allowlist widened to any HTTPS host (Alibaba kept
 serving the same files under unlisted hostname variants like
-`s.alicdn.com/@sc04/kf/…`, which broke pasted URLs).
+`s.alicdn.com/@sc04/kf/…`, which broke pasted URLs);
+2026-09-06 — client-side auto-compression on upload
+(`lib/compress-image.ts`) with per-file "original → compressed" size
+readout; server-action body limit raised 2 MB → 10 MB to match.

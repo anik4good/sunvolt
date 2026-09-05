@@ -5,6 +5,7 @@ import { ImagePlus, Link as LinkIcon, Loader2, Star, X, Upload } from "lucide-re
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { uploadProductImage } from "@/app/admin/(panel)/products/actions";
+import { compressImage, describeCompression } from "@/lib/compress-image";
 
 /**
  * Ordered product image list for the admin product form.
@@ -17,6 +18,7 @@ export function ProductImagesEditor({ initial }: { initial: string[] }) {
   const [url, setUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [compressNotes, setCompressNotes] = useState<string[] | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const dragCounter = useRef(0);
@@ -24,15 +26,24 @@ export function ProductImagesEditor({ initial }: { initial: string[] }) {
   const addUploaded = async (files: FileList | File[]) => {
     setError(null);
     setUploading(true);
+    const notes: string[] = [];
     try {
       for (const file of Array.from(files)) {
-        const result = await uploadProductImage(file);
+        const compressed = await compressImage(file);
+        notes.push(describeCompression(file.name, compressed));
+        const result = await uploadProductImage(compressed.file);
         if (result.error || !result.path) {
           setError(result.error ?? "Upload failed.");
           break;
         }
         setImages((prev) => [...prev, result.path!]);
       }
+      setCompressNotes(notes.length > 0 ? notes : null);
+    } catch {
+      // Server-action transport failures (e.g. body limit) surface here
+      // as thrown errors, not as { error } results.
+      setError("Upload failed — the file may be too large.");
+      setCompressNotes(notes.length > 0 ? notes : null);
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
@@ -219,6 +230,14 @@ export function ProductImagesEditor({ initial }: { initial: string[] }) {
         <p role="alert" className="rounded-lg bg-destructive/10 px-3 py-2 text-xs font-medium text-destructive">
           {error}
         </p>
+      ) : null}
+
+      {compressNotes ? (
+        <ul className="space-y-0.5 rounded-lg bg-leaf/10 px-3 py-2 text-xs text-leaf">
+          {compressNotes.map((note) => (
+            <li key={note}>{note}</li>
+          ))}
+        </ul>
       ) : null}
 
       {uploading && (

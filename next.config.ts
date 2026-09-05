@@ -14,10 +14,13 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
-  // Ensure Server Actions work properly in standalone builds
+  // Ensure Server Actions work properly in standalone builds.
+  // 10 MB lets a maximal (5 MB cap) uncompressed image reach the upload
+  // action's own validation — client-side compression in
+  // lib/compress-image.ts normally keeps uploads far below this.
   experimental: {
     serverActions: {
-      bodySizeLimit: '2mb',
+      bodySizeLimit: '10mb',
     },
   },
 };
