@@ -5,26 +5,14 @@ const nextConfig: NextConfig = {
   output: "standalone",
   // Allows Next.js dev server to accept requests from your custom domain
   allowedDevOrigins: ["sunvolt.root2tech.com", "http://100.122.208.22:3000/"],
-  // Product images may be hosted on external CDNs when added by URL
-  // (Alibaba supplier listings, solarhousebd.com live links).
+  // Product images may be hosted on any external CDN when added by URL.
+  // Only the single admin can set product image URLs (product form /
+  // API), so the optimizer's usual "malicious URL" concern doesn't
+  // apply — and supplier CDNs keep multiplying hostnames (Alibaba
+  // alone uses sc04.alicdn.com/kf/…, s.alicdn.com/@sc04/kf/…, …).
+  // HTTPS-only; local /api/media/... paths are unaffected by this.
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "sc04.alicdn.com",
-        pathname: "/kf/**",
-      },
-      {
-        protocol: "https",
-        hostname: "solarhousebd.com",
-        pathname: "/wp-content/uploads/**",
-      },
-      {
-        protocol: "https",
-        hostname: "safebdes.com",
-        pathname: "/image/cache/catalog/**",
-      },
-    ],
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
   // Ensure Server Actions work properly in standalone builds
   experimental: {

@@ -99,12 +99,11 @@ Learned the hard way — each of these has broken an upload before.
 4. **Images.**
    - *Files* → save into `public/products/<slug>.jpg`; reference as
      `/api/media/products/<slug>.jpg` (served fresh via the media route).
-   - *Live URLs* → must be HTTPS **and** their host must be in
-     `next.config.ts` → `images.remotePatterns`, or Next's image optimizer
-     errors at render. Currently allowed:
-     `sc04.alicdn.com/kf/**`, `solarhousebd.com/wp-content/uploads/**`.
-     Adding a host = config edit + commit.
+   - *Live URLs* → must be **HTTPS**; any host is allowed since 2026-09-06
+     (`next.config.ts` → `images.remotePatterns` = `hostname: "**"`).
+     HTTP URLs are rejected by the image optimizer at render.
    - Hotlinked URLs die if the source site renames/deletes them — warn once.
+     Self-hosting (download + upload the file) is always preferred.
 5. **Money format.** Store `"18000.00"` strings (`numeric` columns). Display
    formatting (`৳18,000`) is automatic — never store formatted text.
 6. **Warranty `0` hides the badge** rather than showing "0 months".
@@ -174,4 +173,7 @@ same day — feature tiles redefined as the 8-tile at-a-glance product summary
 (assistant analyzes provided details, balanced coverage rule, self-check);
 2026-09-02 — added Admin → Products → Clone fast path for similar products;
 2026-09-05 — SENMA PV1500DC-AL cable import; `cable` added to the seeded
-category defaults (DB row ensured by the same upsert script).
+category defaults (DB row ensured by the same upsert script);
+2026-09-06 — image-host allowlist widened to any HTTPS host (Alibaba kept
+serving the same files under unlisted hostname variants like
+`s.alicdn.com/@sc04/kf/…`, which broke pasted URLs).
