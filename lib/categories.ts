@@ -13,6 +13,7 @@ export const PRODUCT_CATEGORIES = [
   { slug: "accessories", label: "Accessories", labelBn: "এক্সেসরিজ", icon: "🎛️" },
   { slug: "battery", label: "Battery", labelBn: "ব্যাটারি", icon: "🔋" },
   { slug: "fan", label: "Fan", labelBn: "ফ্যান", icon: "🌀" },
+  { slug: "cable", label: "Cable", labelBn: "ক্যাবল", icon: "🔗" },
 ] as const;
 
 export type ProductCategorySlug = (typeof PRODUCT_CATEGORIES)[number]["slug"];

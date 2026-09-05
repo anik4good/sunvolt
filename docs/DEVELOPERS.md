@@ -80,7 +80,7 @@ Any other category is a standalone component. Categories are DB-managed
 (Admin → Categories) — list them with `GET /categories` and send the `slug`.
 `"package"` plus the seeded built-ins (`solar-inverter`, `bms`,
 `solar-panel`, `inverter`, `diy-solar`, `mppt-charger`, `dc-charger`,
-`accessories`, `battery`, `fan`) exist by default; unknown slugs are
+`accessories`, `battery`, `fan`, `cable`) exist by default; unknown slugs are
 rejected with a validation error.
 
 **Product fields**

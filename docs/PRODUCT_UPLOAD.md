@@ -22,7 +22,7 @@ sensible default — see §1.1. Only **price** is truly mandatory besides the na
 | # | Field | Notes |
 | - | ----- | ----- |
 | 1 | **Name** | Exact display name, e.g. `Microtek Vertiga 1050 Solar IPS/UPS Inverter`. Bengali name (`nameBn`) optional — assistant translates otherwise. |
-| 2 | **Category** | Any category from Admin → Categories (create one there first if it doesn't exist — no code change needed). Seeded defaults: `solar-inverter`, `solar-panel`, `mppt-charger`, `dc-charger`, `inverter`, `battery`, `bms`, `diy-solar`, `accessories`, `fan`. A full backup kit is `package` instead (extra fields required — see §2.2). |
+| 2 | **Category** | Any category from Admin → Categories (create one there first if it doesn't exist — no code change needed). Seeded defaults: `solar-inverter`, `solar-panel`, `mppt-charger`, `dc-charger`, `inverter`, `battery`, `bms`, `diy-solar`, `accessories`, `fan`, `cable`. A full backup kit is `package` instead (extra fields required — see §2.2). |
 | 3 | **Price (BDT)** | Selling price, whole numbers fine (`18000`). Numeric-range prices (`1250VA–1450VA`) belong in specs, not here. |
 | 4 | Cost price *(optional)* | Supplier/reference buying price for the admin margin column. Set `showMargin` off in Settings to hide entirely. |
 | 5 | Discount % *(optional)* | Whole percent, stored on the product. |
@@ -172,4 +172,6 @@ for m in re.findall(r'tracking-wide text-muted-foreground\">([^<]*)</p>\s*<p[^>]
 (slug upsert pattern, colon-format tile drop, image-host allowlist lessons);
 same day — feature tiles redefined as the 8-tile at-a-glance product summary
 (assistant analyzes provided details, balanced coverage rule, self-check);
-2026-09-02 — added Admin → Products → Clone fast path for similar products.
+2026-09-02 — added Admin → Products → Clone fast path for similar products;
+2026-09-05 — SENMA PV1500DC-AL cable import; `cable` added to the seeded
+category defaults (DB row ensured by the same upsert script).
