@@ -58,7 +58,7 @@ export default async function RootLayout({
         {children}
         {/* Chatbot widget (root2tech) — loads on idle, equivalent to defer */}
         <Script
-          src="https://chatbot.root2tech.com/widget.js"
+          src="https://chatbot.root2tech.com/v1/widget.js"
           data-siteagent="default"
           strategy="lazyOnload"
         />
