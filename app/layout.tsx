@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Manrope, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import { getLang } from "@/lib/i18n";
@@ -55,6 +56,12 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background font-sans">
         {children}
+        {/* Chatbot widget (root2tech) — loads on idle, equivalent to defer */}
+        <Script
+          src="https://chatbot.root2tech.com/widget.js"
+          data-siteagent="default"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

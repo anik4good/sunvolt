@@ -75,7 +75,8 @@ npm run dev                 # http://localhost:3000
 
 ```
 app/
-  layout.tsx           Root layout (fonts Manrope + Noto Sans Bengali, metadata, global CSS)
+  layout.tsx           Root layout (fonts Manrope + Noto Sans Bengali, metadata, global CSS,
+                       chatbot widget script loaded via next/script lazyOnload before </body>)
   globals.css          Tailwind 4 theme tokens (navy/solar/leaf…)
   error.tsx            Root error boundary
   not-found.tsx        404 page
